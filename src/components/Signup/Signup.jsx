@@ -62,7 +62,7 @@ function Signup() {
           <div class="text-center ">
             <button className='form-btn mt-2 font-medium rounded'
               type="button">
-              Login
+              Sign up
             </button>
 
             <div className='flex justify-center success-box-border rounded p-2 mt-8'>
