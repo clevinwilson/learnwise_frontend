@@ -45,11 +45,11 @@ function Login() {
                           <p className='ml-4'>Google</p>
                       </div>
                       <p class="mt-4 mb-0 pt-1 text-sm ">
-                          Don't have an account?
+                          Don't have an account ?
                           <a
                               href="#!"
                               class="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                          >Register</a>
+                          > Register</a>
                       </p>
                   </div>
               </div>
