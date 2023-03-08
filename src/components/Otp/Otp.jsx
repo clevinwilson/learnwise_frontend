@@ -4,35 +4,32 @@ import './Otp.scss'
 
 function Otp() {
 
-    function validate(values){
-        const errors={};
-        if(Object.values(values.otp).some(data => data==="")){
-            errors.otp="Please enter the otp";
+    function validate(values) {
+        const errors = {};
+        if (Object.values(values.otp).some(data => data === "")) {
+            errors.otp = "Please enter the otp";
         }
 
-        if(errors.otp){
-           Object.values(values.otp).map((value,index)=>{
-               inputRef.current[index].classList.add('input-box-error')
-           })
-        }else{
+        if (errors.otp) {
+            Object.values(values.otp).map((value, index) => {
+                inputRef.current[index].classList.add('input-box-error')
+            })
+        } else {
             Object.values(values.otp).map((value, index) => {
                 inputRef.current[index].classList.remove('input-box-error')
             })
         }
-
-       
-
         return errors;
 
     }
 
-    const formik=useFormik({
-        initialValues:{
-            otp:Array.from({length:4}).fill(""),
+    const formik = useFormik({
+        initialValues: {
+            otp: Array.from({ length: 4 }).fill(""),
         },
         validate,
-        onSubmit:(values)=>{
-            console.log(values);
+        onSubmit: (values) => {
+            console.log(values.otp.join(""));
         }
 
     })
@@ -45,21 +42,21 @@ function Otp() {
         digitFour: ""
     })
 
-    useEffect(()=>{
+    useEffect(() => {
 
         inputRef.current[0].focus();
 
-        inputRef.current[0].addEventListener("paste",pasteText);
+        inputRef.current[0].addEventListener("paste", pasteText);
 
-        return ()=>inputRef.current[0].removeEventListener("paste",pasteText)
-    },[])
+        return () => inputRef.current[0].removeEventListener("paste", pasteText)
+    }, [])
 
-    function pasteText(event){
-        const pastedText=event.clipboardData.getData('text');
+    function pasteText(event) {
+        const pastedText = event.clipboardData.getData('text');
 
-        const fieldValues={}
-        Object.keys(otp).forEach((key,index)=>{
-            fieldValues[key]=pastedText[index];
+        const fieldValues = {}
+        Object.keys(otp).forEach((key, index) => {
+            fieldValues[key] = pastedText[index];
         })
 
         setOtp(fieldValues);
@@ -68,30 +65,30 @@ function Otp() {
     }
 
     function handleChange(event, index) {
-        const {value } = event.target;
+        const { value } = event.target;
 
-        if(/[a-z]/gi.test(value)) return
+        if (/[a-z]/gi.test(value)) return
 
-        const currentOtp=[...formik.values.otp];
+        const currentOtp = [...formik.values.otp];
 
-        currentOtp[index]=value.slice(-1);
-        
-        
-        formik.setValues((prev)=>({
+        currentOtp[index] = value.slice(-1);
+
+
+        formik.setValues((prev) => ({
             ...prev,
-            otp:currentOtp
+            otp: currentOtp
         }))
 
 
-        
 
-        if(value && index <3){
+
+        if (value && index < 3) {
             inputRef.current[index + 1].focus()
         }
     }
 
-    function handleBack(event,index){
-        if(event.key==="Backspace"){
+    function handleBack(event, index) {
+        if (event.key === "Backspace") {
             if (index > 0) {
                 inputRef.current[index - 1].focus();
             }
@@ -101,15 +98,15 @@ function Otp() {
     function renderInput(keys) {
         return formik.values.otp.map((value, index) => (
             <input
-               key={index}
+                key={index}
                 type="text"
                 ref={(element) => (inputRef.current[index] = element)}
                 name={value}
                 value={value}
                 className='w-16 h-12 rounded text-center text-xl input-box-border otp-input-box mr-3 '
-                onChange={(event) => { handleChange(event, index) }} 
-                onKeyUp={(event)=>{handleBack(event,index)}}
-                />
+                onChange={(event) => { handleChange(event, index) }}
+                onKeyUp={(event) => { handleBack(event, index) }}
+            />
 
         ))
     }
@@ -118,7 +115,7 @@ function Otp() {
         <section className='section-box'>
             <form action="">
                 <div className='grid-cols-1  form-box p-7'>
-                    <h2 style={{ color:"#6255a4"}} className='text-center text-2xl font-medium pb-5'>Enter OTP</h2>
+                    <h2 style={{ color: "#6255a4" }} className='text-center text-2xl font-medium pb-5'>Enter OTP</h2>
                     <p className='text-center pb-6'>We sent you a verification code</p>
                     <Formik>
                         <div className='text-center flext justify-center'>
