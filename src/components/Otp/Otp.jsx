@@ -19,6 +19,9 @@ function Otp() {
                 inputRef.current[index].classList.remove('input-box-error')
             })
         }
+
+
+
         return errors;
 
     }
