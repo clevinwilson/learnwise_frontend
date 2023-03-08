@@ -1,9 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useFormik, Formik } from 'formik';
+import './Otp.scss'
 
 function Otp() {
 
-    const inputRef = useRef({});
+    function validate(values){
+        const errors={};
+        if(Object.values(values.otp).some(data => data==="")){
+            errors.otp="Please enter the otp";
+        }
 
+        if(errors.otp){
+           Object.values(values.otp).map((value,index)=>{
+               inputRef.current[index].classList.add('input-box-error')
+           })
+        }else{
+            Object.values(values.otp).map((value, index) => {
+                inputRef.current[index].classList.remove('input-box-error')
+            })
+        }
+
+       
+
+        return errors;
+
+    }
+
+    const formik=useFormik({
+        initialValues:{
+            otp:Array.from({length:4}).fill(""),
+        },
+        validate,
+        onSubmit:(values)=>{
+            console.log(values);
+        }
+
+    })
+
+    const inputRef = useRef({});
     const [otp, setOtp] = useState({
         digitOne: "",
         digitTwo: "",
@@ -12,19 +46,44 @@ function Otp() {
     })
 
     useEffect(()=>{
+
         inputRef.current[0].focus();
+
+        inputRef.current[0].addEventListener("paste",pasteText);
+
+        return ()=>inputRef.current[0].removeEventListener("paste",pasteText)
     },[])
 
+    function pasteText(event){
+        const pastedText=event.clipboardData.getData('text');
+
+        const fieldValues={}
+        Object.keys(otp).forEach((key,index)=>{
+            fieldValues[key]=pastedText[index];
+        })
+
+        setOtp(fieldValues);
+
+        inputRef.current[3].focus()
+    }
+
     function handleChange(event, index) {
-        const { name, value } = event.target;
+        const {value } = event.target;
 
         if(/[a-z]/gi.test(value)) return
-        
 
-        setOtp((prev) => ({
+        const currentOtp=[...formik.values.otp];
+
+        currentOtp[index]=value.slice(-1);
+        
+        
+        formik.setValues((prev)=>({
             ...prev,
-            [name]: value
+            otp:currentOtp
         }))
+
+
+        
 
         if(value && index <3){
             inputRef.current[index + 1].focus()
@@ -40,15 +99,14 @@ function Otp() {
     }
 
     function renderInput(keys) {
-        return Object.keys(otp).map((keys, index) => (
+        return formik.values.otp.map((value, index) => (
             <input
                key={index}
                 type="text"
-                maxLength={1}
                 ref={(element) => (inputRef.current[index] = element)}
-                name={keys}
-                value={otp[keys]}
-                className='w-16 h-12 rounded text-center text-xl input-box-border otp-input-box mr-3'
+                name={value}
+                value={value}
+                className='w-16 h-12 rounded text-center text-xl input-box-border otp-input-box mr-3 '
                 onChange={(event) => { handleChange(event, index) }} 
                 onKeyUp={(event)=>{handleBack(event,index)}}
                 />
@@ -60,10 +118,22 @@ function Otp() {
         <section className='section-box'>
             <form action="">
                 <div className='grid-cols-1  form-box p-7'>
-                    <h2 className='text-center text-2xl font-medium pb-8'>OTP</h2>
+                    <h2 style={{ color:"#6255a4"}} className='text-center text-2xl font-medium pb-5'>Enter OTP</h2>
+                    <p className='text-center pb-6'>We sent you a verification code</p>
+                    <Formik>
+                        <div className='text-center flext justify-center'>
+                            {renderInput()}
+                        </div>
+                    </Formik>
 
-                    <div className='text-center flext justify-center'>
-                        {renderInput()}
+                    {formik.errors.otp && <p className='text-center text-red-600 pt-5 '>Please enter the otp</p>}
+
+                    <div className='flex justify-center mt-5'>
+                        <button className='form-btn mt-2 font-medium rounded'
+                            onClick={formik.handleSubmit}
+                            type="button">
+                            Submit
+                        </button>
                     </div>
 
                 </div>
