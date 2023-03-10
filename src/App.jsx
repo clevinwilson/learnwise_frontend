@@ -7,6 +7,8 @@ import OtpPage from './pages/OtpPage';
 import SignupPage from './pages/SignupPage';
 import PrivateRoutes from './utils/PrivateRoutes';
 import 'react-toastify/dist/ReactToastify.css';
+import AdminLogin from './pages/AdminLogin';
+import DashboardPage from './pages/DashboardPage'
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route element={<HomePage/>} path='/' />
         <Route element={<OtpPage/>} path='/otp' />
         <Route element={<LoginPage />} path='/login' />
+        <Route element={<AdminLogin />} path='/admin/login' />
+        <Route element={<DashboardPage />} path='/admin/dashboard' />
       </Routes>
     </BrowserRouter>
 

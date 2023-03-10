@@ -8,7 +8,7 @@ import { setUserDetails } from "../../Redux/Features/userSlice";
 
 
 
-function Login() {
+function Login(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loginData, setLoginData] = useState({
@@ -24,8 +24,7 @@ function Login() {
 
     const handleSubmit=async()=>{
         try{
-            console.log(loginData);
-            var { data } = await axiosInstance.post(
+            const { data } = await axiosInstance.post(
                 "/login",
                 {
                     ...loginData,
@@ -55,11 +54,26 @@ function Login() {
             alert(err)
         }
     }
+
+    const handleAdminSubmit=async()=>{
+        try{
+            const { data } = await axiosInstance.post(
+                "/admin/login",
+                {
+                    ...loginData,
+                }
+            );
+
+            console.log(data);
+        }catch(err){
+            alert(err)
+        }
+    }
   return (
       <section className='section-box'>
           <form action="">
               <div className='grid-cols-1  form-box p-10'>
-                  <h2 className='text-center text-2xl font-medium pb-8'>Login</h2>
+                  <h2 className='text-center text-2xl font-medium pb-8'>{props.admin ? "Admin" : " "} Login</h2>
 
                   <div class="relative mb-6" data-te-input-wrapper-init>
                       <input
@@ -87,26 +101,32 @@ function Login() {
                  
                   <div class="text-center ">
                       <button className='form-btn mt-2 font-medium rounded'
-                          onClick={handleSubmit}
+                          onClick={props.admin ? handleAdminSubmit : handleSubmit}
                           type="button">
                           Login
                       </button>
 
                      
 
-                      <div className='flex justify-center success-box-border rounded p-2 mt-8'>
-                          <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
-                          <p className='ml-4'>Google</p>
+                      {props.admin?
+                      ""
+                      :
+                      <div>
+                              <div className='flex justify-center success-box-border rounded p-2 mt-8'>
+                                  <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
+                                  <p className='ml-4'>Google</p>
+                              </div>
+                              <Link to={'/signup'}>
+                                  <p class="mt-4 mb-0 pt-1 text-sm ">
+                                      Don't have an account ?
+                                      <a
+                                          href="#!"
+                                          class="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+                                      > Register</a>
+                                  </p>
+                              </Link>
                       </div>
-                     <Link to={'/signup'}>
-                          <p class="mt-4 mb-0 pt-1 text-sm ">
-                              Don't have an account ?
-                              <a
-                                  href="#!"
-                                  class="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                              > Register</a>
-                          </p>
-                     </Link>
+                      }
                   </div>
               </div>
           </form>
