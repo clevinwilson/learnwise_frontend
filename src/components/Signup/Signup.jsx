@@ -3,12 +3,15 @@ import './Signup.css';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
 import TextField from '../TextField/TextField';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import axiosInstance from '../../axios/axios';
+import 'boxicons/css/boxicons.min.css';
+import Button from '../button/LoadingButton';
 
 function Signup() {
 
   const [errorMessage,setErrorMessage]=useState(false)
+  const [loading, setLoading] = useState(false);
 
   const navigate=useNavigate();
 
@@ -36,6 +39,7 @@ function Signup() {
     },
     validationSchema:validate,
     onSubmit: async (values) => {
+       setLoading(!loading);
       const { data } = await axiosInstance.post("/signup",
         {
           ...values,
@@ -44,6 +48,7 @@ function Signup() {
       if(data.status){
         navigate("/otp");
       }else{
+         setLoading(false);
         setErrorMessage(data.message)
       }
     }
@@ -160,23 +165,28 @@ function Signup() {
             </div>
 
             <div className="text-center ">
-              <button className='form-btn mt-2 font-medium rounded'
-              onClick={formik.handleSubmit}
-                type="button">
-                Sign up
-              </button>
+             
 
+              <div className='flex justify-center items-center'>
+                <Button loading={loading}
+                  onClick={() => formik.handleSubmit()}>
+                  Sign up
+                </Button>
+
+              </div>
               <div className='flex justify-center success-box-border rounded p-2 mt-8'>
                 <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
                 <p className='ml-4'>Google</p>
               </div>
-              <p className="mt-4 mb-0 pt-1 text-sm ">
-                Already On learnwise ? Log in
-                <a
-                  href="#!"
-                  className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                > Log in</a>
-              </p>
+             <Link to={'/login'}>
+                <p className="mt-4 mb-0 pt-1 text-sm ">
+                  Already On learnwise ? Log in
+                  <a
+                    href="#!"
+                    className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+                  > Log in</a>
+                </p>
+             </Link>
             </div>
           </div>
         </form>

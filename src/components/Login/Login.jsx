@@ -1,5 +1,7 @@
-import React from 'react';
-import './Login.scss'
+import React,{useState} from 'react';
+import './Login.scss';
+import {useNavigate,Link} from 'react-router-dom';
+
 
 function Login() {
   return (
@@ -40,17 +42,21 @@ function Login() {
                           Login
                       </button>
 
+                     
+
                       <div className='flex justify-center success-box-border rounded p-2 mt-8'>
                           <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
                           <p className='ml-4'>Google</p>
                       </div>
-                      <p class="mt-4 mb-0 pt-1 text-sm ">
-                          Don't have an account ?
-                          <a
-                              href="#!"
-                              class="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                          > Register</a>
-                      </p>
+                     <Link to={'/signup'}>
+                          <p class="mt-4 mb-0 pt-1 text-sm ">
+                              Don't have an account ?
+                              <a
+                                  href="#!"
+                                  class="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+                              > Register</a>
+                          </p>
+                     </Link>
                   </div>
               </div>
           </form>

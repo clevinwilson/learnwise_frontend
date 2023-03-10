@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useFormik, Formik } from 'formik';
 import './Otp.scss';
 import axiosInstance from '../../axios/axios';
+import 'boxicons/css/boxicons.min.css';
+import Button from '../button/LoadingButton';
 
 function Otp() {
     const navigate = useNavigate();
@@ -10,6 +12,7 @@ function Otp() {
     function validate(values) {
 
         const errors = {};
+        
         if (Object.values(values.otp).some(data => data === "")) {
             errors.otp = "Please enter the otp";
         }
