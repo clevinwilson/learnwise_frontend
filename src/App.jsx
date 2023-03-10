@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import OtpPage from './pages/OtpPage';
 import SignupPage from './pages/SignupPage';
 import PrivateRoutes from './utils/PrivateRoutes';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (

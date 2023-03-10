@@ -1,9 +1,60 @@
 import React,{useState} from 'react';
 import './Login.scss';
 import {useNavigate,Link} from 'react-router-dom';
+import axiosInstance from '../../axios/axios';
+import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../../Redux/Features/userSlice";
+
 
 
 function Login() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [loginData, setLoginData] = useState({
+        email: "",
+        password: "",
+    });
+
+    const generateError = (err) => {
+        toast.error(err, {
+            position: "top-center",
+        });
+    };
+
+    const handleSubmit=async()=>{
+        try{
+            console.log(loginData);
+            var { data } = await axiosInstance.post(
+                "/login",
+                {
+                    ...loginData,
+                }
+            );
+
+            if(data){
+                if (data.created){
+                    console.log(data);
+                    dispatch(
+                        setUserDetails({
+                            name: data.user.firstName,
+                            id: data.user._id,
+                            email: data.user.email,
+                            token: data.token,
+                        })
+                    );
+                    navigate("/");
+                }else{
+                    generateError(data.message)
+                }
+            }else{
+                console.log(data);
+            }
+
+        }catch(err){
+            alert(err)
+        }
+    }
   return (
       <section className='section-box'>
           <form action="">
@@ -13,31 +64,30 @@ function Login() {
                   <div class="relative mb-6" data-te-input-wrapper-init>
                       <input
                           type="email"
-                          class="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 input-box-border"
+                          className="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200  dark:placeholder:text-violet-900  input-box-border"
                           id="exampleFormControlInput2"
+                          style={{ color: "black" }}
+                          name='email'
+                          onChange={(e) => { setLoginData({...loginData,email:e.target.value})}}
+
                           placeholder="Email address" />
-                      <label
-                          for="exampleFormControlInput2"
-                          class="input-box-lable pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
-                      >Email address
-                      </label>
                   </div>
 
                   <div class="relative mb-6" data-te-input-wrapper-init>
                       <input
                           type="password"
-                          class="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 input-box-border"
+                          className="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200  dark:placeholder:text-violet-900  input-box-border"
                           id="exampleFormControlInput2"
+                          style={{ color: "black" }}
+                          name='password'
+                          onChange={(e) => { setLoginData({...loginData,password:e.target.value}) }}
+
                           placeholder="Password" />
-                      <label
-                          for="exampleFormControlInput2"
-                          class="input-box-lable pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
-                      >Password
-                      </label>
                   </div>
                  
                   <div class="text-center ">
                       <button className='form-btn mt-2 font-medium rounded'
+                          onClick={handleSubmit}
                           type="button">
                           Login
                       </button>
@@ -60,6 +110,7 @@ function Login() {
                   </div>
               </div>
           </form>
+          <ToastContainer />
       </section>
   )
 }

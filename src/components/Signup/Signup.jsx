@@ -3,17 +3,17 @@ import './Signup.css';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
 import TextField from '../TextField/TextField';
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axiosInstance from '../../axios/axios';
 import 'boxicons/css/boxicons.min.css';
 import Button from '../button/LoadingButton';
 
 function Signup() {
 
-  const [errorMessage,setErrorMessage]=useState(false)
+  const [errorMessage, setErrorMessage] = useState(false)
   const [loading, setLoading] = useState(false);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const validate = Yup.object({
     firstName: Yup.string()
@@ -22,10 +22,10 @@ function Signup() {
     email: Yup.string()
       .email('Invalid email address')
       .required('Email is Required'),
-    password:Yup.string()
+    password: Yup.string()
       .min(6, 'Password must be at least 6 charaters')
       .required('Password is Required'),
-    confirmpassword:Yup.string()
+    confirmpassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required('Confirm Password is Required ')
   });
@@ -37,28 +37,28 @@ function Signup() {
       password: '',
       confirmpassword: ''
     },
-    validationSchema:validate,
+    validationSchema: validate,
     onSubmit: async (values) => {
-       setLoading(!loading);
+      setLoading(!loading);
       const { data } = await axiosInstance.post("/signup",
         {
           ...values,
         }
       );
-      if(data.status){
+      if (data.status) {
         navigate("/otp");
-      }else{
-         setLoading(false);
+      } else {
+        setLoading(false);
         setErrorMessage(data.message)
       }
     }
 
   })
 
-  const handleChange=(event)=>{
-    formik.setValues((prev) =>{
-      const formFields = {...prev};
-      formFields[event.target.name]=event.target.value;
+  const handleChange = (event) => {
+    formik.setValues((prev) => {
+      const formFields = { ...prev };
+      formFields[event.target.name] = event.target.value;
       return formFields
     })
   }
@@ -69,15 +69,15 @@ function Signup() {
         <form >
           <div className='grid-cols-1  form-box p-10'>
             <h2 className='text-center text-2xl font-medium pb-8'>Sign Up</h2>
-            {errorMessage ?<div className='text-red-500 pb-6 text-center'>{errorMessage}</div>:""}
+            {errorMessage ? <div className='text-red-500 pb-6 text-center'>{errorMessage}</div> : ""}
             <div className="relative mb-6" data-te-input-wrapper-init>
               <input
                 type="text"
                 className="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-violet-900  input-box-border"
-                style={{ color:"black"}}
+                style={{ color: "black" }}
                 id="firstName"
                 name='firstName'
-                onChange={() => { handleChange(event)}}
+                onChange={() => { handleChange(event) }}
                 placeholder="First Name" />
               {/* <label
                 for="firstName"
@@ -165,7 +165,7 @@ function Signup() {
             </div>
 
             <div className="text-center ">
-             
+
 
               <div className='flex justify-center items-center'>
                 <Button loading={loading}
@@ -178,15 +178,15 @@ function Signup() {
                 <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
                 <p className='ml-4'>Google</p>
               </div>
-             <Link to={'/login'}>
+              <Link to={'/login'}>
                 <p className="mt-4 mb-0 pt-1 text-sm ">
-                  Already On learnwise ? Log in
+                  Already On learnwise ?
                   <a
                     href="#!"
                     className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
                   > Log in</a>
                 </p>
-             </Link>
+              </Link>
             </div>
           </div>
         </form>
