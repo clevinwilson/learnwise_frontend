@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Signup.css';
-import { useFormik, Formik, ErrorMessage } from 'formik';
+import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
 import TextField from '../TextField/TextField';
+import { useNavigate } from "react-router-dom";
+import axiosInstance from '../../axios/axios';
 
 function Signup() {
+
+  const [errorMessage,setErrorMessage]=useState(false)
+
+  const navigate=useNavigate();
+
   const validate = Yup.object({
     firstName: Yup.string()
       .max(15, 'Must be 15 characters or less')
@@ -28,14 +35,22 @@ function Signup() {
       confirmpassword: ''
     },
     validationSchema:validate,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const { data } = await axiosInstance.post("/signup",
+        {
+          ...values,
+        }
+      );
+      if(data.status){
+        navigate("/otp");
+      }else{
+        setErrorMessage(data.message)
+      }
     }
 
   })
 
   const handleChange=(event)=>{
-    console.log(event.target.value);
     formik.setValues((prev) =>{
       const formFields = {...prev};
       formFields[event.target.name]=event.target.value;
@@ -49,11 +64,11 @@ function Signup() {
         <form >
           <div className='grid-cols-1  form-box p-10'>
             <h2 className='text-center text-2xl font-medium pb-8'>Sign Up</h2>
-
-            <div class="relative mb-6" data-te-input-wrapper-init>
+            {errorMessage ?<div className='text-red-500 pb-6 text-center'>{errorMessage}</div>:""}
+            <div className="relative mb-6" data-te-input-wrapper-init>
               <input
                 type="text"
-                class="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-violet-900  input-box-border"
+                className="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-violet-900  input-box-border"
                 style={{ color:"black"}}
                 id="firstName"
                 name='firstName'
@@ -85,10 +100,10 @@ function Signup() {
               </label>
             </div> */}
 
-            <div class="relative mb-6" data-te-input-wrapper-init>
+            <div className="relative mb-6" data-te-input-wrapper-init>
               <input
                 type="email"
-                class="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200  dark:placeholder:text-violet-900  input-box-border"
+                className="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200  dark:placeholder:text-violet-900  input-box-border"
                 id="exampleFormControlInput2"
                 style={{ color: "black" }}
                 name='email'
@@ -105,7 +120,7 @@ function Signup() {
               ) : null}
             </div>
 
-            <div class="relative mb-6" data-te-input-wrapper-init>
+            <div className="relative mb-6" data-te-input-wrapper-init>
               <input
                 type="password"
                 className="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200  dark:placeholder:text-violet-900  input-box-border"
@@ -124,10 +139,10 @@ function Signup() {
                 <div className='text-red-500'>{formik.errors.password}</div>
               ) : null}
             </div>
-            <div class="relative mb-6" data-te-input-wrapper-init>
+            <div className="relative mb-6" data-te-input-wrapper-init>
               <input
                 type="password"
-                class="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200  dark:placeholder:text-violet-900  input-box-border"
+                className="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200  dark:placeholder:text-violet-900  input-box-border"
                 id="exampleFormControlInput2"
                 style={{ color: "black" }}
                 name='confirmpassword'
@@ -144,7 +159,7 @@ function Signup() {
               ) : null}
             </div>
 
-            <div class="text-center ">
+            <div className="text-center ">
               <button className='form-btn mt-2 font-medium rounded'
               onClick={formik.handleSubmit}
                 type="button">
@@ -155,11 +170,11 @@ function Signup() {
                 <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
                 <p className='ml-4'>Google</p>
               </div>
-              <p class="mt-4 mb-0 pt-1 text-sm ">
+              <p className="mt-4 mb-0 pt-1 text-sm ">
                 Already On learnwise ? Log in
                 <a
                   href="#!"
-                  class="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+                  className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
                 > Log in</a>
               </p>
             </div>

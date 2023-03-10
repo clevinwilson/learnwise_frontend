@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import { useFormik, Formik } from 'formik';
-import './Otp.scss'
+import './Otp.scss';
+import axiosInstance from '../../axios/axios';
 
 function Otp() {
+    const navigate = useNavigate();
 
     function validate(values) {
+
         const errors = {};
         if (Object.values(values.otp).some(data => data === "")) {
             errors.otp = "Please enter the otp";
         }
-
         if (errors.otp) {
             Object.values(values.otp).map((value, index) => {
                 inputRef.current[index].classList.add('input-box-error')
@@ -19,9 +22,6 @@ function Otp() {
                 inputRef.current[index].classList.remove('input-box-error')
             })
         }
-
-
-
         return errors;
 
     }
@@ -32,10 +32,23 @@ function Otp() {
         },
         validate,
         onSubmit: (values) => {
-            console.log(values.otp.join(""));
+            handleSubmit(values)
         }
 
     })
+
+    const handleSubmit=(values)=>{
+        axiosInstance.post("/otp",
+            {
+                otp: values.otp.join(""),
+            },
+        ).then((response) => {
+            console.log(response.data);
+            if (response.data.status) {
+                navigate("/login")
+            }
+        })
+    }
 
     const inputRef = useRef({});
     const [otp, setOtp] = useState({
@@ -51,7 +64,7 @@ function Otp() {
 
         inputRef.current[0].addEventListener("paste", pasteText);
 
-        return () => inputRef.current[0].removeEventListener("paste", pasteText)
+        // return () => inputRef.current[0].removeEventListener("paste", pasteText)
     }, [])
 
     function pasteText(event) {
@@ -119,7 +132,7 @@ function Otp() {
             <form action="">
                 <div className='grid-cols-1  form-box p-7'>
                     <h2 style={{ color: "#6255a4" }} className='text-center text-2xl font-medium pb-5'>Enter OTP</h2>
-                    <p className='text-center pb-6'>We sent you a verification code</p>
+                    <p className='text-center pb-6'>We sent you a verification code to your email</p>
                     <Formik>
                         <div className='text-center flext justify-center'>
                             {renderInput()}

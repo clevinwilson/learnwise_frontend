@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import OtpPage from './pages/OtpPage';
 import SignupPage from './pages/SignupPage';
@@ -12,8 +13,8 @@ function App() {
       <Routes>
         <Route element={<PrivateRoutes />} >
           <Route element={<SignupPage />} path='/signup' />
-
         </Route>
+        <Route element={<HomePage/>} path='/' />
         <Route element={<OtpPage/>} path='/otp' />
         <Route element={<LoginPage />} path='/login' />
       </Routes>
