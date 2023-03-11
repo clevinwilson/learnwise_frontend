@@ -1,14 +1,28 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './Sidebar.scss';
 import { useDispatch,useSelector} from 'react-redux';
 import { setUserDetails } from '../../Redux/Features/userSlice';
+import { setSidebar } from '../../Redux/Features/adminSidebarToogle';
 
 
 function Sidebar() {
-  const sidebarToogle = useSelector((state) => state.adminSidebarToogle)
-  console.log(sidebarToogle,'sidebar');
+  const sidebarToogle = useSelector((state) => state.adminSidebarToogle);
+  const dispatch=useDispatch();
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 900) {
+        dispatch(setSidebar(true))
+      } 
+    }
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   return (
-    <div className={`${sidebarToogle.sidebar ? "sidebar " : "close-sidebar "}  fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r`}>
+    <div className={`${sidebarToogle.sidebar ? "sidebar " : "close-sidebar "} z-40  fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r`}>
           <div className="flex items-center justify-center h-14 border-b">
             <div>Learnwise</div>
           </div>
