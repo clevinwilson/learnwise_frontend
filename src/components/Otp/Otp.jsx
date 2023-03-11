@@ -4,7 +4,7 @@ import { useFormik, Formik } from 'formik';
 import './Otp.scss';
 import axiosInstance from '../../axios/axios';
 import 'boxicons/css/boxicons.min.css';
-import Button from '../button/LoadingButton';
+import LoadingButton from '../LoadingButton/LoadingButton';
 
 function Otp() {
     const navigate = useNavigate();

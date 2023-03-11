@@ -1,12 +1,14 @@
 import React from 'react';
-import './Sidebar.scss'
+import './Sidebar.scss';
+import { useDispatch,useSelector} from 'react-redux';
+import { setUserDetails } from '../../Redux/Features/userSlice';
 
 
 function Sidebar() {
+  const sidebarToogle = useSelector((state) => state.adminSidebarToogle)
+  console.log(sidebarToogle,'sidebar');
   return (
-    <div>
-      <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
-        <div className="sidebar fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r">
+    <div className={`${sidebarToogle.sidebar ? "sidebar " : "close-sidebar "}  fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r`}>
           <div className="flex items-center justify-center h-14 border-b">
             <div>Learnwise</div>
           </div>
@@ -108,8 +110,6 @@ function Sidebar() {
             </ul>
           </div>
         </div>
-      </div>
-    </div>
   )
 }
 

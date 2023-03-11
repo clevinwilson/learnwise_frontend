@@ -6,7 +6,7 @@ import TextField from '../TextField/TextField';
 import { useNavigate, Link } from "react-router-dom";
 import axiosInstance from '../../axios/axios';
 import 'boxicons/css/boxicons.min.css';
-import Button from '../button/LoadingButton';
+import LoadingButton from '../LoadingButton/LoadingButton';
 
 function Signup() {
 
@@ -168,10 +168,10 @@ function Signup() {
 
 
               <div className='flex justify-center items-center'>
-                <Button loading={loading}
+                <LoadingButton loading={loading}
                   onClick={() => formik.handleSubmit()}>
                   Sign up
-                </Button>
+                </LoadingButton>
 
               </div>
               <div className='flex justify-center success-box-border rounded p-2 mt-8'>

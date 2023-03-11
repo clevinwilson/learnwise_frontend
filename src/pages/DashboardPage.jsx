@@ -1,9 +1,14 @@
-import React from 'react';
-import Dashboard from "../components/Sidebar/Sidebar"
+import React, { Fragment } from 'react';
+import Sidebar from "../components/Sidebar/Sidebar";
+import AdminHeader from '../components/AdminHeader/AdminHeader';
+
 
 function DashboardPage() {
   return (
-    <Dashboard/>
+    <div className='relative'>
+      <Sidebar />
+      <AdminHeader />
+    </div>
   )
 }
 
