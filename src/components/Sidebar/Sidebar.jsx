@@ -10,8 +10,12 @@ function Sidebar() {
   const dispatch=useDispatch();
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth < 900) {
+      if (window.innerWidth > 760) {
         dispatch(setSidebar(true))
+      }
+      if(window.innerWidth < 400){
+        dispatch(setSidebar(false))
+
       } 
     }
 
@@ -22,7 +26,7 @@ function Sidebar() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   return (
-    <div className={`${sidebarToogle.sidebar ? "sidebar " : "close-sidebar "} z-40  fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r`}>
+    <div className={`${sidebarToogle.sidebar ? "sidebar " : "close-sidebar admin-page-inclose "} z-40  fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r`}>
           <div className="flex items-center justify-center h-14 border-b">
             <div>Learnwise</div>
           </div>
