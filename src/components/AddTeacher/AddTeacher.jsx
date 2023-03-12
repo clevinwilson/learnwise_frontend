@@ -6,6 +6,7 @@ import axiosInstance from '../../axios/axios';
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Redux/Features/userSlice";
 import { setAdminDetails } from '../../Redux/Features/adminSlice';
+import { ToastContainer, toast } from "react-toastify";
 
 function AddTeacher() {
     const {admin}=useSelector((state)=>state);
@@ -31,6 +32,18 @@ function AddTeacher() {
             .required('First Name Required'),
     });
 
+    const generateError = (err) => {
+        toast.error(err, {
+            position: "top-center",
+        });
+    };
+
+    const successMessaage=(message)=>{
+        toast.success(message,{
+            position:'top-center'
+        })
+    }
+
     const formik=useFormik({
         initialValues:{
             firstName:"",
@@ -41,15 +54,19 @@ function AddTeacher() {
         },
         validationSchema: validate,
         onSubmit:async(values)=>{
-            console.log(values);
             const { data } = await axiosInstance.post("/admin/add-teacher",
                 {...values},
                 { headers }
             );
+
             if (data.created) {
                 console.log(data);
+                successMessaage(data.message)
             } else {
                 console.log(data);
+
+                generateError(data.message)
+                
                 // setLoading(false);
                 // setErrorMessage(data.message)
             }
@@ -69,7 +86,7 @@ function AddTeacher() {
             <div className='mb-4 pb-2 form-title-box ' >
                 <span className='text-base font-semibold text-violet-700'>Add Teacher</span>
             </div>
-            <form class="w-full max-w-lg mt-10">
+            <form class="w-full  mt-10">
                 <div class="flex flex-wrap -mx-3  mb-6">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
@@ -148,6 +165,8 @@ function AddTeacher() {
                     </div>
                 </div>
             </form>
+            <ToastContainer />
+
         </div>
     )
 }

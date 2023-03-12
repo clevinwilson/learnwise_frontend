@@ -104,6 +104,7 @@ function Login(props) {
                         token: data.token
                     })
                 )
+                console.log(data);
             }else{
                 generateError(data.message)
             }
