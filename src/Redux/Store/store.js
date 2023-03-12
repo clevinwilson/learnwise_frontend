@@ -1,12 +1,17 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import userReducer from '../Features/userSlice';
+import userSlice from '../Features/userSlice';
 import adminSidebarToogle from '../Features/adminSidebarToogle';
+import adminSlice from '../Features/adminSlice';
+import teacherSlice from '../Features/teacherSlice';
+
 
 
 export default configureStore({
     reducer: {
-        user: userReducer,
-        adminSidebarToogle: adminSidebarToogle
+        user: userSlice,
+        adminSidebarToogle: adminSidebarToogle,
+        admin:adminSlice,
+        teacher:teacherSlice
     },
    
 })

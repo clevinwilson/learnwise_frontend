@@ -24,7 +24,7 @@ const userSlice = createSlice({
             state.id = null;
             state.email = null;
             state.image = null;
-            state.tocken = null;
+            state.token = null;
         }
     }
 })

@@ -3,9 +3,14 @@ import LoadingButton from '../LoadingButton/LoadingButton';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
 import axiosInstance from '../../axios/axios';
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../../Redux/Features/userSlice";
+import { setAdminDetails } from '../../Redux/Features/adminSlice';
 
 function AddTeacher() {
+    const {admin}=useSelector((state)=>state);
     const [loading, setLoading] = useState(false);
+    const headers = { Authorization: `Bearer ${admin.token}` };
 
     const validate = Yup.object({
         firstName: Yup.string()
@@ -38,9 +43,8 @@ function AddTeacher() {
         onSubmit:async(values)=>{
             console.log(values);
             const { data } = await axiosInstance.post("/admin/add-teacher",
-                {
-                    ...values,
-                }
+                {...values},
+                { headers }
             );
             if (data.created) {
                 console.log(data);

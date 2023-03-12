@@ -3,11 +3,13 @@ import './Sidebar.scss';
 import { useDispatch,useSelector} from 'react-redux';
 import { setUserDetails } from '../../Redux/Features/userSlice';
 import { setSidebar } from '../../Redux/Features/adminSidebarToogle';
+import {useNavigate} from 'react-router-dom'
 
 
 function Sidebar() {
   const sidebarToogle = useSelector((state) => state.adminSidebarToogle);
   const dispatch=useDispatch();
+  const navigate=useNavigate()
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth > 760) {
@@ -46,15 +48,16 @@ function Sidebar() {
                 </a>
               </li>
               <li>
-                <a href="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
-                  <span className="inline-flex justify-center items-center ml-4">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
-                  </span>
-                  <span className="ml-2 sidebar-label text-sm tracking-wide truncate">Inbox</span>
+            <a onClick={() => { navigate('/admin/addTeacher')}} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 ml-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+
+                  <span className="ml-2 sidebar-label text-sm tracking-wide truncate">Add Teacher</span>
                   <span className="sidebar-label px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-indigo-500 bg-indigo-50 rounded-full">New</span>
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
                   <span className="inline-flex justify-center items-center ml-4">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
@@ -70,7 +73,7 @@ function Sidebar() {
                   <span className="ml-2 sidebar-label text-sm tracking-wide truncate">Notifications</span>
                   <span className="px-2 sidebar-label py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full">1.2k</span>
                 </a>
-              </li>
+              </li> */}
               <li className="px-3">
                 <div className="flex flex-row items-center h-8">
                   <div className="text-sm  font-light tracking-wide text-gray-500">Tasks</div>

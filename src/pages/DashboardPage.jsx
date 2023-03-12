@@ -10,7 +10,7 @@ function DashboardPage() {
       <Sidebar />
       <AdminHeader />
       <div className='admin-page p-3 ' >
-        <Form />
+        Dashboard
       </div>
       
     </div>

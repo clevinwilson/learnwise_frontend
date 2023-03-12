@@ -5,10 +5,13 @@ import axiosInstance from '../../axios/axios';
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Redux/Features/userSlice";
+import { setAdminDetails } from '../../Redux/Features/adminSlice';
+import { setTeacherDetails } from '../../Redux/Features/teacherSlice';
 
 
 
 function Login(props) {
+    const { teacher } = useSelector((state) => state)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loginData, setLoginData] = useState({
@@ -32,7 +35,7 @@ function Login(props) {
             );
 
             if(data){
-                if (data.created){
+                if (data.login){
                     console.log(data);
                     dispatch(
                         setUserDetails({
@@ -51,7 +54,7 @@ function Login(props) {
             }
 
         }catch(err){
-            alert(err)
+            generateError("something went wrong in server side");
         }
     }
 
@@ -63,16 +66,26 @@ function Login(props) {
                     ...loginData,
                 }
             );
-
-            console.log(data);
+            if(data.login){
+                dispatch(
+                    setAdminDetails({
+                        id: data.admin._id,
+                        login: data.login,
+                        token: data.token
+                    })
+                ) 
+                navigate('/admin/addTeacher')
+            }else{
+                generateError(data.message)
+            }
         }catch(err){
-            alert(err)
+            generateError(err)
+
         }
     }
 
     const handelTeacherSubmit=async()=>{
         try{
-
             const {data} =await axiosInstance.post(
                 "/teacher/login",
                 {
@@ -80,12 +93,23 @@ function Login(props) {
                 }
             );
 
-            if(data){
-                console.log(data);
+            if(data.login){
+                dispatch(
+                    setTeacherDetails({
+                        id: data.teacher._id,
+                        email: data.teacher.email,
+                        firstName: data.teacher.firstName,
+                        lastName: data.teacher.lastName,
+                        login: data.login,
+                        token: data.token
+                    })
+                )
+            }else{
+                generateError(data.message)
             }
 
         }catch(err){
-            alert(err);
+            generateError("something went wrong in server side")
         }
     }
   return (
