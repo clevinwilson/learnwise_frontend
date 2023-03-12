@@ -69,11 +69,30 @@ function Login(props) {
             alert(err)
         }
     }
+
+    const handelTeacherSubmit=async()=>{
+        try{
+
+            const {data} =await axiosInstance.post(
+                "/teacher/login",
+                {
+                    ...loginData
+                }
+            );
+
+            if(data){
+                console.log(data);
+            }
+
+        }catch(err){
+            alert(err);
+        }
+    }
   return (
       <section className='section-box'>
           <form action="">
               <div className='grid-cols-1  form-box p-10'>
-                  <h2 className='text-center text-2xl font-medium pb-8'>{props.admin ? "Admin" : " "} Login</h2>
+                  <h2 className='text-center text-2xl font-medium pb-8'>{props.admin ? "Admin" : props.teacher ? "Teacher" : " "} Login</h2>
 
                   <div class="relative mb-6" data-te-input-wrapper-init>
                       <input
@@ -101,14 +120,14 @@ function Login(props) {
                  
                   <div class="text-center ">
                       <button className='form-btn mt-2 font-medium rounded'
-                          onClick={props.admin ? handleAdminSubmit : handleSubmit}
+                          onClick={props.admin ? handleAdminSubmit : props.teacher ? handelTeacherSubmit: handleSubmit}
                           type="button">
                           Login
                       </button>
 
                      
 
-                      {props.admin?
+                      {props.admin || props.teacher?
                       ""
                       :
                       <div>

@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminLogin from './pages/AdminLogin';
 import DashboardPage from './pages/DashboardPage'
 import AddTeacherPage from './pages/AddTeacherPage';
+import TeacherLoginPage from './pages/TeacherLoginPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route element={<AdminLogin />} path='/admin/login' />
         <Route element={<DashboardPage />} path='/admin/dashboard' />
         <Route element={<AddTeacherPage/>} path='/admin/addTeacher' />
+        <Route element={<TeacherLoginPage/>} path='/teacher/login' />
       </Routes>
     </BrowserRouter>
 

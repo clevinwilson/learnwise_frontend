@@ -17,6 +17,10 @@ function AddTeacher() {
         email: Yup.string()
             .email('Invalid email address')
             .required('Email is Required'),
+        phone: Yup.string()
+            .max(10, 'Please enter a valid phone number')
+            .min(10, "Please enter a valid phone number")
+            .required('Phone Number is Required'),
         place: Yup.string()
             .max(15, 'Must be 15 characters or less')
             .required('First Name Required'),
@@ -27,6 +31,7 @@ function AddTeacher() {
             firstName:"",
             lastName:"",
             email:"",
+            phone:"",
             place:""
         },
         validationSchema: validate,
@@ -99,6 +104,20 @@ function AddTeacher() {
                             <p class="text-red-500 text-xs italic">{formik.errors.email}</p>
                         ) : null}
                         
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                            Phone Number
+                        </label>
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-email" name='phone'
+                            onChange={(e) => { handleChange(e) }}
+                            type="text" placeholder="0000 000 000" />
+                        {formik.touched.phone && formik.errors.phone ? (
+                            <p class="text-red-500 text-xs italic">{formik.errors.phone}</p>
+                        ) : null}
+
                     </div>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
