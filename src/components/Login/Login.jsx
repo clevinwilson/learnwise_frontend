@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Redux/Features/userSlice";
 import { setAdminDetails } from '../../Redux/Features/adminSlice';
 import { setTeacherDetails } from '../../Redux/Features/teacherSlice';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 
 
 
 function Login(props) {
+    const clientId = "726839815908-gh4t232ds4vvnbv7mmihgfocpq2hjr4g.apps.googleusercontent.com"
     const { teacher } = useSelector((state) => state)
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,12 +27,47 @@ function Login(props) {
         });
     };
 
+
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) =>{
+            console.log(codeResponse);
+            axiosInstance.post("/login/google", { ...codeResponse }).then((response) => {
+                console.log(response);
+
+                dispatch(
+                    setUserDetails({
+                        name: response.data.user.firstName,
+                        id: response.data.user._id,
+                        email: response.data.user.email,
+                        image: response.data.user.picture,
+                        token: response.data.token,
+                    })
+                );
+                navigate("/");
+
+            }).catch((err) => { generateError("Something went wrong please reload the page") } )
+        } ,
+        onError: (error) => {
+            console.log('Login Failed:', error);
+            generateError("Login Failed") 
+        }
+    });
+
+
     const googleAuth = () => {
-        window.open(
-            `http://localhost:3000/auth/google/callback`,
-            "_self"
-        )
+        
+        // const googleLoginURL = "http://localhost:3000/login/google"
+
+        // window.open(
+        //     googleLoginURL,
+        //     "_blank",
+        //     "width=500,height=600"
+        // )
+
+       
     }
+
+
 
     const handleSubmit = async () => {
         try {
@@ -58,6 +95,8 @@ function Login(props) {
                 }
             } else {
                 console.log(data);
+                generateError("Error")
+
             }
 
         } catch (err) {
@@ -164,11 +203,12 @@ function Login(props) {
                             :
                             <div>
                                 <div className='flex justify-center success-box-border rounded p-2 mt-8'
-                                    onClick={googleAuth}
+                                    onClick={login}
                                 >
                                     <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
                                     <p className='ml-4'>Google</p>
                                 </div>
+                                
                                 <Link to={'/signup'}>
                                     <p class="mt-4 mb-0 pt-1 text-sm ">
                                         Don't have an account ?
