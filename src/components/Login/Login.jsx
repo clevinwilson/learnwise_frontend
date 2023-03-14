@@ -30,22 +30,26 @@ function Login(props) {
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) =>{
-            console.log(codeResponse);
-            axiosInstance.post("/login/google", { ...codeResponse }).then((response) => {
-                console.log(response);
+            try{
+                console.log(codeResponse);
+                axiosInstance.post("/login/google", { ...codeResponse }).then((response) => {
+                    console.log(response);
 
-                dispatch(
-                    setUserDetails({
-                        name: response.data.user.firstName,
-                        id: response.data.user._id,
-                        email: response.data.user.email,
-                        image: response.data.user.picture,
-                        token: response.data.token,
-                    })
-                );
-                navigate("/");
+                    dispatch(
+                        setUserDetails({
+                            name: response.data.user.firstName,
+                            id: response.data.user._id,
+                            email: response.data.user.email,
+                            image: response.data.user.picture,
+                            token: response.data.token,
+                        })
+                    );
+                    navigate("/");
 
-            }).catch((err) => { generateError("Something went wrong please reload the page") } )
+                }).catch((err) => { generateError("Something went wrong please reload the page") })
+            }catch(err){
+                generateError("Something went wrong please reload the page")
+            }
         } ,
         onError: (error) => {
             console.log('Login Failed:', error);
