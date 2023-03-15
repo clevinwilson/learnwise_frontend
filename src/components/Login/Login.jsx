@@ -148,6 +148,7 @@ function Login(props) {
             );
 
             if (data.login) {
+                localStorage.setItem('teacherJwtToken', data.token);
                 dispatch(
                     setTeacherDetails({
                         id: data.teacher._id,
@@ -158,6 +159,7 @@ function Login(props) {
                         token: data.token
                     })
                 )
+                navigate('/teacher/dashboard')
                 console.log(data);
             } else {
                 generateError(data.message)
