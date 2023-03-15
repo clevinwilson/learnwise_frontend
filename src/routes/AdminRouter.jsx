@@ -8,7 +8,7 @@ import PrivateRoutes from '../utils/PrivateRoutes';
 function AdminRouter() {
   return (
     <Routes>
-      <Route element={<PrivateRoutes />} >
+      <Route element={<PrivateRoutes admin={true} />} >
         <Route path='/admin/dashboard' element={<DashboardPage />} />
         <Route path='/admin/addTeacher' element={<AddTeacherPage />} />
       </Route>

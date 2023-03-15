@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Redux/Features/userSlice";
 import { setAdminDetails } from '../../Redux/Features/adminSlice';
 import { setTeacherDetails } from '../../Redux/Features/teacherSlice';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
+import { login as dfdfdfd } from '../../services/user';
 
 
 
 function Login(props) {
-    const clientId = "726839815908-gh4t232ds4vvnbv7mmihgfocpq2hjr4g.apps.googleusercontent.com"
+
+   
+
     const { teacher } = useSelector((state) => state)
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -117,6 +120,7 @@ function Login(props) {
                 }
             );
             if (data.login) {
+                localStorage.setItem('adminJwtToken', data.token);
                 dispatch(
                     setAdminDetails({
                         id: data.admin._id,
@@ -169,11 +173,11 @@ function Login(props) {
                 <div className='grid-cols-1  form-box p-10'>
                     <h2 className='text-center text-2xl font-medium pb-8'>{props.admin ? "Admin" : props.teacher ? "Teacher" : " "} Login</h2>
 
-                    <div class="relative mb-6" data-te-input-wrapper-init>
+                    <div className="relative mb-6" data-te-input-wrapper-init>
                         <input
                             type="email"
                             className="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200  dark:placeholder:text-violet-900  input-box-border"
-                            id="exampleFormControlInput2"
+                            id="email"
                             style={{ color: "black" }}
                             name='email'
                             onChange={(e) => { setLoginData({ ...loginData, email: e.target.value }) }}
@@ -181,11 +185,11 @@ function Login(props) {
                             placeholder="Email address" />
                     </div>
 
-                    <div class="relative mb-6" data-te-input-wrapper-init>
+                    <div className="relative mb-6" data-te-input-wrapper-init>
                         <input
                             type="password"
                             className="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200  dark:placeholder:text-violet-900  input-box-border"
-                            id="exampleFormControlInput2"
+                            id="password"
                             style={{ color: "black" }}
                             name='password'
                             onChange={(e) => { setLoginData({ ...loginData, password: e.target.value }) }}
@@ -193,7 +197,7 @@ function Login(props) {
                             placeholder="Password" />
                     </div>
 
-                    <div class="text-center ">
+                    <div className="text-center ">
                         <button className='form-btn mt-2 font-medium rounded'
                             onClick={props.admin ? handleAdminSubmit : props.teacher ? handelTeacherSubmit : handleSubmit}
                             type="button">
@@ -214,11 +218,11 @@ function Login(props) {
                                 </div>
                                 
                                 <Link to={'/signup'}>
-                                    <p class="mt-4 mb-0 pt-1 text-sm ">
+                                    <p className="mt-4 mb-0 pt-1 text-sm ">
                                         Don't have an account ?
                                         <a
                                             href="#!"
-                                            class="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+                                            className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
                                         > Register</a>
                                     </p>
                                 </Link>

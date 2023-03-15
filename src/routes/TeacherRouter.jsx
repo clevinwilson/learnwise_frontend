@@ -7,7 +7,7 @@ import TeacherLoginPage from '../pages/TeacherLoginPage';
 function TeacherRouter() {
     return (
         <Routes>
-            <Route element={<PrivateRoutes />} >
+            <Route element={<PrivateRoutes teacher={true} />} >
 
             </Route>
             <Route element={<TeacherLoginPage />} path='/teacher/login' />

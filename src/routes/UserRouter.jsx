@@ -9,7 +9,7 @@ import PrivateRoutes from '../utils/PrivateRoutes';
 function UserRouter() {
   return (
     <Routes>
-      <Route element={<PrivateRoutes />} >
+      <Route element={<PrivateRoutes user={true} />} >
 
       </Route>
       <Route element={<HomePage />} path='/' />
