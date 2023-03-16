@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import LoadingButton from '../LoadingButton/LoadingButton';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
-import axiosInstance from '../../axios/axios';
-import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { addCourse } from '../../services/teacherApi';
 
 function AddCourse() {
     const [lesson, setLesson] = useState([]);
     const [chapter, setChapter] = useState("");
     const [course, setCourse] = useState([]);
+    const [image,setImage]=useState('')
 
     const [chapterDetails, setChapterDetails] = useState(null)
 
@@ -80,9 +80,6 @@ function AddCourse() {
         onSubmit: (values) => {
             setChapterDetails({ chapter: chapterDetails.chapter, lessons: [...chapterDetails.lessons, values] })
 
-            // setLesson([...lesson, values]);
-            // lessonFormik.setFieldValue('lessonName', '');
-            // lessonFormik.setFieldValue('videoUrl', '');
 
         }
     })
@@ -90,6 +87,7 @@ function AddCourse() {
     const formik = useFormik({
         initialValues: {
             name: "",
+            image:"",
             category: "",
             duration: "",
             language: "",
@@ -98,23 +96,16 @@ function AddCourse() {
         validationSchema: validate,
         onSubmit: async (values) => {
             console.log(values);
+            console.log(course);
+            console.log(image)
 
-            // const { data } = await axiosInstance.post("/admin/add-teacher",
-            //     { ...values },
-            //     { headers }
-            // );
-
-            // if (data.created) {
-            //     console.log(data);
-            //     successMessaage(data.message)
-            // } else {
-            //     console.log(data);
-
-            //     generateError(data.message)
-
-            //     // setLoading(false);
-            //     // setErrorMessage(data.message)
-            // }
+            addCourse(values,course,image)
+            .then((response)=>{
+                console.log(response);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
         }
 
     })
@@ -144,14 +135,42 @@ function AddCourse() {
     }
 
     return (
-        <div className='form-wrap w-3/3 mr-4'>
+        <div className='form-wrap w-3/3 mr-md-4'>
             <div className='mb-4 pb-4 form-title-box ' >
                 <span className='text-base font-semibold text-violet-700'>Add Course</span>
+            </div>
+            
+            <div className='mt-10'>
+                {image?
+                    <div className='flex items-center justify-center w-full '>
+                        <img style={{width:"400px"}} class="h-auto max-w-lg rounded-lg w-full" src={image ? URL.createObjectURL(image) : ""} alt="image description"></img>
+                </div>
+                :
+                <div>
+                    <div class="flex items-center justify-center w-full ">
+                            <div className='w-full lg:w-1/3  md:w-1/2 sm:w-1/1'>
+                            <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                    <p>Course thumbnail</p>
+                                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                </div>
+                                <input id="dropzone-file" type="file" className="hidden" required
+                                    onChange={(e) => {
+                                        setImage(e.target.files[0]);
+                                    }}
+                                />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+}
             </div>
             <form className="w-full  mt-10 p-1">
                 <div className="flex flex-wrap -mx-3  mb-3">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="name">
+                        <label className="block uppercase tracking-wide  text-violet-700 text-xs font-bold mb-2" htmlFor="name">
                             Name
                         </label>
                         <input className="border-gray-300  appearance-none block w-full bg-white text-gray-700 border  rounded py-3 
@@ -160,25 +179,25 @@ function AddCourse() {
                             name='name' placeholder="Course Name" />
 
                         {formik.touched.name && formik.errors.name ? (
-                            <p className="text-red-500 text-xs italic">{formik.errors.name}</p>
+                            <p className="text-red-500 text-xs ">{formik.errors.name}</p>
                         ) : null}
                     </div>
                     <div className="w-full md:w-1/2 px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="category">
+                        <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="category">
                             Category
                         </label>
                         <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category" name='category' type="text"
                             onChange={(e) => { handleChange(e) }}
                             placeholder="Category" />
                         {formik.touched.category && formik.errors.category ? (
-                            <p className="text-red-500 text-xs italic">{formik.errors.category}</p>
+                            <p className="text-red-500 text-xs ">{formik.errors.category}</p>
                         ) : null}
                     </div>
                 </div>
                 <div className="flex flex-wrap -mx-3  mb-3">
 
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="Duration">
+                        <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="Duration">
                             Duration
                         </label>
                         <input className="border-gray-300  appearance-none block w-full bg-white text-gray-700 border  rounded py-3 
@@ -187,26 +206,26 @@ function AddCourse() {
                             name='duration' placeholder="Course duration" />
 
                         {formik.touched.duration && formik.errors.duration ? (
-                            <p className="text-red-500 text-xs italic">{formik.errors.duration}</p>
+                            <p className="text-red-500 text-xs ">{formik.errors.duration}</p>
                         ) : null}
                     </div>
 
                     <div className="w-full md:w-1/2 px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="language">
+                        <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="language">
                             Language
                         </label>
                         <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="language" name='language' type="text"
                             onChange={(e) => { handleChange(e) }}
                             placeholder="language" />
                         {formik.touched.language && formik.errors.language ? (
-                            <p className="text-red-500 text-xs italic">{formik.errors.language}</p>
+                            <p className="text-red-500 text-xs ">{formik.errors.language}</p>
                         ) : null}
                     </div>
 
                 </div>
 
                 <div className='mb-4'>
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlfor="description">
+                    <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlfor="description">
                         Description
                     </label>
 
@@ -214,12 +233,12 @@ function AddCourse() {
                         onChange={(e) => { handleChange(e) }}
                     ></textarea>
                     {formik.touched.description && formik.errors.description ? (
-                        <p className="text-red-500 text-xs italic">{formik.errors.description}</p>
+                        <p className="text-red-500 text-xs ">{formik.errors.description}</p>
                     ) : null}
                 </div>
 
                 <div className='mt-7'>
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="addchapter">
+                    <label className="block uppercase tracking-wide text-violet-600 text-xs font-bold mb-2" htmlFor="addchapter">
                         Add Chapter
                     </label>
 
@@ -233,7 +252,7 @@ function AddCourse() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
 
-                            <span className='ml-3'>Add Chapter</span>
+                            <span className='ml-3 '>Add Chapter</span>
                         </button>
                     </div>
                 </div>
@@ -459,7 +478,7 @@ function AddCourse() {
                             <h5
                                 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
                                 id="editCourse">
-                                Add Chapter
+                                Edit Chapter
                             </h5>
 
                             <button
@@ -586,6 +605,7 @@ function AddCourse() {
                                             }))
 
                                             EditLessonFormik.resetForm();
+                                            successMessaage('Chapter Updated successfully')
                                         }}
                                             className='loading-btn form-btn mt-2 font-medium rounded' >
                                             <span className="txt">
