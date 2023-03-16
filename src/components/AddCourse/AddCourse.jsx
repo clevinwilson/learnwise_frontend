@@ -8,8 +8,10 @@ import { ToastContainer, toast } from "react-toastify";
 
 function AddCourse() {
     const [lesson, setLesson] = useState([]);
-    const [chapter,setChapter]=useState("");
-    const [course,setCourse]=useState([]);
+    const [chapter, setChapter] = useState("");
+    const [course, setCourse] = useState([]);
+
+    const [chapterDetails, setChapterDetails] = useState(null)
 
     const validateLesson = Yup.object({
         chapterName: Yup.string()
@@ -30,7 +32,7 @@ function AddCourse() {
             .required('Phone duration is Required'),
         language: Yup.string()
             .required('First language Required'),
-        description:Yup.string()
+        description: Yup.string()
             .required('First description Required'),
     });
 
@@ -46,9 +48,11 @@ function AddCourse() {
         })
     }
 
-    const addChapter=()=>{
-        setCourse([{...course,lessons:lesson} ]);
-        console.log(course,"courserrre");
+    const addChapter = () => {
+        setCourse([...course, { chapter, lessons: lesson }]);
+        setLesson([]);
+        successMessaage("Chapter Add successfull");
+        setChapter("");
     }
 
     const lessonFormik = useFormik({
@@ -59,7 +63,27 @@ function AddCourse() {
         },
         validationSchema: validateLesson,
         onSubmit: (values) => {
-            setLesson([...lesson,values])
+            setLesson([...lesson, values]);
+            lessonFormik.setFieldValue('lessonName', '');
+            lessonFormik.setFieldValue('videoUrl', '');
+
+        }
+    })
+
+    const EditLessonFormik = useFormik({
+        initialValues: {
+            chapterName: "",
+            lessonName: "",
+            videoUrl: ""
+        },
+        // validationSchema: validateLesson,
+        onSubmit: (values) => {
+            setChapterDetails({ chapter: chapterDetails.chapter, lessons: [...chapterDetails.lessons, values] })
+
+            // setLesson([...lesson, values]);
+            // lessonFormik.setFieldValue('lessonName', '');
+            // lessonFormik.setFieldValue('videoUrl', '');
+
         }
     })
 
@@ -68,7 +92,7 @@ function AddCourse() {
             name: "",
             category: "",
             duration: "",
-            language:"",
+            language: "",
             description: ""
         },
         validationSchema: validate,
@@ -110,87 +134,97 @@ function AddCourse() {
             return formFields;
         })
     }
+
+    const handEditleLessonChange = (e) => {
+        EditLessonFormik.setValues((prev) => {
+            const formFields = { ...prev };
+            formFields[e.target.name] = e.target.value;
+            return formFields;
+        })
+    }
+
     return (
-        <div className='form-wrap w-3/3'>
+        <div className='form-wrap w-3/3 mr-4'>
             <div className='mb-4 pb-4 form-title-box ' >
                 <span className='text-base font-semibold text-violet-700'>Add Course</span>
             </div>
-            <form class="w-full  mt-10 p-1">
-                <div class="flex flex-wrap -mx-3  mb-3">
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
+            <form className="w-full  mt-10 p-1">
+                <div className="flex flex-wrap -mx-3  mb-3">
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="name">
                             Name
                         </label>
-                        <input class="border-gray-300  appearance-none block w-full bg-white text-gray-700 border  rounded py-3 
+                        <input className="border-gray-300  appearance-none block w-full bg-white text-gray-700 border  rounded py-3 
                         px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="name" type="text"
                             onChange={(e) => { handleChange(e) }}
                             name='name' placeholder="Course Name" />
 
                         {formik.touched.name && formik.errors.name ? (
-                            <p class="text-red-500 text-xs italic">{formik.errors.name}</p>
+                            <p className="text-red-500 text-xs italic">{formik.errors.name}</p>
                         ) : null}
                     </div>
-                    <div class="w-full md:w-1/2 px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
+                    <div className="w-full md:w-1/2 px-3">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="category">
                             Category
                         </label>
-                        <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category" name='category' type="text"
+                        <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category" name='category' type="text"
                             onChange={(e) => { handleChange(e) }}
                             placeholder="Category" />
                         {formik.touched.category && formik.errors.category ? (
-                            <p class="text-red-500 text-xs italic">{formik.errors.category}</p>
+                            <p className="text-red-500 text-xs italic">{formik.errors.category}</p>
                         ) : null}
                     </div>
                 </div>
-                <div class="flex flex-wrap -mx-3  mb-3">
+                <div className="flex flex-wrap -mx-3  mb-3">
 
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Duration">
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="Duration">
                             Duration
                         </label>
-                        <input class="border-gray-300  appearance-none block w-full bg-white text-gray-700 border  rounded py-3 
+                        <input className="border-gray-300  appearance-none block w-full bg-white text-gray-700 border  rounded py-3 
                         px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="duration" type="text"
                             onChange={(e) => { handleChange(e) }}
                             name='duration' placeholder="Course duration" />
 
                         {formik.touched.duration && formik.errors.duration ? (
-                            <p class="text-red-500 text-xs italic">{formik.errors.duration}</p>
+                            <p className="text-red-500 text-xs italic">{formik.errors.duration}</p>
                         ) : null}
                     </div>
 
-                    <div class="w-full md:w-1/2 px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="language">
+                    <div className="w-full md:w-1/2 px-3">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="language">
                             Language
                         </label>
-                        <input class="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="language" name='language' type="text"
+                        <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="language" name='language' type="text"
                             onChange={(e) => { handleChange(e) }}
                             placeholder="language" />
                         {formik.touched.language && formik.errors.language ? (
-                            <p class="text-red-500 text-xs italic">{formik.errors.language}</p>
+                            <p className="text-red-500 text-xs italic">{formik.errors.language}</p>
                         ) : null}
                     </div>
 
                 </div>
 
                 <div className='mb-4'>
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="description">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlfor="description">
                         Description
                     </label>
-                    <textarea id="description" rows="3" name='description' class="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."
+
+                    <textarea id="description" rows="3" name='description' className="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."
                         onChange={(e) => { handleChange(e) }}
                     ></textarea>
                     {formik.touched.description && formik.errors.description ? (
-                        <p class="text-red-500 text-xs italic">{formik.errors.description}</p>
+                        <p className="text-red-500 text-xs italic">{formik.errors.description}</p>
                     ) : null}
                 </div>
 
                 <div className='mt-7'>
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="addchapter">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="addchapter">
                         Add Chapter
                     </label>
 
                     <div className="chapter mt-7">
-                        <button type="button" class="text-gray-900 bg-green-400   focus:ring-4 focus:outline-none text-white focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2"
+                        <button type="button" className=" bg-green-400   focus:ring-4 focus:outline-none text-white focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2"
                             data-te-toggle="modal"
                             data-te-target="#exampleModalXl"
                             data-te-ripple-init
@@ -204,9 +238,37 @@ function AddCourse() {
                     </div>
                 </div>
 
+                <div className='flex flex-wrap'>
+                    {
+                        course.map((obj, index) => {
+                            return (
+                                <div className='p-3 w-full md:w-1/2'>
+                                    <a href="#" className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                                        data-te-toggle="modal"
+                                        data-te-target="#editCourse"
+                                        data-te-ripple-init
+                                        data-te-ripple-color="light"
+                                        onClick={() => {
+                                            setChapterDetails(course.find(courses => courses.chapter === obj.chapter));
+                                            console.log(chapterDetails);
+                                        }}
+                                    >
+                                        <div className="flex flex-col justify-between p-4 leading-normal">
+                                            <h5 className=" text-lg font-semibold tracking-tight text-gray-900 dark:text-white"><span className='mr-3'>{index + 1}.</span>{obj.chapter}</h5>
+
+                                        </div>
+                                    </a>
+
+                                </div>
+                            )
+                        })
+                    }
+
+                </div>
 
 
-                <div class="flex flex-wrap -mx-3 mb-2">
+
+                <div className="flex flex-wrap -mx-3 mb-2">
 
                     <div className='mt-8 w-full  flex justify-end mr-3'>
                         <LoadingButton onClick={formik.handleSubmit}>
@@ -219,31 +281,31 @@ function AddCourse() {
 
 
 
-            {/* modal */}
+            {/*add course modal */}
             <div
                 data-te-modal-init
-                class="fixed top-0 left-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none "
+                className="fixed top-0 left-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none "
                 id="exampleModalXl"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-labelledby="exampleModalXlLabel"
                 aria-modal="true"
                 role="dialog">
                 <div
                     data-te-modal-dialog-ref
-                    class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px] min-[992px]:max-w-[800px] min-[1200px]:max-w-[1140px]">
+                    className="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px] min-[992px]:max-w-[800px] min-[1200px]:max-w-[1140px]">
                     <div
-                        class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
+                        className="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
                         <div
-                            class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+                            className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
                             <h5
-                                class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
                                 id="exampleModalXlLabel">
                                 Add Chapter
                             </h5>
 
                             <button
                                 type="button"
-                                class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
                                 data-te-modal-dismiss
                                 aria-label="Close">
                                 <svg
@@ -252,7 +314,7 @@ function AddCourse() {
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="h-6 w-6">
+                                    className="h-6 w-6">
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
@@ -262,22 +324,23 @@ function AddCourse() {
                         </div>
                         <div className='p-7'>
                             <div className='flex  mt-5 '>
-                                <div class="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
+                                <div className="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
                                     <input
                                         type="text"
-                                        class="peer block min-h-[auto] w-full rounded border-gray-300  bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        className="peer block min-h-[auto] w-full rounded border-gray-300  bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                         id="chapterName"
                                         name='chapterName'
+                                        value={chapter}
                                         onChange={(e) => { handleLessonChange(e); setChapter(e.target.value) }}
                                         placeholder="Form control lg" />
 
                                     {lessonFormik.touched.chapterName && lessonFormik.errors.chapterName ? (
-                                        <p class="text-red-500 text-xs ">{lessonFormik.errors.chapterName}</p>
+                                        <p className="text-red-500 text-xs ">{lessonFormik.errors.chapterName}</p>
                                     ) : null}
 
                                     <label
-                                        for="chapterName"
-                                        class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.7rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+                                        htmlFor="chapterName"
+                                        className="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.7rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
                                     >Chapter Name
                                     </label>
                                 </div>
@@ -285,43 +348,44 @@ function AddCourse() {
                             </div>
 
                             <div className='flex  mt-5 '>
-                                <div class="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
+                                <div className="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
                                     <input
                                         type="text"
-                                        class="peer block min-h-[auto] w-full rounded border-gray-300  bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        className="peer block min-h-[auto] w-full rounded border-gray-300  bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                         id="name"
-                                        onChange={(e) => { handleLessonChange(e);  }}
+                                        value={lessonFormik.values.lessonName}
+                                        onChange={(e) => { handleLessonChange(e); }}
                                         name='lessonName'
                                         placeholder="Name" />
                                     {lessonFormik.touched.lessonName && lessonFormik.errors.lessonName ? (
-                                        <p class="text-red-500 text-xs ">{lessonFormik.errors.lessonName}</p>
+                                        <p className="text-red-500 text-xs ">{lessonFormik.errors.lessonName}</p>
                                     ) : null}
                                     <label
-                                        for="name"
-                                        class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.7rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+                                        htmlFor="name"
+                                        className="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.7rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
                                     >Lesson Name
                                     </label>
                                 </div>
-                                <div class="relative mb-3 w-full md:w-1/2 sm:w-1/1 m-3" data-te-input-wrapper-init>
+                                <div className="relative mb-3 w-full md:w-1/2 sm:w-1/1 m-3" data-te-input-wrapper-init>
                                     <input
                                         type="text"
                                         name='videoUrl'
                                         onChange={(e) => { handleLessonChange(e) }}
-
-                                        class="peer block min-h-[auto] w-full rounded border-gray-300  bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        value={lessonFormik.values.videoUrl}
+                                        className="peer block min-h-[auto] w-full rounded border-gray-300  bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                         id="videoUrl"
                                         placeholder="Video Url" />
                                     {lessonFormik.touched.videoUrl && lessonFormik.errors.videoUrl ? (
-                                        <p class="text-red-500 text-xs ">{lessonFormik.errors.videoUrl}</p>
+                                        <p className="text-red-500 text-xs ">{lessonFormik.errors.videoUrl}</p>
                                     ) : null}
                                     <label
-                                        for="videoUrl"
-                                        class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.7rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+                                        htmlFor="videoUrl"
+                                        className="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.7rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
                                     >Video Link
                                     </label>
                                 </div>
-                                <div class="relative mb-3 w-full md:w-1/3 m-3" data-te-input-wrapper-init>
-                                    <button type="button" class="focus:outline-none text-white bg-green-400 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-400 
+                                <div className="relative mb-3 w-full md:w-1/3 m-3" data-te-input-wrapper-init>
+                                    <button type="button" className="focus:outline-none text-white bg-green-400 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-400 
                                     dark:hover:bg-green-500 dark:focus:ring-green-500"
                                         onClick={lessonFormik.handleSubmit}
                                     >Add</button>
@@ -329,37 +393,206 @@ function AddCourse() {
 
                             </div>
 
-                            <div>
-                                <h1 className='ml-4 mt-3'>Lessons</h1>
-                            </div>
+                            {lesson[0] ?
+                                <div>
+                                    <div>
+                                        <h1 className='ml-4 mt-3'>Lessons</h1>
+                                    </div>
 
-                            <div className='flex flex-wrap'>
-                                {
-                                    lesson.map((obj,index)=>{
-                                        return(
-                                            <div className='p-3 w-full md:w-1/2'>
-                                                <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                                    <div class="flex flex-col justify-between p-4 leading-normal">
-                                                        <h5 class=" text-lg font-semibold tracking-tight text-gray-900 dark:text-white"><span className='mr-3'>{index+1}.</span>{obj.lessonName}</h5>
+                                    <div className='flex flex-wrap'>
+                                        {
+                                            lesson.map((obj, index) => {
+                                                return (
+                                                    <div className='p-3 w-full md:w-1/2'>
+                                                        <a href="#" className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                                            <div className="flex flex-col justify-between p-4 leading-normal">
+                                                                <h5 className=" text-lg font-semibold tracking-tight text-gray-900 dark:text-white"><span className='mr-3'>{index + 1}.</span>{obj.lessonName}</h5>
+
+                                                            </div>
+                                                        </a>
 
                                                     </div>
-                                                </a>
+                                                )
+                                            })
+                                        }
 
-                                            </div>
-                                        )
-                                    })
-                                }
+                                    </div>
+
+                                    <div className="flex flex-wrap -mx-3 mb-2">
+
+                                        <div className='mt-8 w-full  flex justify-end mr-7'>
+                                            <button type="button" onClick={addChapter}
+                                                className='loading-btn form-btn mt-2 font-medium rounded' >
+                                                <span className="txt">
+                                                    Submit
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                :
+                                ""
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {/* edit courser modal */}
+            <div
+                data-te-modal-init
+                className="fixed top-0 left-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none "
+                id="editCourse"
+                tabIndex="-1"
+                aria-labelledby="editCourse"
+                aria-modal="true"
+                role="dialog">
+                <div
+                    data-te-modal-dialog-ref
+                    className="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px] min-[992px]:max-w-[800px] min-[1200px]:max-w-[1140px]">
+                    <div
+                        className="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
+                        <div
+                            className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+                            <h5
+                                className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                id="editCourse">
+                                Add Chapter
+                            </h5>
+
+                            <button
+                                type="button"
+                                className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                data-te-modal-dismiss
+                                aria-label="Close">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    className="h-6 w-6">
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className='p-7'>
+                            <div className='flex  mt-5 '>
+                                <div className="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
+                                    <input
+                                        type="text"
+                                        className="peer block min-h-[auto] w-full rounded border-gray-300  bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        id="chapterName"
+                                        name='chapterName'
+                                        value={chapterDetails ? chapterDetails.chapter : ""}
+                                        onChange={(e) => { handEditleLessonChange(e); setChapter(e.target.value) }}
+                                        readOnly
+                                        placeholder="Form control lg" />
+
+                                    {lessonFormik.touched.chapterName && lessonFormik.errors.chapterName ? (
+                                        <p className="text-red-500 text-xs ">{lessonFormik.errors.chapterName}</p>
+                                    ) : null}
+
+
+                                </div>
 
                             </div>
-                            <div class="flex flex-wrap -mx-3 mb-2">
 
-                                <div className='mt-8 w-full  flex justify-end mr-7'>
-                                    <button type="button" onClick={addChapter}
-                                        className='loading-btn form-btn mt-2 font-medium rounded' >
-                                        <span className="txt">
-                                            Submit
-                                        </span>
-                                    </button>
+                            <div className='flex  mt-5 '>
+                                <div className="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
+                                    <input
+                                        type="text"
+                                        className="peer block min-h-[auto] w-full rounded border-gray-300  bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        id="name"
+                                        value={EditLessonFormik.values.lessonName}
+                                        onChange={(e) => { handEditleLessonChange(e); }}
+                                        name='lessonName'
+                                        placeholder="Name" />
+                                    {EditLessonFormik.touched.lessonName && EditLessonFormik.errors.lessonName ? (
+                                        <p className="text-red-500 text-xs ">{EditLessonFormik.errors.lessonName}</p>
+                                    ) : null}
+                                    <label
+                                        htmlFor="name"
+                                        className="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.7rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+                                    >Lesson Name
+                                    </label>
+                                </div>
+                                <div className="relative mb-3 w-full md:w-1/2 sm:w-1/1 m-3" data-te-input-wrapper-init>
+                                    <input
+                                        type="text"
+                                        name='videoUrl'
+                                        onChange={(e) => { handEditleLessonChange(e) }}
+                                        value={EditLessonFormik.values.videoUrl}
+                                        className="peer block min-h-[auto] w-full rounded border-gray-300  bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        id="videoUrl"
+                                        placeholder="Video Url" />
+                                    {EditLessonFormik.touched.videoUrl && EditLessonFormik.errors.videoUrl ? (
+                                        <p className="text-red-500 text-xs ">{EditLessonFormik.errors.videoUrl}</p>
+                                    ) : null}
+                                    <label
+                                        htmlFor="videoUrl"
+                                        className="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.7rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+                                    >Video Link
+                                    </label>
+                                </div>
+                                <div className="relative mb-3 w-full md:w-1/3 m-3" data-te-input-wrapper-init>
+                                    <button type="button" className="focus:outline-none text-white bg-green-400 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-400 
+                                    dark:hover:bg-green-500 dark:focus:ring-green-500"
+                                        onClick={EditLessonFormik.handleSubmit}
+                                    >Add</button>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div>
+                                    <h1 className='ml-4 mt-3'>Lessons</h1>
+                                </div>
+
+                                <div className='flex flex-wrap'>
+                                    {chapterDetails ?
+                                        chapterDetails.lessons.map((obj, index) => {
+                                            return (
+                                                <div className='p-3 w-full md:w-1/2'>
+                                                    <a href="#" className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                                        <div className="flex flex-col justify-between p-4 leading-normal">
+                                                            <h5 className=" text-lg font-semibold tracking-tight text-gray-900 dark:text-white"><span className='mr-3'>{index + 1}.</span>{obj.lessonName}</h5>
+
+                                                        </div>
+                                                    </a>
+
+                                                </div>
+                                            )
+                                        })
+                                        : ""
+                                    }
+
+                                </div>
+
+                                <div className="flex flex-wrap -mx-3 mb-2">
+
+                                    <div className='mt-8 w-full  flex justify-end mr-7'>
+                                        <button type="button" onClick={() => {
+                                            setCourse(course.map((obj) => {
+                                                if (obj.chapter == chapterDetails.chapter) {
+                                                    return { ...chapterDetails }
+                                                }
+                                                return obj;
+                                            }))
+
+                                            EditLessonFormik.resetForm();
+                                        }}
+                                            className='loading-btn form-btn mt-2 font-medium rounded' >
+                                            <span className="txt">
+                                                Submit
+                                            </span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
