@@ -4,6 +4,7 @@ import PrivateRoutes from '../utils/PrivateRoutes';
 import TeacherLoginPage from '../pages/TeacherLoginPage';
 import TeacherDashboardPage from '../pages/TeacherDashboardPage';
 import AddCoursePage from '../pages/AddCoursePage';
+import ViewCoursePage from '../pages/ViewCoursePage';
 
 
 function TeacherRouter() {
@@ -12,6 +13,7 @@ function TeacherRouter() {
             <Route element={<PrivateRoutes teacher={true} />} >
                 <Route element={<TeacherDashboardPage />} path='/teacher/dashboard' />
                 <Route element={<AddCoursePage />} path='/teacher/add-course' />
+                <Route element={<ViewCoursePage />} path='/teacher/course' />
             </Route>
             <Route element={<TeacherLoginPage />} path='/teacher/login' />
         </Routes>

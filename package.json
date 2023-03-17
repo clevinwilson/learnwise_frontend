@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.13",
+    "@heroicons/react": "^2.0.16",
     "@react-oauth/google": "^0.8.0",
     "@reduxjs/toolkit": "^1.9.3",
     "@syncfusion/ej2-react-popups": "^20.4.53",

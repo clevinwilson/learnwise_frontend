@@ -1,7 +1,7 @@
 import React from 'react'
 
-const login=()=>{
+const authUser =()=>{
     console.log("user nodeeeeee");
 }
 
-export {login}
+export { authUser }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import axiosInstance from '../../axios/axios';
@@ -8,7 +8,9 @@ import { setUserDetails } from "../../Redux/Features/userSlice";
 import { setAdminDetails } from '../../Redux/Features/adminSlice';
 import { setTeacherDetails } from '../../Redux/Features/teacherSlice';
 import { useGoogleLogin } from '@react-oauth/google';
-import { login as dfdfdfd } from '../../services/user';
+import { authTeacher } from '../../services/teacherApi';
+import { authUser } from '../../services/user';
+import {authAdmin} from '../../services/adminApi'
 
 
 
@@ -23,6 +25,28 @@ function Login(props) {
         email: "",
         password: "",
     });
+
+    useEffect(()=>{
+      
+        if(props.admin){
+            authAdmin().then((response)=>{
+                if (response.data.status) navigate('/admin/dashboard')
+            })
+        }else if(props.teacher){
+            authTeacher().then((response)=>{
+                if (response.data.status) navigate('/teacher/add-course')
+            })
+        }else{
+            authUser().then((response)=>{
+                if (response.data.status) navigate('/')
+
+            })
+        }
+
+       
+        
+        
+    },[])
 
     const generateError = (err) => {
         toast.error(err, {
