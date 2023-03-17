@@ -9,6 +9,11 @@ const authTeacher = () => {
 
 
 const addCourse = (values, course, image)=>{
+
+    console.log(values);
+    console.log(course);
+    console.log(image)
+
     return axiosInstance.post('/teacher/add-course', { ...values, course, image }, { headers:{ ...headers, "Content-Type": "multipart/form-data" } })
 }
 

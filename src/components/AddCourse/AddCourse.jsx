@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import LoadingButton from '../LoadingButton/LoadingButton';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from "react-toastify";
 import { addCourse } from '../../services/teacherApi';
+import './AddCourse.scss';
 
 function AddCourse() {
+    const fileInputRef =useRef();
     const [lesson, setLesson] = useState([]);
     const [chapter, setChapter] = useState("");
     const [course, setCourse] = useState([]);
-    const [image,setImage]=useState('')
+    const [image,setImage]=useState('');
+    const [chapterDetails, setChapterDetails] = useState(null);
 
-    const [chapterDetails, setChapterDetails] = useState(null)
+    const handleClick = () => {
+        fileInputRef.current.click();
+    };
 
     const validateLesson = Yup.object({
         chapterName: Yup.string()
@@ -27,13 +32,15 @@ function AddCourse() {
         name: Yup.string()
             .required('Course Name Required'),
         category: Yup.string()
-            .required('First category Required'),
+            .required('category Required'),
         duration: Yup.string()
             .required('Phone duration is Required'),
         language: Yup.string()
-            .required('First language Required'),
+            .required('language Required'),
+        price:Yup.string()
+            .required('Price Required'),
         description: Yup.string()
-            .required('First description Required'),
+            .required('Description Required'),
     });
 
     const generateError = (err) => {
@@ -91,20 +98,22 @@ function AddCourse() {
             category: "",
             duration: "",
             language: "",
+            price:"",
             description: ""
         },
         validationSchema: validate,
         onSubmit: async (values) => {
-            console.log(values);
-            console.log(course);
-            console.log(image)
-
             addCourse(values,course,image)
             .then((response)=>{
-                console.log(response);
+
+                if(response.data.status){
+                    successMessaage(response.data.message);
+                }else{
+                    generateError(response.data.message);
+                }
             })
             .catch((err)=>{
-                console.log(err);
+                generateError("Network error");
             })
         }
 
@@ -142,21 +151,23 @@ function AddCourse() {
             
             <div className='mt-10'>
                 {image?
-                    <div className='flex items-center justify-center w-full '>
-                        <img style={{width:"400px"}} class="h-auto max-w-lg rounded-lg w-full" src={image ? URL.createObjectURL(image) : ""} alt="image description"></img>
+                    <div className='flex items-center justify-center w-full ' >
+                        <img class="h-auto max-w-lg rounded-lg w-full course-image" src={image ? URL.createObjectURL(image) : ""} alt="image description" onClick={handleClick}></img>
                 </div>
-                :
+                :""}
+
                 <div>
-                    <div class="flex items-center justify-center w-full ">
+                    <div class={!image ? "flex items-center justify-center w-full" :"items-center justify-center w-full hidden"}>
                             <div className='w-full lg:w-1/3  md:w-1/2 sm:w-1/1'>
                             <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                     <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                                     <p>Course thumbnail</p>
-                                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
                                     <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                 </div>
-                                <input id="dropzone-file" type="file" className="hidden" required
+                                    <input id="dropzone-file" ref={fileInputRef} type="file" className="hidden" required
+                                    
                                     onChange={(e) => {
                                         setImage(e.target.files[0]);
                                     }}
@@ -165,7 +176,7 @@ function AddCourse() {
                         </div>
                     </div>
                 </div>
-}
+
             </div>
             <form className="w-full  mt-10 p-1">
                 <div className="flex flex-wrap -mx-3  mb-3">
@@ -176,6 +187,7 @@ function AddCourse() {
                         <input className="border-gray-300  appearance-none block w-full bg-white text-gray-700 border  rounded py-3 
                         px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="name" type="text"
                             onChange={(e) => { handleChange(e) }}
+                            value={formik.values.name}
                             name='name' placeholder="Course Name" />
 
                         {formik.touched.name && formik.errors.name ? (
@@ -188,6 +200,7 @@ function AddCourse() {
                         </label>
                         <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category" name='category' type="text"
                             onChange={(e) => { handleChange(e) }}
+                            value={formik.values.category}
                             placeholder="Category" />
                         {formik.touched.category && formik.errors.category ? (
                             <p className="text-red-500 text-xs ">{formik.errors.category}</p>
@@ -224,6 +237,23 @@ function AddCourse() {
 
                 </div>
 
+                <div className="flex flex-wrap -mx-3  mb-3">
+
+                    <div className="w-full md:w-1/2 px-3">
+                        <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="price">
+                            Price
+                        </label>
+                        <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="price" name='price' type="text"
+                            onChange={(e) => { handleChange(e) }}
+                            value={formik.values.price}
+                            placeholder="Price" />
+                        {formik.touched.price && formik.errors.price ? (
+                            <p className="text-red-500 text-xs ">{formik.errors.price}</p>
+                        ) : null}
+                    </div>
+
+                </div>
+
                 <div className='mb-4'>
                     <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlfor="description">
                         Description
@@ -231,7 +261,7 @@ function AddCourse() {
 
                     <textarea id="description" rows="3" name='description' className="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."
                         onChange={(e) => { handleChange(e) }}
-                    ></textarea>
+                    >{formik.values.price}</textarea>
                     {formik.touched.description && formik.errors.description ? (
                         <p className="text-red-500 text-xs ">{formik.errors.description}</p>
                     ) : null}
