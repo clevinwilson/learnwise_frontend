@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ToastContainer, toast } from "react-toastify";
-import { getTeachers, blockTeacher } from '../../services/adminApi';
+import { getTeachers, blockTeacher, unBlockTeacher } from '../../services/adminApi';
 
 
 
@@ -67,6 +67,21 @@ function ViewTeachers() {
                 }
             });
         
+    }
+
+    const handleUnblock = (teacherId) => {
+        unBlockTeacher(teacherId).then((response) => {
+            if (response.data.status) {
+                setTeacher(
+                    teacher.map((obj) => {
+                        if (obj._id == teacherId) {
+                            obj.status = true
+                        }
+                        return obj;
+                    })
+                )
+            }
+        })
     }
 
   return (
@@ -195,6 +210,7 @@ function ViewTeachers() {
                                   <td className="px-6 py-4">
                                       {obj.email}
                                   </td>
+                                  {obj.status ?
                                   <td className="px-6 py-4 flex justify-center items-center">
                                       
                                       <button type="button" className="text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm p-2.5  text-center mr-2 mb-2 dark:bg-red-400 dark:hover:bg-red-500 dark:focus:ring-red-900"
@@ -207,6 +223,20 @@ function ViewTeachers() {
                                           <span className="sr-only">Icon description</span>
                                       </button>
                                   </td>
+                                  :
+                                  <td className="px-6 py-4 flex justify-center items-center">
+
+                                      <button type="button" className="text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm p-2.5  text-center mr-2 mb-2 dark:bg-green-400 dark:hover:bg-green-500 dark:focus:ring-green-900"
+                                          onClick={() => { handleUnblock(obj._id) }}
+                                      >
+                                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                          </svg>
+
+                                          <span className="sr-only">Icon description</span>
+                                      </button>
+                                  </td>
+                   }
                               </tr>
                           )
                       })
