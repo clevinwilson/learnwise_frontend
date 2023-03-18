@@ -5,6 +5,7 @@ import DashboardPage from '../pages/admin/DashboardPage'
 import AddTeacherPage from '../pages/admin/AddTeacherPage';
 import PrivateRoutes from '../utils/PrivateRoutes';
 import ViewTeachersPage from '../pages/admin/ViewTeachersPage';
+import ViewUserPage from '../pages/admin/ViewUserPage';
 
 function AdminRouter() {
   return (
@@ -13,6 +14,7 @@ function AdminRouter() {
         <Route path='/admin/dashboard' element={<DashboardPage />} />
         <Route path='/admin/add-teacher' element={<AddTeacherPage />} />
         <Route path='/admin/teacher' element={<ViewTeachersPage />} />
+        <Route path='/admin/user' element={<ViewUserPage/>} />
       </Route>
       
       <Route path='/admin/login' element={<AdminLogin />} />
