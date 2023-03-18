@@ -7,4 +7,13 @@ const authAdmin = () => {
     return axiosInstance.get('/admin/auth', { headers })
 }
 
-export { authAdmin }
+
+const addTeacher = (values) => {
+    const headers = { Authorization: `Bearer ${localStorage.getItem('adminJwtToken') }` };
+    return axiosInstance.post("/admin/add-teacher",
+        { ...values },
+        { headers }
+    )
+}
+
+export { authAdmin, addTeacher }

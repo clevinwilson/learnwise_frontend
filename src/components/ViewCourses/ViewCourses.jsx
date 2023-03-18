@@ -58,7 +58,7 @@ function ViewCourses() {
 
   return (
 
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-5 mr-6 shadow-2xl">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-5 md:mr-6 shadow-2xl">
       <div className="flex items-center justify-between pb-4">
         <div>
 

@@ -10,7 +10,7 @@ function AdminRouter() {
     <Routes>
       <Route element={<PrivateRoutes admin={true} />} >
         <Route path='/admin/dashboard' element={<DashboardPage />} />
-        <Route path='/admin/addTeacher' element={<AddTeacherPage />} />
+        <Route path='/admin/add-teacher' element={<AddTeacherPage />} />
       </Route>
       
       <Route path='/admin/login' element={<AdminLogin />} />

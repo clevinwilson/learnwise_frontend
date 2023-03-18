@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Sidebar.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from '../../Redux/Features/userSlice';
@@ -8,9 +8,10 @@ import adminLinks from '../../links/adminLinks';
 import teacherLinks from '../../links/teacherLinks'
 
 function Sidebar(props) {
+  const [sidebarLinks,setSidebarLinks]=useState([]);
   const sidebarToogle = useSelector((state) => state.adminSidebarToogle);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth > 760) {
@@ -18,10 +19,16 @@ function Sidebar(props) {
       }
       if (window.innerWidth < 400) {
         dispatch(setSidebar(false))
-
       }
     }
 
+    if(props.admin){
+      setSidebarLinks(adminLinks);
+    }else{
+      setSidebarLinks(teacherLinks);
+    }
+
+    
     handleResize();
 
     window.addEventListener('resize', handleResize);
@@ -36,7 +43,7 @@ function Sidebar(props) {
       <div className="overflow-y-auto overflow-x-hidden flex-grow">
         <ul className="flex flex-col py-4 space-y-1">
           {
-            props.admin ? adminLinks : teacherLinks .map((obj,index) => {
+            sidebarLinks.map((obj,index) => {
               return (
                 <>
                   <li className="px-3" key={index}>

@@ -152,7 +152,7 @@ function Login(props) {
                         token: data.token
                     })
                 )
-                navigate('/admin/addTeacher')
+                navigate('/admin/dashboard')
             } else {
                 generateError(data.message)
             }

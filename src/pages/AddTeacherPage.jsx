@@ -6,7 +6,7 @@ import Header from '../components/Header/Header';
 function AddTeacherPage() {
   return (
      <div className='relative '>
-      <Sidebar />
+      <Sidebar admin={true} />
       <Header />
       <div className='admin-page p-3 ' >
         <AddTeacher />
