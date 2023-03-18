@@ -1,13 +1,13 @@
 import React from 'react';
 import AddTeacher from '../components/AddTeacher/AddTeacher';
 import Sidebar from "../components/Sidebar/Sidebar";
-import AdminHeader from '../components/AdminHeader/AdminHeader';
+import Header from '../components/Header/Header';
 
 function AddTeacherPage() {
   return (
      <div className='relative '>
       <Sidebar />
-      <AdminHeader />
+      <Header />
       <div className='admin-page p-3 ' >
         <AddTeacher />
       </div>

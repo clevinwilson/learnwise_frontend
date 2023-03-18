@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './AdminHeader.scss';
 import { setSidebar } from '../../Redux/Features/adminSidebarToogle';
 import { useDispatch, useSelector } from 'react-redux';
+import {useNavigate} from 'react-router-dom'
 
 function AdminHeader() {
     const sidebarToogle = useSelector((state) => state.adminSidebarToogle)
     const dispatch = useDispatch();
+    const navigate=useNavigate();
     return (
         <div className='p-3'>
             <nav style={{ border: "1px solid #e5e7eb", position: 'fixed', width: '100%', top: '0' ,left:'0',right:'0' }} className="relative  z-50 px-4 py-4 flex justify-between items-center bg-white">
@@ -24,7 +26,13 @@ function AdminHeader() {
                 </div>
 
                 <a className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="#">Sign In</a>
-                <a className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="#">Sign up</a>
+                <a className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white 
+                font-bold rounded-xl transition duration-200"
+                onClick={()=>{
+                    localStorage.removeItem('teacherJwtToken');
+                    navigate('/teacher/login')
+                }}
+                >Logout</a>
             </nav>
 
         </div>

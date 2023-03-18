@@ -37,10 +37,10 @@ function Login(props) {
                 if (response.data.status) navigate('/teacher/add-course')
             })
         }else{
-            authUser().then((response)=>{
-                if (response.data.status) navigate('/')
+            // authUser().then((response)=>{
+            //     if (response.data.status) navigate('/')
 
-            })
+            // })
         }
 
        

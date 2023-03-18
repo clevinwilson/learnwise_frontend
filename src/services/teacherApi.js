@@ -1,8 +1,6 @@
 import React from 'react';
 import axiosInstance from '../axios/axios';
-const token = localStorage.getItem('teacherJwtToken');
 
-const headers = { Authorization: `Bearer ${token}` };
 
 
 const authTeacher = () => {
@@ -15,12 +13,18 @@ const authTeacher = () => {
 
 
 const addCourse = (values, course, image) => {
-
+    const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
     return axiosInstance.post('/teacher/add-course', { ...values, course, image }, { headers: { ...headers, "Content-Type": "multipart/form-data" } })
 }
 
 const getCourses = () => {
+    const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken') }` };
     return axiosInstance.get('/teacher/course', { headers })
 }
 
-export { authTeacher, addCourse, getCourses }
+
+const deleteCourse=(courseId)=>{
+    const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
+    return axiosInstance.delete(`/teacher/delete-course/${courseId}`, { headers })
+}
+export { authTeacher, addCourse, getCourses, deleteCourse }

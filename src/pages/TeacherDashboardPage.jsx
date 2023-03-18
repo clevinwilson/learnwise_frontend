@@ -1,12 +1,12 @@
 import React from 'react';
 import Sidebar from "../components/Sidebar/Sidebar";
-import AdminHeader from '../components/AdminHeader/AdminHeader';
+import Header from '../components/Header/Header';
 
 function TeacherDashboardPage() {
   return (
       <div className='relative '>
           <Sidebar />
-          <AdminHeader />
+          <Header />
           <div className='admin-page p-3 ' >
               Dashboard
           </div>

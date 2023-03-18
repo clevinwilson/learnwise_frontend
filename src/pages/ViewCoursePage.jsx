@@ -1,13 +1,13 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar/Sidebar';
-import AdminHeader from '../components/AdminHeader/AdminHeader';
+import Header from '../components/Header/Header';
 import ViewCourses from '../components/ViewCourses/ViewCourses'
 
 function ViewCoursePage() {
   return (
     <div className='relative '>
       <Sidebar teacher={true} />
-      <AdminHeader />
+      <Header />
       <div className='admin-page p-3 ' >
         <ViewCourses/>
       </div>

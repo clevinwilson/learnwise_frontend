@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminRouter from './routes/AdminRouter';
 import UserRouter from './routes/UserRouter';
 import TeacherRouter from './routes/TeacherRouter';
+import swal from 'sweetalert';
 
 function App() {
   return (
