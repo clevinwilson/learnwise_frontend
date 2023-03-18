@@ -1,7 +1,7 @@
 import React from 'react';
-import AddTeacher from '../components/AddTeacher/AddTeacher';
-import Sidebar from "../components/Sidebar/Sidebar";
-import Header from '../components/Header/Header';
+import AddTeacher from '../../components/AddTeacher/AddTeacher';
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Header from '../../components/Header/Header';
 
 function AddTeacherPage() {
   return (

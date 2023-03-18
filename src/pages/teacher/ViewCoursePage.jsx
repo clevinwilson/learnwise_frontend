@@ -1,7 +1,7 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar/Sidebar';
-import Header from '../components/Header/Header';
-import ViewCourses from '../components/ViewCourses/ViewCourses'
+import Sidebar from '../../components/Sidebar/Sidebar';
+import Header from '../../components/Header/Header';
+import ViewCourses from '../../components/ViewCourses/ViewCourses'
 
 function ViewCoursePage() {
   return (

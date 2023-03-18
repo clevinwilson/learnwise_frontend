@@ -1,7 +1,7 @@
 import React from 'react';
-import AddCourse from '../components/AddCourse/AddCourse';
-import Sidebar from '../components/Sidebar/Sidebar';
-import Header from '../components/Header/Header';
+import AddCourse from '../../components/AddCourse/AddCourse';
+import Sidebar from '../../components/Sidebar/Sidebar';
+import Header from '../../components/Header/Header';
 
 function AddCoursePage() {
   return (

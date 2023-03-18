@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import Sidebar from "../components/Sidebar/Sidebar";
-import Header from '../components/Header/Header';
-import Form from '../components/Form/Form';
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Header from '../../components/Header/Header';
+import Form from '../../components/Form/Form';
 
 
 function DashboardPage() {

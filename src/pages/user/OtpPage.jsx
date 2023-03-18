@@ -1,5 +1,5 @@
 import React from 'react'
-import Otp from '../components/Otp/Otp'
+import Otp from '../../components/Otp/Otp'
 
 function OtpPage() {
   return (

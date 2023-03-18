@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from '../pages/HomePage';
-import OtpPage from '../pages/OtpPage';
-import LoginPage from '../pages/LoginPage';
-import SignupPage from '../pages/SignupPage';
+import HomePage from '../pages/user/HomePage';
+import OtpPage from '../pages/user/OtpPage';
+import LoginPage from '../pages/user/LoginPage';
+import SignupPage from '../pages/user/SignupPage';
 import PrivateRoutes from '../utils/PrivateRoutes';
 
 function UserRouter() {
