@@ -34,12 +34,14 @@ const getUsers=()=>{
     return axiosInstance.get('/admin/user',{headers:getToken()})
 }
 
-const blockUsere=(userId)=>{
-    return axiosInstance.get(`/admin/block-user/${userId}`,{headers:getToken()})
-}
 
 const blockUser = (userId) => {
     return axiosInstance.get(`/admin/block-user/${userId}`, { headers: getToken() })
 }
 
-export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser }
+const unBlockUser=(userId)=>{
+    return axiosInstance.get(`/admin/unblock-user/${userId}`, { headers: getToken() })
+
+}
+
+export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser }
