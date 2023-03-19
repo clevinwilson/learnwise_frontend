@@ -43,7 +43,7 @@ function ViewTeachers() {
     const handleBlock=(teacherId)=>{
         swal({
             title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover file!",
+            text: "Are you sure you want to block!",
             icon: "warning",
             buttons: true,
             dangerMode: true,

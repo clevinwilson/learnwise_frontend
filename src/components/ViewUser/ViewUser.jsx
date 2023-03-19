@@ -29,18 +29,28 @@ function ViewUser() {
     }
 
     const handleBlock=(userId)=>{
-        blockUser(userId).then((response)=>{
-            if(response.data.status){
-                setUser(
-                    user.map((obj)=>{
-                        if(obj._id==userId){
-                            obj.status=false
-                        }
-                        return obj;
-                    })
-                )
-            }
-        })
+        swal({
+            title: "Are you sure?",
+            text: "Are you sure you want to block!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((response) => {
+            if (response) {
+                blockUser(userId).then((response) => {
+                    if (response.data.status) {
+                        setUser(
+                            user.map((obj) => {
+                                if (obj._id == userId) {
+                                    obj.status = false
+                                }
+                                return obj;
+                            })
+                        )
+                    }
+                })
+            }})
+        
     }
 
     const handleUnblock=(userId)=>{
