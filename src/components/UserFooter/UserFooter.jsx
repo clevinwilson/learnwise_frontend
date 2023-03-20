@@ -2,9 +2,7 @@ import React from 'react'
 
 function UserFooter() {
     return (
-        <div>
-
-            <footer className="bg-white dark:bg-gray-900">
+        <footer className="bg-white dark:bg-gray-900 mb-20 md:mb-0">
                 <div className="mx-auto w-full container p-4 sm:p-6">
                     <div className="md:flex md:justify-between">
                         <div className="mb-6 md:mb-0">
@@ -77,8 +75,6 @@ function UserFooter() {
                     </div>
                 </div>
             </footer>
-
-        </div>
     )
 }
 

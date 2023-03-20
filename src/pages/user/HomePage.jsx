@@ -7,6 +7,7 @@ import TopCourses from '../../components/TopCourses/TopCourses'
 import UserFooter from '../../components/UserFooter/UserFooter'
 import ChallengesBanner from '../../components/ChallengesBanner/ChallengesBanner'
 import NewCourses from '../../components/NewCourses/NewCourses'
+import CommunityBanner from '../../components/Communitybanner/CommunityBanner '
 
 function HomePage() {
   return (
@@ -17,6 +18,7 @@ function HomePage() {
       <BottomNavigation />
       <ChallengesBanner/>
       <NewCourses/>
+      <CommunityBanner/>
       <UserFooter/>
     </React.Fragment>
   )
