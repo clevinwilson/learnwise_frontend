@@ -8,7 +8,7 @@ function SyllabusDropdown({ faq, index, toggleFAQ }) {
           key={index}
           onClick={() => toggleFAQ(index)}
       >
-          <div className="syllabus-title">{faq.question}</div>
+          <div className="syllabus-title font-semibold">{faq.question}</div>
           <div className="lessons-title">{faq.answer}</div>
       </div>
   )
