@@ -2,8 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap'); */
 
 .text-theme-color {
     color: #6255a4;
+}
+
+.banner-title {
+    line-height: 64px !important;
+}
+
+.banner-wrap {
+    height: 490px;
+}
+
+@media screen and (max-width:768px) {
+    .banner-title {
+        line-height: 42px !important;
+    }
 }

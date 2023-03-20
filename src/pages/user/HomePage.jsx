@@ -5,6 +5,7 @@ import BottomNavigation from '../../components/BottomNavigation/BottomNavigation
 import UserHeader from '../../components/UserHeader/UserHeader'
 import TopCourses from '../../components/TopCourses/TopCourses'
 import UserFooter from '../../components/UserFooter/UserFooter'
+import ChallengesBanner from '../../components/ChallengesBanner/ChallengesBanner'
 
 function HomePage() {
   return (
@@ -13,6 +14,7 @@ function HomePage() {
       <BannerWithSearch/>
       <TopCourses/>
       <BottomNavigation />
+      <ChallengesBanner/>
       <UserFooter/>
     </React.Fragment>
   )
