@@ -6,6 +6,7 @@ import UserHeader from '../../components/UserHeader/UserHeader'
 import TopCourses from '../../components/TopCourses/TopCourses'
 import UserFooter from '../../components/UserFooter/UserFooter'
 import ChallengesBanner from '../../components/ChallengesBanner/ChallengesBanner'
+import NewCourses from '../../components/NewCourses/NewCourses'
 
 function HomePage() {
   return (
@@ -15,6 +16,7 @@ function HomePage() {
       <TopCourses/>
       <BottomNavigation />
       <ChallengesBanner/>
+      <NewCourses/>
       <UserFooter/>
     </React.Fragment>
   )
