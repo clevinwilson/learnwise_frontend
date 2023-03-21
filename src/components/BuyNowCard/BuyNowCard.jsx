@@ -4,7 +4,7 @@ import Button from '../Button/Button'
 function BuyNowCard(props) {
     return (
 
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg w-80 shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className="max-w-sm mt-8 bg-white border border-gray-200 rounded-lg w-80 shadow dark:bg-gray-800 dark:border-gray-700">
             
                 <div className='p-5'>
                 <img className="rounded w-full object-cover" src="https://img-c.udemycdn.com/course/240x135/2887266_c696_5.jpg" alt />

@@ -40,29 +40,28 @@ function CourseDetails() {
     return (
        <section>
         <div className="p-2 lg:p-20 mx-auto">
-                <div className="flex flex-col-reverse sm:flex-row">
+                <div className="flex flex-col-reverse sm:flex-row xl:px-20">
                     <div className="w-full lg:w-7/12 ">
-                         <div className='hidden sm:block xl:ml-14 mb-8'>
+                         <div className='hidden sm:block xl:ml-1 mb-8'>
                             <h1 className="text-3xl font-semibold mb-4">The Complete 2023 Web Development
                                 Bootcamp</h1>
-                            <p className='mb-3'>Master NodeJS and build a presentable portfolio with this course</p>
-                            <h3 className="text-theme-color text-2xl font-semibold mb-4">Syllabus</h3>
+                            <p className='mb-3 mr-6'>Non-Indian Users can purchase courses via our apps. Once purchased in-app, course is
+                                available on the web, iOS, and Android in your account. Search in store for -
+                                LearnCodeOnline</p>
+                            <h3 className="text-theme-color text-2xl font-semibold mb-3">Syllabus</h3>
                          </div>
 
-                        <h3 className="text-2xl font-semibold mb-4 block md:hidden ">Syllabus</h3>
+                        <h3 className="text-xl text-theme-color mt-8 font-semibold mb-4 block sm:hidden ">Syllabus</h3>
                         <div className="App">
-                            <div className="syllabus syllabus-wrap   rounded">
+                            <div className="syllabus syllabus-wrap    rounded-lg">
                                 {faqs.map((faq, index) => (
                                     <SyllabusDropdown faq={faq} index={index} key={index} toggleFAQ={toggleFAQ} />
                                 ))}
                             </div>
                         </div>
-                      
-                        
 
-                         
                     </div>
-                    <div className="w-full lg:w-5/12 flex-column  flex justify-center flex-col md:flex-row items-center  sm:h-screen top-0 sm:sticky ">
+                    <div className="w-full lg:w-5/12 flex-column  flex  flex-col  items-center  sm:h-screen top-0 sm:sticky ">
                         <div className='block sm:hidden p-2 mt-3 mb-3'>
                             <h1 className="text-3xl font-semibold mb-4">The Complete 2023 Web Development
                                 Bootcamp</h1>
