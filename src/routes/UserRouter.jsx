@@ -7,13 +7,17 @@ import SignupPage from '../pages/user/SignupPage';
 import PrivateRoutes from '../utils/PrivateRoutes';
 import CourseDetailsPage from '../pages/user/CourseDetailsPage';
 import OrderSummaryPage from '../pages/user/OrderSummaryPage';
+import EnrolledCoursesPage from '../pages/user/EnrolledCoursesPage';
 
 function UserRouter() {
   return (
     <Routes>
       <Route element={<PrivateRoutes user={true} />} >
       </Route>
-        <Route element={< OrderSummaryPage />} path='/coursePayment' />
+        <Route element={< OrderSummaryPage />} path='/course-payment' />
+      <Route element={<EnrolledCoursesPage />} path='/my-enrollments' />
+
+
       <Route element={<HomePage />} path='/' />
       <Route element={<OtpPage />} path='/otp' />
       <Route element={<LoginPage />} path='/login' />
