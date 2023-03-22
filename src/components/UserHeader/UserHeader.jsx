@@ -22,10 +22,10 @@ function UserHeader() {
                 <a className="text-3xl font-bold leading-none" href="#">
                     <img src="../../../public/images/LearnWise-logo.png" width="130px" alt="" />
                 </a>
-                <div class="flex items-center md:order-2">
+                <div className="flex items-center md:order-2">
 
 
-                    {user ? <img class="w-8 h-8 rounded-full object-cover" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png" alt="user photo"
+                    {user ? <img className="w-8 h-8 rounded-full object-cover" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png" alt="user photo"
                         onClick={() => {
                             setProfileBox(!profileBox);
                         }} />
@@ -41,11 +41,11 @@ function UserHeader() {
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
-                                    class="h-5 w-5">
+                                    className="h-5 w-5">
                                     <path
-                                        fill-rule="evenodd"
+                                        fillRule="evenodd"
                                         d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                                        clip-rule="evenodd" />
+                                        clipRule="evenodd" />
                                 </svg>
                             </div>
                         </div>
@@ -53,23 +53,23 @@ function UserHeader() {
 
                     }
 
-                    <div style={profileBox ? { display: 'block' } : { display: 'none' }} class="z-50 absolute right-2 top-12  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-                        <div class="px-4 py-3">
-                            <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-                            <span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+                    <div style={profileBox ? { display: 'block' } : { display: 'none' }} className="z-50 absolute right-2 top-12  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+                        <div className="px-4 py-3">
+                            <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
+                            <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
                         </div>
-                        <ul class="py-2" aria-labelledby="user-menu-button">
+                        <ul className="py-2" aria-labelledby="user-menu-button">
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
+                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
                             </li>
                         </ul>
                     </div>
