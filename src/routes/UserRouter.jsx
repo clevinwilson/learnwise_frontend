@@ -28,7 +28,7 @@ function UserRouter() {
       <Route element={<OtpPage />} path='/otp' />
       <Route element={<LoginPage />} path='/login' />
       <Route element={<SignupPage />} path='/signup' />
-      <Route element={<CourseDetailsPage />} path='/course-details' />
+      <Route element={<CourseDetailsPage />} path='/course-details/:courseId' />
     </Routes>
   )
 }

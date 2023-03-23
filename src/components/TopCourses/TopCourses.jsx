@@ -20,7 +20,7 @@ function TopCourses() {
             {topCourse.map((course)=>{
               console.log(course);
               return(
-                <CourseCard course={course} />
+                <CourseCard key={course._id} course={course} />
               )
             })}
 

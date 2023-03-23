@@ -7,10 +7,10 @@ import BottomNavigation from '../../components/BottomNavigation/BottomNavigation
 function CourseDetailsPage() {
   return (
     <React.Fragment>
-        <UserHeader/>
-        <CourseDetails/>
+      <UserHeader />
+      <CourseDetails />
       <BottomNavigation />
-        <Footer/>
+      <Footer />
     </React.Fragment>
   )
 }

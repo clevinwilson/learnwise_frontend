@@ -14,4 +14,8 @@ const getTopCourse=()=>{
     return axiosInstance.get('/top-course');
 }
 
-export { authUser, getTopCourse }
+
+const getCourseDetails=(courseId)=>{
+    return axiosInstance.get(`/course-details/${courseId}`)
+}
+export { authUser, getTopCourse, getCourseDetails }
