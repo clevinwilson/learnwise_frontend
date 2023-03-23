@@ -46,7 +46,9 @@ function CourseDetails() {
         <section>
 
             {loading ?
-                <Loader loading={loading} />
+               <div className='h-screen flex justify-center items-center'>
+                    <Loader loading={loading} />
+               </div>
                 :
                 <div className="p-2 lg:p-20 mx-auto">
 
