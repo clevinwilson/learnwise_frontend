@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../Button/Button'
 
 function BuyNowCard({ courseDetails }) {
@@ -13,9 +14,11 @@ function BuyNowCard({ courseDetails }) {
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">₹ {courseDetails.price}</h5>
                 </a>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">life long validity</p>
-                <Button>
-                    Buy Now
-                </Button>
+                <Link to={`/course-payment/${courseDetails._id}`}>
+                    <Button>
+                        Buy Now
+                    </Button>
+               </Link>
             </div>
             <div className='border-t pl-5 mt-4 mb-4'>
                 <h4 className='font-semibold mt-3'>Whats included</h4>

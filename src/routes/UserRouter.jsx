@@ -19,7 +19,7 @@ function UserRouter() {
 
 
 
-      <Route element={< OrderSummaryPage />} path='/course-payment' />
+      <Route element={< OrderSummaryPage />} path='/course-payment/:courseId' />
       <Route element={<EnrolledCoursesPage />} path='/my-enrollments' />
       <Route element={<LearnPage />} path='/course/learn' />
 

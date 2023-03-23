@@ -3,6 +3,7 @@ import userSlice from '../Features/userSlice';
 import adminSidebarToogle from '../Features/adminSidebarToogle';
 import adminSlice from '../Features/adminSlice';
 import teacherSlice from '../Features/teacherSlice';
+import courseSlice from '../Features/courseSlice';
 
 
 
@@ -11,7 +12,8 @@ export default configureStore({
         user: userSlice,
         adminSidebarToogle: adminSidebarToogle,
         admin:adminSlice,
-        teacher:teacherSlice
+        teacher:teacherSlice,
+        course: courseSlice
     },
    
 })
