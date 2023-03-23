@@ -102,7 +102,7 @@ function CourseDetails() {
                             </div>
                         </div>
 
-                        <div className="w-full lg:w-5/12 flex-column  flex  flex-col  items-center  sm:h-screen top-0 sm:sticky ">
+                        <div className="w-full lg:w-5/12 flex-column  flex  flex-col  items-center sm:items-start ml-0 sm:ml-8 sm:h-screen top-0 sm:sticky ">
                             <div className='block sm:hidden p-2 mt-3 mb-3'>
                                 <h1 className="text-3xl font-semibold mb-4">{courseDetails.name}</h1>
                                 <p className='mb-3'>{courseDetails.description}</p>
