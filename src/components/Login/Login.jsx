@@ -10,13 +10,13 @@ import { setTeacherDetails } from '../../Redux/Features/teacherSlice';
 import { useGoogleLogin } from '@react-oauth/google';
 import { authTeacher } from '../../services/teacherApi';
 import { authUser } from '../../services/user';
-import {authAdmin} from '../../services/adminApi'
+import { authAdmin } from '../../services/adminApi'
 
 
 
 function Login(props) {
 
-   
+
 
     const { teacher } = useSelector((state) => state)
     const dispatch = useDispatch();
@@ -26,27 +26,23 @@ function Login(props) {
         password: "",
     });
 
-    useEffect(()=>{
-      
-        if(props.admin){
-            authAdmin().then((response)=>{
+    useEffect(() => {
+
+        if (props.admin) {
+            authAdmin().then((response) => {
                 if (response.data.status) navigate('/admin/dashboard')
             })
-        }else if(props.teacher){
-            authTeacher().then((response)=>{
+        } else if (props.teacher) {
+            authTeacher().then((response) => {
                 if (response.data.status) navigate('/teacher/add-course')
             })
-        }else{
-            // authUser().then((response)=>{
-            //     if (response.data.status) navigate('/')
-
-            // })
+        } else {
+            authUser().then((response) => {
+                if (response.data.status) navigate('/')
+            })
         }
 
-       
-        
-        
-    },[])
+    }, [])
 
     const generateError = (err) => {
         toast.error(err, {
@@ -56,8 +52,8 @@ function Login(props) {
 
 
     const login = useGoogleLogin({
-        onSuccess: (codeResponse) =>{
-            try{
+        onSuccess: (codeResponse) => {
+            try {
                 console.log(codeResponse);
                 axiosInstance.post("/login/google", { ...codeResponse }).then((response) => {
                     console.log(response);
@@ -74,19 +70,19 @@ function Login(props) {
                     navigate("/");
 
                 }).catch((err) => { generateError("Something went wrong please reload the page") })
-            }catch(err){
+            } catch (err) {
                 generateError("Something went wrong please reload the page")
             }
-        } ,
+        },
         onError: (error) => {
             console.log('Login Failed:', error);
-            generateError("Login Failed") 
+            generateError("Login Failed")
         }
     });
 
 
     const googleAuth = () => {
-        
+
         // const googleLoginURL = "http://localhost:3000/login/google"
 
         // window.open(
@@ -95,7 +91,7 @@ function Login(props) {
         //     "width=500,height=600"
         // )
 
-       
+
     }
 
 
@@ -108,10 +104,11 @@ function Login(props) {
                     ...loginData,
                 }
             );
-
             if (data) {
                 if (data.login) {
                     console.log(data);
+                    localStorage.setItem('JwtToken', data.token);
+
                     dispatch(
                         setUserDetails({
                             name: data.user.firstName,
@@ -242,7 +239,7 @@ function Login(props) {
                                     <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
                                     <p className='ml-4'>Google</p>
                                 </div>
-                                
+
                                 <Link to={'/signup'}>
                                     <p className="mt-4 mb-0 pt-1 text-sm ">
                                         Don't have an account ?

@@ -2,12 +2,12 @@ import React from 'react'
 import axiosInstance from '../axios/axios';
 
 const getToken = () => {
-    return { Authorization: `Bearer ${localStorage.getItem('adminJwtToken')}` };
+    return { Authorization: `Bearer ${localStorage.getItem('JwtToken')}` };
 }
 
 
 const authUser =()=>{
-    console.log("user nodeeeeee");
+    return axiosInstance.get('/user-authenticate', { headers:getToken() })
 }
 
 const getTopCourse=()=>{
