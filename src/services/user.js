@@ -20,6 +20,6 @@ const getCourseDetails=(courseId)=>{
 }
 
 const handleCheckout = (values, courseId) => {
-   return axiosInstance.post('/create-checkout-session',{...values,courseId})
+    return axiosInstance.post('/create-checkout-session', { ...values, courseId }, { headers: getToken() })
 }
 export { authUser, getTopCourse, getCourseDetails, handleCheckout }
