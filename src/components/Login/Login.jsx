@@ -56,7 +56,7 @@ function Login(props) {
             try {
                 console.log(codeResponse);
                 axiosInstance.post("/login/google", { ...codeResponse }).then((response) => {
-                    console.log(response);
+                    localStorage.setItem('JwtToken', response.data.token);
 
                     dispatch(
                         setUserDetails({
@@ -106,7 +106,6 @@ function Login(props) {
             );
             if (data) {
                 if (data.login) {
-                    console.log(data);
                     localStorage.setItem('JwtToken', data.token);
 
                     dispatch(

@@ -1,10 +1,33 @@
-import React, { useState } from 'react';
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import { useSelector,useDispatch } from "react-redux";
+import { authUser } from '../../services/user';
+import { setUserDetails, setSignoutState } from "../../Redux/Features/userSlice";
+
 
 function UserHeader() {
+    const dispatch=useDispatch();
+    const user = useSelector((state) => state.user);
+    const navigate=useNavigate();
+
+    useEffect(()=>{
+        if(!user._id){
+            authUser().then((response)=>{
+                console.log(response.data);
+                dispatch(
+                    setUserDetails({
+                        name: response.data.user.firstName,
+                        id: response.data.user._id,
+                        email: response.data.user.email,
+                        image: response.data.user.picture,
+                        token: response.data.token,
+                    })
+                );
+            })
+        }
+    },[])
     const [sidebar, setSidebar] = useState(false);
     const [profileBox, setProfileBox] = useState(false);
-    const user = false;
     return (
         <div>
             <nav className="relative px-4 py-4 flex justify-between items-center bg-white">
@@ -26,7 +49,7 @@ function UserHeader() {
                 <div className="flex items-center md:order-2">
 
 
-                    {user ? <img className="w-8 h-8 rounded-full object-cover" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png" alt="user photo"
+                    {user.firstName ? <img className="w-9 h-9 rounded-full object-cover" src={user.id ? user.image :'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png'} alt="user photo"
                         onClick={() => {
                             setProfileBox(!profileBox);
                         }} />
@@ -55,12 +78,12 @@ function UserHeader() {
                     }
 
                     <div style={profileBox ? { display: 'block' } : { display: 'none' }} className="z-50 absolute right-2 top-12  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-                        <div className="px-4 py-3">
+                        {/* <div className="px-4 py-3">
                             <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
                             <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
-                        </div>
+                        </div> */}
                         <ul className="py-2" aria-labelledby="user-menu-button">
-                            <li>
+                            {/* <li>
                                 <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
                             </li>
                             <li>
@@ -68,9 +91,16 @@ function UserHeader() {
                             </li>
                             <li>
                                 <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-                            </li>
+                            </li> */}
                             <li>
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                                <p  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                onClick={()=>{
+                                    localStorage.removeItem('JwtToken');
+                                    dispatch(setSignoutState());
+                                    navigate('/login');
+                                }}
+                                
+                                >Sign out</p>
                             </li>
                         </ul>
                     </div>
