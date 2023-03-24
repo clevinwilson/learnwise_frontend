@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import Button from '../Button/Button'
 import { useParams } from 'react-router-dom';
 import Loader from '../Loader/Loader';
-import { getCourseDetails } from '../../services/user';
+import { getCourseDetails, handleCheckout } from '../../services/user';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
-import axiosInstance from '../../axios/axios';
+import PayButton from '../PayButton/PayButton';
 
 function OrderSummary() {
   const { courseId } = useParams();
@@ -17,7 +17,7 @@ function OrderSummary() {
       .max(30, 'Must be 30 characters or less')
       .required('Address is Required'),
     pincode: Yup.number()
-      .max(6, 'Must be 6 characters or less')
+      .min(6, 'Must be 6 characters')
       .required('Pincode is Required'),
   });
 
@@ -29,6 +29,15 @@ function OrderSummary() {
     validationSchema: validate,
     onSubmit: async (values) => {
       console.log(values);
+      handleCheckout(values, courseId).then((response) => {
+        console.log(response);
+        if (response.data.url) {
+          window.location.href = response.data.url
+        }
+      })
+        .catch((err) => {
+          console.log(err);
+        })
     }
   })
 
@@ -52,6 +61,7 @@ function OrderSummary() {
       return formFields
     })
   }
+
 
   return (
     <section>
@@ -107,6 +117,7 @@ function OrderSummary() {
                   <Button onClick={() => formik.handleSubmit()} >
                     Pay Securely
                   </Button>
+                  {/* <PayButton/> */}
                 </div>
               </div>
 
@@ -148,9 +159,10 @@ function OrderSummary() {
                 <h5 className="mb-3 mt-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Payment</h5>
                 <p className="mb-3 text-sm text-gray-700 dark:text-gray-400">Make payment for the product here</p>
                 <div className='mt-8'>
-                  <Button className>
+                  <Button >
                     Pay Securely
                   </Button>
+                  
                 </div>
               </div>
 

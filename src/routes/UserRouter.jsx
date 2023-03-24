@@ -9,6 +9,7 @@ import CourseDetailsPage from '../pages/user/CourseDetailsPage';
 import OrderSummaryPage from '../pages/user/OrderSummaryPage';
 import EnrolledCoursesPage from '../pages/user/EnrolledCoursesPage';
 import LearnPage from '../pages/user/LearnPage';
+import OrderSuccessPage from '../pages/user/OrderSuccessPage';
 
 function UserRouter() {
   return (
@@ -22,6 +23,8 @@ function UserRouter() {
       <Route element={< OrderSummaryPage />} path='/course-payment/:courseId' />
       <Route element={<EnrolledCoursesPage />} path='/my-enrollments' />
       <Route element={<LearnPage />} path='/course/learn' />
+      <Route element={<OrderSuccessPage />} path='/order-success' />
+
 
 
       <Route element={<HomePage />} path='/' />
