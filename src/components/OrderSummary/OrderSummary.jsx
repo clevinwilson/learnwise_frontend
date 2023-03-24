@@ -5,12 +5,15 @@ import Loader from '../Loader/Loader';
 import { getCourseDetails, handleCheckout } from '../../services/user';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
-import PayButton from '../PayButton/PayButton';
+import LoadingButton from '../LoadingButton/LoadingButton';
+
 
 function OrderSummary() {
   const { courseId } = useParams();
   const [courseDetails, setCourseDetails] = useState({});
-  let [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [btnloading, setBtnLoading] = useState(false);
+
 
   const validate = Yup.object({
     address: Yup.string()
@@ -28,9 +31,9 @@ function OrderSummary() {
     },
     validationSchema: validate,
     onSubmit: async (values) => {
-      console.log(values);
+      setBtnLoading(true);
       handleCheckout(values, courseId).then((response) => {
-        console.log(response);
+        setBtnLoading(false);
         if (response.data.url) {
           window.location.href = response.data.url
         }
@@ -114,9 +117,12 @@ function OrderSummary() {
                 <h5 className="mb-3 mt-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Payment</h5>
                 <p className="mb-3 text-sm text-gray-700 dark:text-gray-400">Make payment for the product here</p>
                 <div className='mt-8'>
-                  <Button onClick={() => formik.handleSubmit()} >
+                  {/* <Button onClick={() => formik.handleSubmit()} >
                     Pay Securely
-                  </Button>
+                  </Button> */}
+                  <LoadingButton onClick={formik.handleSubmit} loading={btnloading}>
+                    Pay Securely
+                  </LoadingButton>
                   {/* <PayButton/> */}
                 </div>
               </div>
@@ -162,7 +168,7 @@ function OrderSummary() {
                   <Button >
                     Pay Securely
                   </Button>
-                  
+
                 </div>
               </div>
 
