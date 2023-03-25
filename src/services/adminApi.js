@@ -45,7 +45,7 @@ const unBlockUser=(userId)=>{
 }
 
 const unBlockTeacher=(teacherId)=>{
-    return axiosInstance.get(`/admin/unblock-teacher/${teacherId}`, { headers: getToken() })
+    return axiosInstance.get(`/admin/unblock-teacher/${teacherId}`, { headers: getToken() }) 
 }
 
 export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher }

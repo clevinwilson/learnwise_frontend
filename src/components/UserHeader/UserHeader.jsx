@@ -13,7 +13,6 @@ function UserHeader() {
     useEffect(() => {
         if (!user.id) {
             authUser().then((response) => {
-                console.log(response.data);
                 if (response.data.status) {
                     dispatch(
                         setUserDetails({
@@ -54,7 +53,7 @@ function UserHeader() {
                 <a className="text-3xl font-bold leading-none" href="#">
                     <img src="../../../public/images/LearnWise-logo.png" width="130px" alt="" />
                 </a>
-                <div className="flex items-center md:order-2">
+                <div className="flex items-center md:order-2 cursor-pointer">
 
 
                     {user.firstName ? <img className="w-9 h-9 rounded-full object-cover" src={user.id ? user.image : 'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png'} alt="user photo"
@@ -91,15 +90,12 @@ function UserHeader() {
                             <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
                         </div> */}
                         <ul className="py-2" aria-labelledby="user-menu-button">
-                            {/* <li>
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-                            </li>
+                        
                             <li>
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                                <Link to={'/my-enrollments'}>
+                                <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My Enrollments</p>
+                                </Link>
                             </li>
-                            <li>
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-                            </li> */}
                             <li>
                                 <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                     onClick={() => {

@@ -1,53 +1,60 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import SyllabusDropdown from '../SyllabusDropdown/SyllabusDropdown';
 import YouTube from 'react-youtube';
 import UserFooter from '../UserFooter/UserFooter';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setCourseDetails } from '../../Redux/Features/courseSlice';
+import getYouTubeID from 'get-youtube-id';
 
 function Learn() {
+    const dispatch = useDispatch();
     const [playerHeight, setPlayerHeight] = useState('');
-    const [faqs, setFaqs] = useState([
-        {
-            question: "Javascript - From scratch to advance",
-            answer:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pharetra lorem eu dolor rhoncus, at scelerisque ligula gravida. Sed porta id mi sit amet convallis. Etiam iaculis massa sit amet lacus blandit sodales. Nulla ultrices velit a diam placerat congue. Pellentesque iaculis, ipsum quis eleifend dapibus, est dui eleifend ante, quis fermentum mi ligula quis nisl. Ut et ex dui. Integer id venenatis quam.",
-            open: true
-        },
-        {
-            question: "Who is the most awesome person?",
-            answer: "You! The viewer!",
-            open: false
-        },
-        {
-            question:
-                "How many questions does it take to makes a succesful FAQ Page?",
-            answer: "This many!",
-            open: false
-        }
-    ]);
+    const courseDetails = useSelector((state) => state.course.value);
+    const [videoId, setVideoId] = useState();
 
-    const toggleFAQ = index => {
-        setFaqs(
-            faqs.map((faq, i) => {
-                if (i === index) {
-                    faq.open = !faq.open;
-                } else {
-                    faq.open = false;
+    console.log(courseDetails);
+    //toggle dropdown
+    const toggleDropdown = index => {
+        let course = courseDetails.course.map((course, i) => {
+            if (i === index) {
+                return {
+                    ...course,
+                    open: !course.open
                 }
-
-                return faq;
-            })
-        );
+            } else {
+                return {
+                    ...course,
+                    open: false
+                }
+            }
+        })
+        dispatch(setCourseDetails({ ...courseDetails, course }));
     };
 
+
+    //youtube window opts
     const opts = {
         height: playerHeight,
         width: '100%',
+        playerVars: {
+            autoplay: 1,
+        },
     };
 
+    //youtube video id generator
+
+    const getYoutubeVideoId = (videoUrl) => {
+        console.log(videoUrl);
+        setVideoId(getYouTubeID(videoUrl));
+        console.log(videoId);
+    }
+
+
+
     useEffect(() => {
+        getYoutubeVideoId(courseDetails.course[0].lessons[0].videoUrl);
+        //screen resize
         function handleResize() {
-            console.log();
             const windowWidth = window.innerWidth
             if (windowWidth >= 1080) {
                 setPlayerHeight("589");
@@ -57,15 +64,13 @@ function Learn() {
                 setPlayerHeight("240");
             }
         }
-
         handleResize();
-
         window.addEventListener('resize', handleResize);
-
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const videoId = 'DKlZRKmMdRQ';
+
+
 
     return (
         <section>
@@ -82,9 +87,15 @@ function Learn() {
                         </div>
 
                         <div>
-                            <div>
-                                <YouTube videoId={videoId} opts={opts} />
-                            </div>
+                           {videoId?
+                                <div>
+                                    <YouTube videoId={videoId} opts={opts} />
+                                </div>
+                                :
+                                <div>
+                                    <img src="" alt="" />
+                                </div>
+                           }
 
 
                             <div className="course-info-wrap p-5">
@@ -141,10 +152,10 @@ function Learn() {
                                 <h3 className="text-2xl  font-semibold tracking-wider">Syllabus</h3>
                             </div>
                             <div>
-                                <div className="p-1 mt-14">
+                                <div className=" mt-14">
                                     <div className="syllabus syllabus-wrap    rounded-lg">
-                                        {faqs.map((faq, index) => (
-                                            <SyllabusDropdown faq={faq} index={index} key={index} toggleFAQ={toggleFAQ} />
+                                        {courseDetails.course && courseDetails.course.map((course, index) => (
+                                            <SyllabusDropdown course={course} index={index} key={index} toggleDropdown={toggleDropdown} getYoutubeVideoId={getYoutubeVideoId} />
                                         ))}
                                     </div>
                                 </div>

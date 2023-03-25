@@ -18,7 +18,7 @@ function UserRouter() {
       <Route element={<PrivateRoutes user={true} />} >
         <Route element={< OrderSummaryPage />} path='/course-payment/:courseId' />
         <Route element={<EnrolledCoursesPage />} path='/my-enrollments' />
-        <Route element={<LearnPage />} path='/course/learn' />
+        <Route element={<LearnPage />} path='/course/learn/:courseId' />
         <Route element={<OrderSuccessPage />} path='/order-success' />
       </Route>
 
