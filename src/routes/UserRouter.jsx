@@ -10,6 +10,7 @@ import OrderSummaryPage from '../pages/user/OrderSummaryPage';
 import EnrolledCoursesPage from '../pages/user/EnrolledCoursesPage';
 import LearnPage from '../pages/user/LearnPage';
 import OrderSuccessPage from '../pages/user/OrderSuccessPage';
+import AllCoursePage from '../pages/user/AllCoursePage';
 
 function UserRouter() {
   return (
@@ -26,6 +27,7 @@ function UserRouter() {
       <Route element={<OtpPage />} path='/otp' />
       <Route element={<LoginPage />} path='/login' />
       <Route element={<SignupPage />} path='/signup' />
+      <Route element={<AllCoursePage />} path='/courses' />
       <Route element={<CourseDetailsPage />} path='/course-details/:courseId' />
     </Routes>
   )
