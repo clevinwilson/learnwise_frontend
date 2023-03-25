@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import { useSelector,useDispatch } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
 import { authUser } from '../../services/user';
 import { setUserDetails, setSignoutState } from "../../Redux/Features/userSlice";
 
 
 function UserHeader() {
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
-    useEffect(()=>{
-        if(!user._id){
-            authUser().then((response)=>{
+    useEffect(() => {
+        if (!user.id) {
+            authUser().then((response) => {
                 console.log(response.data);
-                dispatch(
-                    setUserDetails({
-                        name: response.data.user.firstName,
-                        id: response.data.user._id,
-                        email: response.data.user.email,
-                        image: response.data.user.picture,
-                        token: response.data.token,
-                    })
-                );
+                if (response.data.status) {
+                    dispatch(
+                        setUserDetails({
+                            name: response.data.user.firstName,
+                            id: response.data.user._id,
+                            email: response.data.user.email,
+                            image: response.data.user.picture,
+                            token: response.data.token,
+                        })
+                    );
+                } else {
+
+                    localStorage.removeItem('JwtToken');
+                    dispatch(setSignoutState({}));
+
+                }
+
             })
         }
-    },[])
+    }, [])
     const [sidebar, setSidebar] = useState(false);
     const [profileBox, setProfileBox] = useState(false);
     return (
@@ -49,7 +57,7 @@ function UserHeader() {
                 <div className="flex items-center md:order-2">
 
 
-                    {user.firstName ? <img className="w-9 h-9 rounded-full object-cover" src={user.id ? user.image :'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png'} alt="user photo"
+                    {user.firstName ? <img className="w-9 h-9 rounded-full object-cover" src={user.id ? user.image : 'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png'} alt="user photo"
                         onClick={() => {
                             setProfileBox(!profileBox);
                         }} />
@@ -93,13 +101,13 @@ function UserHeader() {
                                 <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
                             </li> */}
                             <li>
-                                <p  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                onClick={()=>{
-                                    localStorage.removeItem('JwtToken');
-                                    dispatch(setSignoutState());
-                                    navigate('/login');
-                                }}
-                                
+                                <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                    onClick={() => {
+                                        localStorage.removeItem('JwtToken');
+                                        dispatch(setSignoutState());
+                                        navigate('/login');
+                                    }}
+
                                 >Sign out</p>
                             </li>
                         </ul>
@@ -130,7 +138,7 @@ function UserHeader() {
                         </svg>
                     </li>
                     <li><a className="text-sm text-gray-400 hover:font-bold focus:text-violet-600 hover:text-violet-600" href="#">Challenges</a></li>
-                    
+
                 </ul>
 
             </nav>

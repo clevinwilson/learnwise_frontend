@@ -33,10 +33,11 @@ function OrderSummary() {
     onSubmit: async (values) => {
       setBtnLoading(true);
       handleCheckout(values, courseId).then((response) => {
-        setBtnLoading(false);
         if (response.data.url) {
           window.location.href = response.data.url
         }
+        setBtnLoading(false);
+
       })
         .catch((err) => {
           console.log(err);

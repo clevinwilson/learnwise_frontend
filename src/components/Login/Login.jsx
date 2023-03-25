@@ -69,7 +69,9 @@ function Login(props) {
                     );
                     navigate("/");
 
-                }).catch((err) => { generateError("Something went wrong please reload the page") })
+                }).catch((err) => { 
+                    console.log(err);
+                    generateError("Something went wrong please reload the page") })
             } catch (err) {
                 generateError("Something went wrong please reload the page")
             }
