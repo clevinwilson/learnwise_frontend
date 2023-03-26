@@ -40,4 +40,9 @@ const getEnrolledCourse = () => {
 const isCourseEnrolled = (courseId) => {
     return axiosInstance.get(`/is-course-enrolled/${courseId}`, { headers: getToken() })
 }
-export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled }
+
+//search course
+const search = (query)=>{
+    return axiosInstance.get(`/search?q=${query}`)
+}
+export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search }

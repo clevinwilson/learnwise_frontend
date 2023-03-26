@@ -1,6 +1,7 @@
 import React from 'react';
 import './BannerWithSearch.scss';
 import Button from '../Button/Button';
+import { Link } from 'react-router-dom';
 
 function BannerWithSearch() {
     return (
@@ -31,7 +32,9 @@ function BannerWithSearch() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </div>
-                        <input style={{ '--tw-ring-color': '#fff' }} className="peer h-full w-full outline-none text-sm text-gray-700 pr-2 focus:border-white border-white" type="text" id="search" placeholder="Search Course.." />
+                       <Link to={'/search'}>
+                            <input style={{ '--tw-ring-color': '#fff' }} readOnly className="peer h-full w-full outline-none text-sm text-gray-700 pr-2 focus:border-white border-white" type="text" id="search" placeholder="Search Course.." />
+                       </Link>
                     </div>
                 </div>
 

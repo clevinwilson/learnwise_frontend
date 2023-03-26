@@ -11,6 +11,7 @@ import EnrolledCoursesPage from '../pages/user/EnrolledCoursesPage';
 import LearnPage from '../pages/user/LearnPage';
 import OrderSuccessPage from '../pages/user/OrderSuccessPage';
 import AllCoursePage from '../pages/user/AllCoursePage';
+import SearchPage from '../pages/user/SearchPage';
 
 function UserRouter() {
   return (
@@ -29,6 +30,9 @@ function UserRouter() {
       <Route element={<SignupPage />} path='/signup' />
       <Route element={<AllCoursePage />} path='/courses' />
       <Route element={<CourseDetailsPage />} path='/course-details/:courseId' />
+      <Route element={<SearchPage />} path='/search' />
+
+
     </Routes>
   )
 }
