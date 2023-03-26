@@ -6,26 +6,28 @@ function Search() {
     const [query, setQuery] = useState('');
     const [course, setCourse] = useState();
     const inputRef = useRef();
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         inputRef.current.focus();
     }, []);
 
     const handleSearch = () => {
-       try{
-          if(query != ""){
-              search(query).then((response) => {
-                  setCourse(response.data.result)
-              }).catch((err) => {
-                  console.log(err);
-              })
-          }
-       }catch(err){
-        console.log(err);
-       }
+        try {
+            if (query != "") {
+                search(query).then((response) => {
+                    setCourse(response.data.result)
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
         <div>
+
             <div className="flex flex-col p-2 py-6 mb-6 m-h-screen items-center">
                 <div className="bg-white items-center justify-between w-full flex rounded-full max-w-2xl drop-shadow-2xl p-2 mb-5 sticky" style={{ top: 5 }}>
                     <input ref={inputRef} value={query} onChange={(e) => { setQuery(e.target.value) }} className="  rounded-full w-full py-4 pl-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs" type="text" placeholder="Search" />
@@ -46,27 +48,26 @@ function Search() {
                 </div>}
 
             {course && course.length ? course.map((obj, index) => {
-                console.log(obj);
                 return (
                     <Link to={`/course-details/${obj._id}`}>
-                    <div key={index} className='mx-3 lg:mx-20 mb-10'>
-                        <div className="flex justify-center mt-4 sm:mx-10 m-3">
-                            <div className="flex p-4 w-full max-w-screen-lg hover:bg-violet-50 flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                <img className="rounded-md mt-4 sm:mt-0 w-56 h-32 object-cover" src={"http://localhost:3000/"+obj.image.path}  />
-                                <div className="flex flex-col ml-0 sm:ml-3 justify-between mt-2 sm:0 p-4 leading-normal">
-                                    <h5 className="mb-2 text-xl  font-bold tracking-tight text-gray-900 dark:text-white">{obj.name}</h5>
-                                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{obj.description}</p>
+                        <div key={index} className='mx-3 lg:mx-20 mb-10'>
+                            <div className="flex justify-center mt-4 sm:mx-10 m-3">
+                                <div className="flex p-4 w-full max-w-screen-lg hover:bg-violet-50 flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    <img className="rounded-md mt-4 sm:mt-0 w-56 h-32 object-cover" src={"http://localhost:3000/" + obj.image.path} />
+                                    <div className="flex flex-col ml-0 sm:ml-3 justify-between mt-2 sm:0 p-4 leading-normal">
+                                        <h5 className="mb-2 text-xl  font-bold tracking-tight text-gray-900 dark:text-white">{obj.name}</h5>
+                                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{obj.description}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </Link>
                 )
             })
-            :
-            <div className='flex justify-center items-center'>
+                :
+                <div className='flex justify-center items-center'>
                     <img src="/images/nocourse.svg" alt="" />
-            </div>
+                </div>
             }
         </div>
     )
