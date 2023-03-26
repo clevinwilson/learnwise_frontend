@@ -74,20 +74,20 @@ function CourseDetails() {
                             {/* //author section */}
                             <div>
                                 <h3 className="text-2xl  mt-8 font-semibold mb-4 ">Author</h3>
-                                <blockquote class="rounded-lg bg-gray-100 p-8">
-                                    <div class="flex items-center gap-4">
+                                <blockquote className="rounded-lg bg-gray-100 p-8">
+                                    <div className="flex items-center gap-4">
                                         <img
                                             alt="Man"
                                             src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
-                                            class="h-16 w-16 rounded-full object-cover"
+                                            className="h-16 w-16 rounded-full object-cover"
                                         />
 
                                         <div>
-                                            <p class="mt-1 text-lg font-medium text-gray-700">{courseDetails.teacher && courseDetails.teacher.firstName}</p>
+                                            <p className="mt-1 text-lg font-medium text-gray-700">{courseDetails.teacher && courseDetails.teacher.firstName}</p>
                                         </div>
                                     </div>
 
-                                    <p class="line-clamp-2 sm:line-clamp-none mt-4 text-gray-500">
+                                    <p className="line-clamp-2 sm:line-clamp-none mt-4 text-gray-500">
                                         {courseDetails.teacher && courseDetails.teacher.about}
                                     </p>
                                 </blockquote>

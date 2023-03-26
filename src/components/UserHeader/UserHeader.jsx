@@ -62,8 +62,13 @@ function UserHeader() {
                         }} />
                         :
                         <div>
-                            <a className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="#">Sign In</a>
-                            <a className="hidden lg:inline-block py-2 px-5 bg-green-400 hover:bg-green-500 text-sm text-white font-bold rounded-xl transition duration-200" href="#">Sign up</a>
+                            <Link to={'/login'}>
+                            <div className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="#">Sign In</div>
+                            </Link>
+
+                            <Link to={'/signup'}>
+                            <div className="hidden lg:inline-block py-2 px-5 bg-green-400 hover:bg-green-500 text-sm text-white font-bold rounded-xl transition duration-200" href="#">Sign up</div>
+                            </Link>
 
                             <div className=' lg:hidden '>
 
@@ -101,7 +106,7 @@ function UserHeader() {
                                     onClick={() => {
                                         localStorage.removeItem('JwtToken');
                                         dispatch(setSignoutState());
-                                        navigate('/login');
+                                        // navigate('/login');
                                     }}
 
                                 >Sign out</p>

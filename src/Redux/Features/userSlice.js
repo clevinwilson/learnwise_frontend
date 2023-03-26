@@ -20,7 +20,7 @@ const userSlice = createSlice({
             state.token = action.payload.token
         },
         setSignoutState: (state, action) => {
-            state.name = null;
+            state.firstName = null;
             state.id = null;
             state.email = null;
             state.image = null;

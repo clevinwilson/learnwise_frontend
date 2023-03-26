@@ -7,17 +7,17 @@ const getToken = () => {
 
 
 //user authentication in useeffect
-const authUser =()=>{
-    return axiosInstance.get('/user-authenticate', { headers:getToken() })
+const authUser = () => {
+    return axiosInstance.get('/user-authenticate', { headers: getToken() })
 }
 
 //top courses in home page 
-const getTopCourse=()=>{
+const getTopCourse = () => {
     return axiosInstance.get('/top-course');
 }
 
 //course details
-const getCourseDetails=(courseId)=>{
+const getCourseDetails = (courseId) => {
     return axiosInstance.get(`/course-details/${courseId}`)
 }
 
@@ -27,13 +27,17 @@ const handleCheckout = (values, courseId) => {
 }
 
 //get all courses
-const getCourses=()=>{
+const getCourses = () => {
     return axiosInstance.get('/course')
 }
 
 //get Enrolled Course
-
-const getEnrolledCourse=()=>{
+const getEnrolledCourse = () => {
     return axiosInstance.get('/enrolled-course', { headers: getToken() })
 }
-export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse }
+
+//check whether user alread enrolled the couser
+const isCourseEnrolled = (courseId) => {
+    return axiosInstance.get(`/is-course-enrolled/${courseId}`, { headers: getToken() })
+}
+export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled }
