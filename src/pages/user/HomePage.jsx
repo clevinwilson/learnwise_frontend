@@ -14,7 +14,7 @@ function HomePage() {
       <UserHeader />
       <BannerWithSearch/>
       <TopCourses/>
-      <BottomNavigation />
+      {/* <BottomNavigation /> */}
       <ChallengesBanner/>
       <NewCourses/>
       <CommunityBanner/>

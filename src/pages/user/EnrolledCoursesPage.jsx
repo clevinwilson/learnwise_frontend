@@ -31,7 +31,7 @@ function EnrolledCoursesPage() {
         )
       })
       }
-      <BottomNavigation />
+      {/* <BottomNavigation /> */}
       <UserFooter />
     </React.Fragment>
   )

@@ -9,7 +9,7 @@ function OrderSummaryPage() {
     <React.Fragment>
       <UserHeader />
       <OrderSummary />
-      <BottomNavigation/>
+      {/* <BottomNavigation/> */}
       <UserFooter/>
     </React.Fragment>
   )

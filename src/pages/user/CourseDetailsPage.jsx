@@ -9,7 +9,7 @@ function CourseDetailsPage() {
     <React.Fragment>
       <UserHeader />
       <CourseDetails />
-      <BottomNavigation />
+      {/* <BottomNavigation /> */}
       <Footer />
     </React.Fragment>
   )

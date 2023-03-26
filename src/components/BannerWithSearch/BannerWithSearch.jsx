@@ -15,7 +15,7 @@ function BannerWithSearch() {
                     </h2>
                 </div>
                 <div className='mb-10 tracking-wide'>
-                    <p className='text-xs sm:text-base md:leading-5 md:leading-6'>Learn the skills you need to take the next step and every step <br />
+                    <p className='text-xs sm:text-base sm:leading-5 md:leading-6'>Learn the skills you need to take the next step and every step <br />
                         after. Log in now to save on courses through March 1.</p>
                 </div>
                 <div className='mb-10'>
