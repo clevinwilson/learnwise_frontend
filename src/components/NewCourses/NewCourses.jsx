@@ -16,7 +16,7 @@ function NewCourses() {
         <div className='p-5 flex justify-center ml-0  md:ml-10  flex-col'>
           <h2 className='text-3xl sm:text-4xl  lg:text-5xl font-black mb-3 tracking-wide banner-title'>Learn Without Limits</h2>
 
-          <p className='mb-3 p-1 md:w-96' style={{ color: "#595668" }}>It's ok to be confused as a beginner. Tech is
+          <p className='mb-3 p-1 lg:w-96' style={{ color: "#595668" }}>It's ok to be confused as a beginner. Tech is
             vast but don’t worry. Our curated bundles will
             act as a guided learning path. Check out all Of
             our bundles and start your programming

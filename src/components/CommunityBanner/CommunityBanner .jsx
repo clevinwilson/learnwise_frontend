@@ -19,7 +19,7 @@ function CommunityBanner () {
               <a style={{ color: "#659f7b" }} className='text-xl font-black' href=""> View Challenges</a>
           </div>
           <div className=' justify-center items-center hidden sm:flex'>
-              <img src="images/community.png" alt="" />
+              <img src="images/community.png" />
           </div>
           
       </div>

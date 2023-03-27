@@ -51,7 +51,7 @@ function UserHeader() {
                 </div>
                 <Link to={'/'}>
                     <a className="text-3xl font-bold leading-none" href="#">
-                        <img src="/images/LearnWise-logo.png" width="130px" alt="" />
+                        <img src="/images/LearnWise-logo.png" width="130px"  />
                     </a>
                 </Link>
 
@@ -74,7 +74,7 @@ function UserHeader() {
 
                     <Link to={'/search'}>
                         <div>
-                            <div className=' lg:hidden '>
+                            <div className=' md:hidden '>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20"
@@ -107,6 +107,7 @@ function UserHeader() {
                                     onClick={() => {
                                         localStorage.removeItem('JwtToken');
                                         dispatch(setSignoutState());
+                                        setProfileBox(false);
                                         // navigate('/login');
                                     }}
 
@@ -155,7 +156,7 @@ function UserHeader() {
                 <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25" />
                 <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-4/6 max-w-xs py-6 px-6 bg-white border-r overflow-y-auto">
                     <div className="flex items-center mb-8">
-                        <a className="mr-auto text-3xl font-bold leading-none" href="#">
+                        <a className="mr-auto text-3xl font-bold leading-none">
                             <img className='w-32' src="/images/LearnWise-logo.png" />
                         </a>
                         <button className="navbar-close"

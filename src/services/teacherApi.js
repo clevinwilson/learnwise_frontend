@@ -8,7 +8,6 @@ const authTeacher = () => {
     const headers = { Authorization: `Bearer ${token}` };
     return axiosInstance.get('/teacher/auth', { headers })
 
-
 }
 
 

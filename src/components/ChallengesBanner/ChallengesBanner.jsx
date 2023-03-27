@@ -5,7 +5,7 @@ function ChallengesBanner() {
   return (
       <div className='grid grid-cols-1 sm:grid-cols-2 challenges-banner-wrap banner-wrap'>
         <div className=' justify-center items-center hidden sm:flex'>
-              <img src="../../../public/images/ChallengesBanner.png" alt="" />
+              <img src="../../../public/images/ChallengesBanner.png"  />
         </div>
         <div className='py-10 px-2 md:px-0 flex justify-evenly flex-col'>
               <h2 className='text-3xl sm:text-4xl  lg:text-5xl font-black mb-3 tracking-wide banner-title'>Learn Better By <br />

@@ -34,6 +34,7 @@ function PrivateRoutes(props) {
  
 
   if (auth == null) return
+  
   return (
     auth ? <Outlet /> : props.user ? < Navigate to="/login" /> : props.admin ? < Navigate to="admin/login" /> : < Navigate to="teacher/login" />
   )
