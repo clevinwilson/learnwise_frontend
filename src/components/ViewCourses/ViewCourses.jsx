@@ -4,6 +4,9 @@ import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { getCourses, deleteCourse } from '../../services/teacherApi';
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCourseDetails } from '../../Redux/Features/courseSlice';
 
 
 function classNames(...classes) {
@@ -12,10 +15,13 @@ function classNames(...classes) {
 
 
 function ViewCourses() {
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
   const [course, setCourse] = useState([]);
 
   useEffect(() => {
     getCourses().then((response) => {
+      console.log(response.data.course);
       setCourse(response.data.course);
     })
   }, []);
@@ -33,7 +39,7 @@ function ViewCourses() {
   }
 
 
-  const handleDelete = (courseId)=>{
+  const handleDelete = (courseId) => {
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover file!",
@@ -43,22 +49,22 @@ function ViewCourses() {
     })
       .then((willDelete) => {
         if (willDelete) {
-          deleteCourse(courseId).then((response)=>{
-            if(response.data.status){
-              setCourse(course.filter (obj=>obj._id!=courseId));
+          deleteCourse(courseId).then((response) => {
+            if (response.data.status) {
+              setCourse(course.filter(obj => obj._id != courseId));
               successMessaage(response.data.message);
-            }else{
+            } else {
               generateError(response.data.message);
             }
           })
-        } 
+        }
       });
   }
 
 
   return (
 
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-5 md:mr-6 shadow-2xl">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg p-5 md:mr-6 ">
       <div className="flex items-center justify-between pb-4">
         <div>
 
@@ -175,7 +181,10 @@ function ViewCourses() {
                     {obj.price}
                   </td>
                   <td className="px-6 py-4 flex justify-center items-center">
-                    <button type="button" class="text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-200 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-800">
+                    <button type="button" onClick={() => { 
+                      navigate(`/teacher/edit-course/${obj._id}`)
+                      dispatch(setCourseDetails(obj));
+                  }} class="text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-4 focus:ring-yellow-200 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-800">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                       </svg>

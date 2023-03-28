@@ -1,13 +1,14 @@
 import React from 'react';
 import axiosInstance from '../axios/axios';
 
-
+const getToken = () => {
+    return { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
+}
 
 const authTeacher = () => {
     const token = localStorage.getItem('teacherJwtToken');
     const headers = { Authorization: `Bearer ${token}` };
     return axiosInstance.get('/teacher/auth', { headers })
-
 }
 
 
@@ -26,4 +27,8 @@ const deleteCourse=(courseId)=>{
     const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
     return axiosInstance.delete(`/teacher/delete-course/${courseId}`, { headers })
 }
-export { authTeacher, addCourse, getCourses, deleteCourse }
+
+const getCourseDetails=(courseId)=>{
+    return axiosInstance.get(`/teacher/course-details/${courseId}`, { headers: getToken()})
+}
+export { authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails }
