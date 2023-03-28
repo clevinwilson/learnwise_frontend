@@ -158,6 +158,7 @@ function EditCourse() {
     }
 
 
+    //edit lesson
 
     const EditLessonFormik = useFormik({
         initialValues: {
@@ -165,15 +166,10 @@ function EditCourse() {
             lessonName: "",
             videoUrl: ""
         },
-        // validationSchema: validateLesson,
         onSubmit: (values) => {
             setChapterDetails({ chapter: chapterDetails.chapter, lessons: [...chapterDetails.lessons, values] })
         }
     })
-
-
-
-
 
     const handEditleLessonChange = (e) => {
         EditLessonFormik.setValues((prev) => {
@@ -187,6 +183,16 @@ function EditCourse() {
     //delete chapter 
     const handleChapterDelete = (chapterId) => {
         setCourse(course.filter((chapter) => chapter._id != chapterId))
+    }
+
+    //delete lesson
+    const handleDeleteLesson =(lessonId)=>{
+        // setLesson(chapterDetails.filter((lesson)=>lesson._id != lessonId))
+
+      let  updateLesson=chapterDetails.lessons.filter((obj)=>obj._id != lessonId)
+
+        setChapterDetails({ chapter: chapterDetails.chapter, lessons: updateLesson })
+
     }
 
     return (
@@ -228,6 +234,7 @@ function EditCourse() {
 
 
                 <div className="flex flex-wrap -mx-3  mb-3">
+
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide  text-violet-700 text-xs font-bold mb-2" htmlFor="name">
                             Name
@@ -242,6 +249,7 @@ function EditCourse() {
                             <p className="text-red-500 text-xs ">{formik.errors.name}</p>
                         ) : null}
                     </div>
+
                     <div className="w-full md:w-1/2 px-3">
                         <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="category">
                             Category
@@ -259,6 +267,7 @@ function EditCourse() {
 
 
                 <div className="flex flex-wrap -mx-3  mb-3">
+
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="Duration">
                             Duration
@@ -345,7 +354,6 @@ function EditCourse() {
                                         data-te-ripple-color="light"
                                         onClick={() => {
                                             setChapterDetails(course.find(courses => courses.chapter === obj.chapter));
-                                            console.log(chapterDetails);
                                         }}
                                     >
                                         <div className="flex flex-col justify-between p-4 leading-normal">
@@ -353,12 +361,10 @@ function EditCourse() {
                                         </div>
                                     </a>
                                     <button type="button" className="ml-3 text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm p-2.5  text-center mr-2 mb-2 dark:bg-red-400 dark:hover:bg-red-500 dark:focus:ring-red-900"
-                                        onClick={() => { handleChapterDelete(obj._id) }}
-                                    >
+                                        onClick={() => { handleChapterDelete(obj._id) }}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
-
                                         <span className="sr-only">Icon description</span>
                                     </button>
                                 </div>
@@ -656,14 +662,21 @@ function EditCourse() {
                                     {chapterDetails ?
                                         chapterDetails.lessons.map((obj, index) => {
                                             return (
-                                                <div key={index} className='p-3 w-full md:w-1/2'>
-                                                    <a href="#" className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                                <div key={index} className='p-3 w-full flex justify-center items-center md:w-1/2'>
+                                                    <a  className="flex w-full flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                                                         <div className="flex flex-col justify-between p-4 leading-normal">
                                                             <h5 className=" text-lg font-semibold tracking-tight text-gray-900 dark:text-white"><span className='mr-3'>{index + 1}.</span>{obj.lessonName}</h5>
 
                                                         </div>
                                                     </a>
+                                                    <button type="button" className="ml-3 text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm p-2.5  text-center mr-2 mb-2 dark:bg-red-400 dark:hover:bg-red-500 dark:focus:ring-red-900"
+                                                        onClick={() => { handleDeleteLesson(obj._id) }}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                        </svg>
 
+                                                        <span className="sr-only">Icon description</span>
+                                                    </button>
                                                 </div>
                                             )
                                         })
