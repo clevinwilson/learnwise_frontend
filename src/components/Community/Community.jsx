@@ -1,5 +1,7 @@
 import React from 'react';
 import GroupCard from '../GroupCard/GroupCard';
+import Button from '../Button/Button';
+import { BiPlus } from 'react-icons/bi';
 
 const newGroups = [
     {
@@ -76,7 +78,12 @@ function Community({ isTab }) {
           className={`w-full ${isTab ? "px-2 py-0" : "border-x px-5 py-3 sm:px-8"
               } border-base-300 `}
       >
-          <div className="text-xl font-bold sm:text-2xl">Your Community</div>
+          <div className='flex justify-between items-center mb-5'>
+              <h1 className='text-xl font-bold sm:text-2xl'>Your Community</h1>
+              <Button >
+                  <div className="flex justify-center items-center"> <BiPlus size={22} />  <span className='ml-4 hidden md:flex'>Create New</span></div>
+              </Button>
+          </div>
           <div className="mt-3 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {newGroups.map((group) => (
                   <GroupCard key={group.id} group={group} />
