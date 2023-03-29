@@ -3,7 +3,7 @@ import LoadingButton from '../LoadingButton/LoadingButton';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from "react-toastify";
-import { addCourse } from '../../services/teacherApi';
+import { addCourse, updateCourse } from '../../services/teacherApi';
 import './EditCourse.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -38,7 +38,7 @@ function EditCourse() {
                 window.removeEventListener('beforeunload', handleBeforeUnload);
             };
         } catch (err) {
-            console.log(err);
+            generateError(err)
         }
     }, [])
 
@@ -122,8 +122,7 @@ function EditCourse() {
         },
         validationSchema: validate,
         onSubmit: async (values) => {
-            console.log(values);
-            addCourse(values, course, image)
+            updateCourse(values, course, image, courseId)
                 .then((response) => {
 
                     if (response.data.status) {
@@ -133,6 +132,7 @@ function EditCourse() {
                     }
                 })
                 .catch((err) => {
+                    console.log(err);
                     generateError("Network error");
                 })
         }

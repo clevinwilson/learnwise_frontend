@@ -31,4 +31,9 @@ const deleteCourse=(courseId)=>{
 const getCourseDetails=(courseId)=>{
     return axiosInstance.get(`/teacher/course-details/${courseId}`, { headers: getToken()})
 }
-export { authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails }
+
+const updateCourse = (values, course, image, courseId)=>{
+    const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
+    return axiosInstance.put('/teacher/update-course', { ...values, course, image, courseId }, { headers: { ...headers, "Content-Type": "multipart/form-data" } })
+}
+export { authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails, updateCourse }
