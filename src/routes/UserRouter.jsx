@@ -12,6 +12,8 @@ import LearnPage from '../pages/user/LearnPage';
 import OrderSuccessPage from '../pages/user/OrderSuccessPage';
 import AllCoursePage from '../pages/user/AllCoursePage';
 import SearchPage from '../pages/user/SearchPage';
+import GroupPage from '../pages/user/GroupPage';
+import CommunityPage from '../pages/user/CommunityPage';
 
 function UserRouter() {
   return (
@@ -31,6 +33,9 @@ function UserRouter() {
       <Route element={<AllCoursePage />} path='/courses' />
       <Route element={<CourseDetailsPage />} path='/course-details/:courseId' />
       <Route element={<SearchPage />} path='/search' />
+      <Route element={<GroupPage />} path='/groups' />
+      <Route element={<CommunityPage />} path='/community' />
+
 
 
     </Routes>
