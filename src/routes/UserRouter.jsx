@@ -14,6 +14,7 @@ import AllCoursePage from '../pages/user/AllCoursePage';
 import SearchPage from '../pages/user/SearchPage';
 import GroupPage from '../pages/user/GroupPage';
 import CommunityPage from '../pages/user/CommunityPage';
+import CommunityHomePage from '../pages/user/CommunityHomePage';
 
 function UserRouter() {
   return (
@@ -35,6 +36,8 @@ function UserRouter() {
       <Route element={<SearchPage />} path='/search' />
       <Route element={<GroupPage />} path='/groups' />
       <Route element={<CommunityPage />} path='/community' />
+      <Route element={<CommunityHomePage />} path='/community-home' />
+
 
 
 
