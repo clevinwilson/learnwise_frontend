@@ -7,12 +7,14 @@ import { ToastContainer, toast } from "react-toastify";
 
 
 function AddCommunityModal(props) {
-    const fileInputRef = useRef();
 
+    //image input box 
+    const fileInputRef = useRef();
     const handleClick = () => {
         fileInputRef.current.click();
     };
 
+    //form validation 
     const validate = Yup.object({
         name: Yup.string()
             .required('Community Name Required'),
@@ -24,6 +26,7 @@ function AddCommunityModal(props) {
             .required('About Required'),
     })
 
+    //formik for community form 
     const formik = useFormik({
         initialValues: {
             name: "",
