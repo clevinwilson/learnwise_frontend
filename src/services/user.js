@@ -45,4 +45,10 @@ const isCourseEnrolled = (courseId) => {
 const search = (query)=>{
     return axiosInstance.get(`/search?q=${query}`)
 }
-export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search }
+
+//create community
+const createCommunity=(data)=>{
+    const headers = { Authorization: `Bearer ${localStorage.getItem('JwtToken')}` };
+    return axiosInstance.post('/create-community',{...data}, { headers: { ...headers, "Content-Type": "multipart/form-data" } })
+}
+export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search, createCommunity }

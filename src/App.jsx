@@ -5,6 +5,7 @@ import AdminRouter from './routes/AdminRouter';
 import UserRouter from './routes/UserRouter';
 import TeacherRouter from './routes/TeacherRouter';
 import swal from 'sweetalert';
+import { ToastContainer, toast } from "react-toastify";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
 
       {/* Admin Router */}
       <AdminRouter />
+      <ToastContainer />
 
     </BrowserRouter>
 
