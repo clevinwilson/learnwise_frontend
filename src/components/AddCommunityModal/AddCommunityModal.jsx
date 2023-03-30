@@ -37,7 +37,6 @@ function AddCommunityModal(props) {
         validationSchema: validate,
         onSubmit: async (values) => {
             createCommunity(values).then((response)=>{
-                console.log(response.data);
                 if(response.data.status){
                     props.close()
                     toast.success(response.data.message, {
@@ -48,11 +47,8 @@ function AddCommunityModal(props) {
                         position: "top-center",
                     });
                 }
-               
             })
-
         }
-
     })
 
     const handleChange = (e) => {

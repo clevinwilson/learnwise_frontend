@@ -1,27 +1,50 @@
-const GroupCard = ({ group }) => {
+import { useSelector } from "react-redux";
+import { joinCommunity } from "../../services/user";
+
+const GroupCard = ({ community, joined }) => {
+    const user = useSelector((state) => state.user);
+    const handleJoin=()=>{
+        joinCommunity(user.id,community._id).then((response)=>{
+            console.log(response.data);
+        })
+    }
+
     return (
-        <div className="card card-compact bg-base-100 shadow-lg">
+        <div className="card cursor-pointer card-compact bg-base-100 shadow-lg">
             <figure>
-                <img src={group.image} alt="" className="aspect-[2/1] object-cover" />
+                <img src={`${import.meta.env.VITE_SERVER_URL}${community.image.path}`} alt="" className="w-full aspect-[2/1] object-cover" />
             </figure>
             <div className="p-3">
-                <div className="flex justify-between gap-2">
+                <div className="flex justify-between gap-2 items-center">
                     <div className="flex items-start gap-3">
-                        <div className="mask mask-circle bg-base-200 p-1 text-2xl">
-                            {group.icon}
+                        <div className="  text-2xl">
+                            <img className="h-12 w-12 mask mask-circle object-cover" src={`${import.meta.env.VITE_SERVER_URL}${community.image.path}`} alt="" />
                         </div>
                         <div>
                             <div
                                 className="cursor-pointer truncate text-base font-bold leading-6 hover:text-primary"
-                                data-tip={group.name}
+                                data-tip={community.name}
                             >
-                                {group.name}
+                                {community.name}
                             </div>
                             <div className="text-xs text-gray-500">
-                                {group.members} members
+                                {community.members.length} members
                             </div>
                         </div>
                     </div>
+                    {joined ?
+                        null
+                        :
+                        user.email ?
+                            <div>
+                                <div className="mr-3 cursor-pointer">
+                                    <h2 className="font-bold"
+                                    onClick={handleJoin}
+                                    >Join</h2>
+                                </div>
+                            </div>
+                            : null
+                    }
                 </div>
             </div>
         </div>

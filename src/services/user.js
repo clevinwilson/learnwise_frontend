@@ -51,4 +51,13 @@ const createCommunity=(data)=>{
     const headers = { Authorization: `Bearer ${localStorage.getItem('JwtToken')}` };
     return axiosInstance.post('/create-community',{...data}, { headers: { ...headers, "Content-Type": "multipart/form-data" } })
 }
-export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search, createCommunity }
+
+const getCommunity=()=>{
+    return axiosInstance.get('/community',{headers:getToken()});
+}
+
+const joinCommunity=(userId,communityId)=>{
+    return axiosInstance.put('/join-community', { userId, communityId }, { headers: getToken() });
+
+}
+export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search, createCommunity, getCommunity, joinCommunity }
