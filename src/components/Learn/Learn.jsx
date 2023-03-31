@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCourseDetails } from '../../Redux/Features/courseSlice';
 import getYouTubeID from 'get-youtube-id';
 import { Link } from 'react-router-dom'
-import { getCourseDetails } from '../../services/user';
+import { getCourseDetails } from '../../services/userApi';
 import { useParams } from 'react-router-dom';
 
 

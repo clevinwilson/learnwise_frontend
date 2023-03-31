@@ -9,14 +9,12 @@ import { setAdminDetails } from '../../Redux/Features/adminSlice';
 import { setTeacherDetails } from '../../Redux/Features/teacherSlice';
 import { useGoogleLogin } from '@react-oauth/google';
 import { authTeacher } from '../../services/teacherApi';
-import { authUser } from '../../services/user';
+import { authUser } from '../../services/userApi';
 import { authAdmin } from '../../services/adminApi'
 
 
 
 function Login(props) {
-
-
 
     const { teacher } = useSelector((state) => state)
     const dispatch = useDispatch();

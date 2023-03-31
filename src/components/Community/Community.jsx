@@ -3,12 +3,10 @@ import GroupCard from '../GroupCard/GroupCard';
 import Button from '../Button/Button';
 import { BiPlus } from 'react-icons/bi';
 import AddCommunityModal from '../AddCommunityModal/AddCommunityModal';
-import { getCommunity, getJoinedCommunity } from '../../services/user';
+import { getCommunity, getJoinedCommunity, joinCommunity } from '../../services/userApi';
 import { toast } from "react-toastify";
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../Loader/Loader';
-import { joinCommunity } from "../../services/user";
 
 
 
@@ -22,7 +20,15 @@ function Community({ isTab }) {
 
     const handleJoin = (communityId) => {
         joinCommunity(user.id, communityId).then((response) => {
-            console.log(response.data);
+            if(response.data.status){
+                toast.success(response.data.message, {
+                    position: "top-center",
+                });
+            }else{
+                toast.error(response.data.message, {
+                    position: "top-center",
+                });
+            }
         })
     }
 
@@ -83,7 +89,7 @@ function Community({ isTab }) {
                 <div className="mt-10 text-xl font-bold sm:text-2xl">Explore Community</div>
                 <div className="my-3 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {communitys.map((community) => (
-                        <GroupCard key={community._id} community={community} handleJoin={handleJoin} />
+                            <GroupCard key={community._id} community={community} handleJoin={handleJoin} />
                     ))}
                 </div>
             </div>

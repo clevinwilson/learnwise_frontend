@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const GroupCard = ({ community, joined, handleJoin }) => {
     const user = useSelector((state) => state.user);
-    
+    const navigate=useNavigate();
 
     return (
-        <div className="card cursor-pointer card-compact bg-base-100 shadow-lg">
-            <figure>
+        <div  className="card cursor-pointer card-compact bg-base-100 shadow-lg">
+            <figure onClick={() => { navigate('/community-home') }}>
                 <img src={`${import.meta.env.VITE_SERVER_URL}${community.image.path}`} alt="" className="w-full aspect-[2/1] object-cover" />
             </figure>
             <div className="p-3">

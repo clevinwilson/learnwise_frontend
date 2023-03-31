@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { isCourseEnrolled } from '../../services/user';
+import { isCourseEnrolled } from '../../services/userApi';
 import Button from '../Button/Button';
 
 

@@ -11,13 +11,13 @@ function AdminRouter() {
   return (
     <Routes>
       <Route element={<PrivateRoutes admin={true} />} >
-        <Route path='/admin/dashboard' element={<DashboardPage />} />
-        <Route path='/admin/add-teacher' element={<AddTeacherPage />} />
-        <Route path='/admin/teacher' element={<ViewTeachersPage />} />
-        <Route path='/admin/user' element={<ViewUserPage/>} />
+        <Route path='/dashboard' element={<DashboardPage />} />
+        <Route path='/add-teacher' element={<AddTeacherPage />} />
+        <Route path='/teacher' element={<ViewTeachersPage />} />
+        <Route path='/user' element={<ViewUserPage/>} />
       </Route>
       
-      <Route path='/admin/login' element={<AdminLogin />} />
+      <Route path='/' element={<AdminLogin />} />
     </Routes>
   )
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Button from '../Button/Button'
 import { useParams } from 'react-router-dom';
 import Loader from '../Loader/Loader';
-import { getCourseDetails, handleCheckout } from '../../services/user';
+import { getCourseDetails, handleCheckout } from '../../services/userApi';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
 import LoadingButton from '../LoadingButton/LoadingButton';

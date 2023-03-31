@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from "react-router-dom";
 import { authAdmin } from '../services/adminApi';
 import { authTeacher } from '../services/teacherApi';
-import { authUser } from '../services/user';
+import { authUser } from '../services/userApi';
 
 
 
@@ -36,7 +36,7 @@ function PrivateRoutes(props) {
   if (auth == null) return
   
   return (
-    auth ? <Outlet /> : props.user ? < Navigate to="/login" /> : props.admin ? < Navigate to="admin/login" /> : < Navigate to="teacher/login" />
+    auth ? <Outlet /> : props.user ? < Navigate to="/login" /> : props.admin ? < Navigate to="/admin" /> : < Navigate to="/teacher" />
   )
 }
 

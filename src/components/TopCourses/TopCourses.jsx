@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getTopCourse } from '../../services/user';
+import { getTopCourse } from '../../services/userApi';
 import CourseCard from '../CourseCard/CourseCard';
 import Loader from '../Loader/Loader';
 

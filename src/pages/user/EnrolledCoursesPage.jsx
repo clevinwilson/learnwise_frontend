@@ -4,7 +4,7 @@ import HorizontalCourseCard from '../../components/HorizontalCourseCard/Horizont
 import Loader from '../../components/Loader/Loader';
 import UserFooter from '../../components/UserFooter/UserFooter';
 import UserHeader from '../../components/UserHeader/UserHeader';
-import { getEnrolledCourse } from '../../services/user';
+import { getEnrolledCourse } from '../../services/userApi';
 
 function EnrolledCoursesPage() {
   const [enrolledCourse, setEnrolledCourse] = useState();

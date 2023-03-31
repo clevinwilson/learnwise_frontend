@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminRouter from './routes/AdminRouter';
@@ -12,16 +12,20 @@ function App() {
     <BrowserRouter>
 
       {/* User Router */}
-      <UserRouter />
+      <Routes>
+        <Route path={'/*'} element={<UserRouter />} />
+      </Routes>
 
-      
       {/* Teacher Router */}
-      <TeacherRouter />
-
-     
+      <Routes>
+        <Route path={'/teacher/*'} element={<TeacherRouter />} />
+      </Routes>
 
       {/* Admin Router */}
-      <AdminRouter />
+      <Routes>
+        <Route path={'/admin/*'} element={<AdminRouter />} />
+      </Routes>
+
       <ToastContainer />
 
     </BrowserRouter>

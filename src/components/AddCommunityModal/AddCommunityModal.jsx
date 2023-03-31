@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { BiCloudUpload } from "react-icons/bi";
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
-import { createCommunity } from '../../services/user';
+import { createCommunity } from '../../services/userApi';
 import { ToastContainer, toast } from "react-toastify";
 
 

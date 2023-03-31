@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { search } from '../../services/user';
+import { search } from '../../services/userApi';
 
 function Search() {
     const [query, setQuery] = useState('');

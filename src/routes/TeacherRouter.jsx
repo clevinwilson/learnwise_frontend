@@ -12,12 +12,12 @@ function TeacherRouter() {
     return (
         <Routes>
             <Route element={<PrivateRoutes teacher={true} />} >
-                <Route element={<TeacherDashboardPage />} path='/teacher/dashboard' />
-                <Route element={<AddCoursePage />} path='/teacher/add-course' />
-                <Route element={<ViewCoursePage />} path='/teacher/course' />
-                <Route element={<EditCoursePage/>} path='/teacher/edit-course/:courseId'/>
+                <Route element={<TeacherDashboardPage />} path='/dashboard' />
+                <Route element={<AddCoursePage />} path='/add-course' />
+                <Route element={<ViewCoursePage />} path='/course' />
+                <Route element={<EditCoursePage/>} path='/edit-course/:courseId'/>
             </Route>
-            <Route element={<TeacherLoginPage />} path='/teacher/login' />
+            <Route element={<TeacherLoginPage />} path='/' />
         </Routes>
     )
 }

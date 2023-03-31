@@ -3,7 +3,7 @@ import SyllabusDropdown from '../SyllabusDropdown/SyllabusDropdown';
 import BuyNowCard from '../BuyNowCard/BuyNowCard';
 import './CourseDetails.scss'
 import { useParams } from 'react-router-dom';
-import { getCourseDetails } from '../../services/user';
+import { getCourseDetails } from '../../services/userApi';
 import Loader from '../Loader/Loader';
 
 
