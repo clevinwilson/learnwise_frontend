@@ -1,13 +1,8 @@
 import { useSelector } from "react-redux";
-import { joinCommunity } from "../../services/user";
 
-const GroupCard = ({ community, joined }) => {
+const GroupCard = ({ community, joined, handleJoin }) => {
     const user = useSelector((state) => state.user);
-    const handleJoin=()=>{
-        joinCommunity(user.id,community._id).then((response)=>{
-            console.log(response.data);
-        })
-    }
+    
 
     return (
         <div className="card cursor-pointer card-compact bg-base-100 shadow-lg">
@@ -39,7 +34,7 @@ const GroupCard = ({ community, joined }) => {
                             <div>
                                 <div className="mr-3 cursor-pointer">
                                     <h2 className="font-bold"
-                                    onClick={handleJoin}
+                                        onClick={() => { handleJoin(community._id)}}
                                     >Join</h2>
                                 </div>
                             </div>

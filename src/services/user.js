@@ -58,6 +58,9 @@ const getCommunity=()=>{
 
 const joinCommunity=(userId,communityId)=>{
     return axiosInstance.put('/join-community', { userId, communityId }, { headers: getToken() });
-
 }
-export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search, createCommunity, getCommunity, joinCommunity }
+
+const getJoinedCommunity=()=>{
+    return axiosInstance.get('/joined-community', { headers: getToken() });
+}
+export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search, createCommunity, getCommunity, joinCommunity, getJoinedCommunity }
