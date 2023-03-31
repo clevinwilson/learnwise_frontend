@@ -1,15 +1,17 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const GroupCard = ({ community, joined, handleJoin }) => {
     const user = useSelector((state) => state.user);
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     return (
-        <div  className="card cursor-pointer card-compact bg-base-100 shadow-lg">
-            <figure onClick={() => { navigate('/community-home') }}>
-                <img src={`${import.meta.env.VITE_SERVER_URL}${community.image.path}`} alt="" className="w-full aspect-[2/1] object-cover" />
-            </figure>
+        <div className="card cursor-pointer card-compact bg-base-100 shadow-lg">
+            <Link to={'/community-home'} state={{ communityId: community._id } } >
+                <figure>
+                    <img src={`${import.meta.env.VITE_SERVER_URL}${community.image.path}`} alt="" className="w-full aspect-[2/1] object-cover" />
+                </figure>
+            </Link>
             <div className="p-3">
                 <div className="flex justify-between gap-2 items-center">
                     <div className="flex items-start gap-3">
@@ -35,7 +37,7 @@ const GroupCard = ({ community, joined, handleJoin }) => {
                             <div>
                                 <div className="mr-3 cursor-pointer">
                                     <h2 className="font-bold"
-                                        onClick={() => { handleJoin(community._id)}}
+                                        onClick={() => { handleJoin(community._id) }}
                                     >Join</h2>
                                 </div>
                             </div>

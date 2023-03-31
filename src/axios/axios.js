@@ -19,6 +19,7 @@ export const userInstance = axios.create({
 userInstance.interceptors.request.use((request)=>{
     const token = localStorage.getItem('JwtToken')
     request.headers.Authorization = `Bearer ${token}`
+    return request
 })
 
 export default axiosInstance;

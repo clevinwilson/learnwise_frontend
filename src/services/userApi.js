@@ -1,5 +1,5 @@
 import React from 'react'
-import axiosInstance from '../axios/axios';
+import axiosInstance, { userInstance } from '../axios/axios';
 
 const getToken = () => {
     return { Authorization: `Bearer ${localStorage.getItem('JwtToken')}` };
@@ -7,60 +7,64 @@ const getToken = () => {
 
 
 //user authentication in useeffect
-const authUser = () => {
+export const authUser = () => {
     return axiosInstance.get('/user-authenticate', { headers: getToken() })
 }
 
 //top courses in home page 
-const getTopCourse = () => {
+export const getTopCourse = () => {
     return axiosInstance.get('/top-course');
 }
 
 //course details
-const getCourseDetails = (courseId) => {
+export const getCourseDetails = (courseId) => {
     return axiosInstance.get(`/course-details/${courseId}`)
 }
 
 //checkout page
-const handleCheckout = (values, courseId) => {
+export const handleCheckout = (values, courseId) => {
     return axiosInstance.post('/create-checkout-session', { ...values, courseId }, { headers: getToken() })
 }
 
 //get all courses
-const getCourses = () => {
+export const getCourses = () => {
     return axiosInstance.get('/course')
 }
 
 //get Enrolled Course
-const getEnrolledCourse = () => {
+export const getEnrolledCourse = () => {
     return axiosInstance.get('/enrolled-course', { headers: getToken() })
 }
 
 //check whether user alread enrolled the couser
-const isCourseEnrolled = (courseId) => {
+export const isCourseEnrolled = (courseId) => {
     return axiosInstance.get(`/is-course-enrolled/${courseId}`, { headers: getToken() })
 }
 
 //search course
-const search = (query)=>{
+export const search = (query)=>{
     return axiosInstance.get(`/search?q=${query}`)
 }
 
 //create community
-const createCommunity=(data)=>{
+export const createCommunity=(data)=>{
     const headers = { Authorization: `Bearer ${localStorage.getItem('JwtToken')}` };
     return axiosInstance.post('/create-community',{...data}, { headers: { ...headers, "Content-Type": "multipart/form-data" } })
 }
 
-const getCommunity=()=>{
+export const getCommunity=()=>{
     return axiosInstance.get('/community',{headers:getToken()});
 }
 
-const joinCommunity=(userId,communityId)=>{
+export const joinCommunity=(userId,communityId)=>{
     return axiosInstance.put('/join-community', { userId, communityId }, { headers: getToken() });
 }
 
-const getJoinedCommunity=()=>{
+export const getJoinedCommunity=()=>{
     return axiosInstance.get('/joined-community', { headers: getToken() });
 }
-export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search, createCommunity, getCommunity, joinCommunity, getJoinedCommunity }
+
+export const getCommunityDetails=(communityId)=>{
+    return userInstance.get(`/community-details/${communityId}`)
+}
+// export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search, createCommunity, getCommunity, joinCommunity, getJoinedCommunity, getCommunityDetails }
