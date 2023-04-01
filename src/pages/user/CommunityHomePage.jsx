@@ -18,32 +18,33 @@ function CommunityHomePage() {
     const [activeTab, setActiveTab] = useState(CommunityTab[0].label);
     const [showModal, setShowModal] = useState(false)
 
-
+    //is community details is not there in state details will load from api 
     useEffect(() => {
-        if(!state){
+        if (!state) {
             getCommunityDetails(state.communityId).then((response) => {
                 console.log(response.data.communityDetails);
                 setCommunitys(response.data.communityDetails)
             })
-        }else{
+        } else {
             setCommunitys(state)
         }
     }, [])
 
-    const togglePostModal=()=>{
+    const togglePostModal = () => {
         setShowModal(true);
     }
 
-    const closePostModal=()=>{
+    const closePostModal = () => {
         setShowModal(false);
     }
 
+    //tab items
     const loadTab = () => {
         switch (activeTab) {
             case "Feed":
                 return <Feeds togglePostModal={togglePostModal} />;
             case "Groups":
-                return <Groups  />;
+                return <Groups />;
             case "Description":
                 return <p>{community?.description}</p>;
             case "Members":

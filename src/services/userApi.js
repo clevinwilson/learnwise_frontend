@@ -65,6 +65,6 @@ export const getJoinedCommunity=()=>{
 }
 
 export const getCommunityDetails=(communityId)=>{
-    return userInstance.get(`/community-details/${communityId}`)
+    return userInstance.get(`/community-details/${communityId}`, { headers: getToken() })
 }
 // export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search, createCommunity, getCommunity, joinCommunity, getJoinedCommunity, getCommunityDetails }
