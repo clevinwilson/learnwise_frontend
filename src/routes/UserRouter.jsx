@@ -24,6 +24,8 @@ function UserRouter() {
         <Route element={<EnrolledCoursesPage />} path='/my-enrollments' />
         <Route element={<LearnPage />} path='/course/learn/:courseId' />
         <Route element={<OrderSuccessPage />} path='/order-success' />
+        <Route element={<CommunityHomePage />} path='/community-home' />
+
       </Route>
 
 
@@ -36,7 +38,6 @@ function UserRouter() {
       <Route element={<SearchPage />} path='/search' />
       <Route element={<GroupPage />} path='/groups' />
       <Route element={<CommunityPage />} path='/community' />
-      <Route element={<CommunityHomePage />} path='/community-home' />
 
 
 

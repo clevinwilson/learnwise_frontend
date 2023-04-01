@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const GroupCard = ({ community, joined, handleJoin }) => {
     const user = useSelector((state) => state.user);
-    const navigate = useNavigate();
 
     return (
         <div className="card cursor-pointer card-compact bg-base-100 shadow-lg">
-            <Link to={'/community-home'} state={{ communityId: community._id } } >
+            <Link to={'/community-home'} state={community} >
                 <figure>
                     <img src={`${import.meta.env.VITE_SERVER_URL}${community.image.path}`} alt="" className="w-full aspect-[2/1] object-cover" />
                 </figure>

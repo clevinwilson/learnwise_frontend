@@ -4,6 +4,7 @@ import adminSidebarToogle from '../Features/adminSidebarToogle';
 import adminSlice from '../Features/adminSlice';
 import teacherSlice from '../Features/teacherSlice';
 import courseSlice from '../Features/courseSlice';
+import communitySlice from '../Features/communitySlice';
 
 
 
@@ -13,7 +14,8 @@ export default configureStore({
         adminSidebarToogle: adminSidebarToogle,
         admin:adminSlice,
         teacher:teacherSlice,
-        course: courseSlice
+        course: courseSlice,
+        community: communitySlice
     },
    
 })

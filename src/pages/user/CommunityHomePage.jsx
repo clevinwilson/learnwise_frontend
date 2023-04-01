@@ -8,6 +8,7 @@ import CommunityTab from '../../utils/CommunityTab';
 import Feeds from '../../components/CommunityTabs/Feeds';
 import Members from '../../components/CommunityTabs/Members';
 import Groups from '../../components/CommunityTabs/Groups';
+import PostModal from '../../components/Modal/PostModal';
 
 
 function CommunityHomePage() {
@@ -15,19 +16,34 @@ function CommunityHomePage() {
     const { state } = useLocation();
     const [community, setCommunitys] = useState({});
     const [activeTab, setActiveTab] = useState(CommunityTab[0].label);
+    const [showModal, setShowModal] = useState(false)
+
 
     useEffect(() => {
-        getCommunityDetails(state.communityId).then((response) => {
-            setCommunitys(response.data.communityDetails)
-        })
+        if(!state){
+            getCommunityDetails(state.communityId).then((response) => {
+                console.log(response.data.communityDetails);
+                setCommunitys(response.data.communityDetails)
+            })
+        }else{
+            setCommunitys(state)
+        }
     }, [])
+
+    const togglePostModal=()=>{
+        setShowModal(true);
+    }
+
+    const closePostModal=()=>{
+        setShowModal(false);
+    }
 
     const loadTab = () => {
         switch (activeTab) {
             case "Feed":
-                return <Feeds />;
+                return <Feeds togglePostModal={togglePostModal} />;
             case "Groups":
-                return <Groups />;
+                return <Groups  />;
             case "Description":
                 return <p>{community?.description}</p>;
             case "Members":
@@ -93,7 +109,7 @@ function CommunityHomePage() {
                             </div>
                         </div>
 
-                        <div className="p-2 md:p-8 bg-gray-50 grid grid-cols gap-4 dark:bg-gray-900  ">
+                        <div className="p-2 md:p-8 bg-gray-50  dark:bg-gray-900  ">
                             {loadTab()}
 
                         </div>
@@ -101,6 +117,7 @@ function CommunityHomePage() {
                     </div>
                 </div>
             </div>
+            {showModal ? <PostModal closePostModal={closePostModal} /> : ""}
             <CommunityNavigation />
         </>
 
