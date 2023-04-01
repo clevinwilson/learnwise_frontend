@@ -25,7 +25,7 @@ function CommunityNavigation() {
 
 
     return (
-        <div className="fixed flex sm:hidden bottom-0 w-full border-t border-base-300 bg-base-100">
+        <div className="fixed flex sm:hidden bottom-0 w-full z-50 border-t border-base-300 bg-base-100">
             <ul className="menu rounded-box menu-horizontal w-full justify-around bg-base-100">
                 {CommunitySidebarLink.map((item) => (
                     <li key={item.label}>

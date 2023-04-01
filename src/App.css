@@ -34,3 +34,11 @@
 .form-title-box {
     border-bottom: 1px solid #dbc3ff;
 }
+
+
+/* community tabs */
+
+.tab-active {
+    border-bottom: 3px solid #4b6bfb
+}
+
