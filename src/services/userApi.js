@@ -72,3 +72,9 @@ export const getCommunityDetails=(communityId)=>{
 export const createCommunityPost=(data)=>{
     return userInstance.post('/create-communityPost', { ...data }, { headers: {  "Content-Type": "multipart/form-data" } })
 }
+
+//load community feeds 
+export const getFeeds=(communityId)=>{
+    console.log(communityId,'ffffffffffffff');
+    return userInstance.get(`/community/feeds/${communityId}`,)
+}

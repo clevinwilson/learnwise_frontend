@@ -22,7 +22,6 @@ function CommunityHomePage() {
     useEffect(() => {
         if (!state) {
             getCommunityDetails(state.communityId).then((response) => {
-                console.log(response.data.communityDetails);
                 setCommunitys(response.data.communityDetails)
             })
         } else {
@@ -42,7 +41,7 @@ function CommunityHomePage() {
     const loadTab = () => {
         switch (activeTab) {
             case "Feed":
-                return <Feeds togglePostModal={togglePostModal} />;
+                return <Feeds togglePostModal={togglePostModal} community={state} />;
             case "Groups":
                 return <Groups />;
             case "Description":
