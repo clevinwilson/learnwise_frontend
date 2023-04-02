@@ -75,6 +75,5 @@ export const createCommunityPost=(data)=>{
 
 //load community feeds 
 export const getFeeds=(communityId)=>{
-    console.log(communityId,'ffffffffffffff');
     return userInstance.get(`/community/feeds/${communityId}`,)
 }

@@ -14,19 +14,20 @@ import PostModal from '../../components/Modal/PostModal';
 function CommunityHomePage() {
     const groupsIcon = ["🕺", "🎨", "🍳", "🎸"];
     const { state } = useLocation();
-    const [community, setCommunitys] = useState({});
+    const [community, setCommunitys] = useState();
     const [activeTab, setActiveTab] = useState(CommunityTab[0].label);
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false);
+    const [isAdmin,setIsAdmin]=useState(false);
 
     //is community details is not there in state details will load from api 
     useEffect(() => {
-        if (!state) {
-            getCommunityDetails(state.communityId).then((response) => {
-                setCommunitys(response.data.communityDetails)
+            getCommunityDetails(state._id).then((response) => {
+                console.log(response.data);
+                setCommunitys(response.data.communityDetails);
+                setIsAdmin(response.data.admin);
             })
-        } else {
-            setCommunitys(state)
-        }
+
+            // setCommunitys(state)
     }, [])
 
     const togglePostModal = () => {
@@ -41,7 +42,7 @@ function CommunityHomePage() {
     const loadTab = () => {
         switch (activeTab) {
             case "Feed":
-                return <Feeds togglePostModal={togglePostModal} community={state} />;
+                return <Feeds togglePostModal={togglePostModal} community={state} admin={isAdmin} />;
             case "Groups":
                 return <Groups />;
             case "Description":
@@ -65,7 +66,7 @@ function CommunityHomePage() {
                     <div className="bg-base-100">
                         <div>
                             <img
-                                src={community.image && import.meta.env.VITE_SERVER_URL + community.image.path}
+                                src={community ? import.meta.env.VITE_SERVER_URL + community.image.path :" "}
                                 className="aspect-[2/1] md:aspect-[3/1] w-full object-cover "
                                 alt=""
                             />
@@ -85,15 +86,15 @@ function CommunityHomePage() {
                                 <div className="flex flex-wrap items-start justify-between gap-3">
                                     <div>
                                         <div className="text-2xl font-bold">
-                                            {community.name && community.name}
+                                            {community && community.name}
                                         </div>
                                         <div className="text-sm">
-                                            {community.members && community.members.length} members &nbsp; ● &nbsp; {community.groups && community.groups.length} Groups
+                                            {community && community.members.length} members &nbsp; ● &nbsp; {community && community.groups.length} Groups
                                         </div>
                                     </div>
                                     <button className="btn btn-primary">Join</button>
                                 </div>
-                                <p>{community.about && community.about}</p>
+                                <p>{community && community.about}</p>
                             </div>
                             <div className="home-tabs tabs mt-7  justify-between border-b border-base-300 px-5">
                                 {CommunityTab

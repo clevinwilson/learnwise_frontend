@@ -4,7 +4,7 @@ import { getFeeds } from '../../services/userApi';
 import { toast } from 'react-toastify';
 
 
-function Feeds({ togglePostModal, community }) {
+function Feeds({ togglePostModal, community,admin }) {
     const user=useSelector(state=>state.user);
     const [loading, setLoading] = useState(true);
     const [feeds,setFeeds]=useState([]);
@@ -26,12 +26,14 @@ function Feeds({ togglePostModal, community }) {
 
         <div className='grid grid-cols gap-4'>
 
+            {admin?
             <div className='flex justify-center'>
                 <div onClick={togglePostModal} className='w-full max-w-3xl flex p-5 bg-white shadow rounded-lg cursor-pointer'>
                     <img class="w-10 h-10 rounded-full mr-5" src={user.image} alt="Default avatar" />
                     <input type="text" id="first_name" class="bg-gray-100 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg w-full  " placeholder="What's on your mind ?" readOnly disabled />
                 </div>
             </div>
+            :""}
 
            {feeds && feeds.map((post)=>{
             console.log(post);
