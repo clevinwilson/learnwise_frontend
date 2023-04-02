@@ -58,7 +58,7 @@ function Community({ isTab }) {
 
         <div className={`w-full ${isTab ? "px-2 py-0" : "border-x px-5 py-3 sm:px-8"} border-base-300 `} >
             {/* community user have joinde */}
-            {user.id? 
+            {user.id && joinedCommunity.length >0? 
             <>
                     <div className='flex justify-between items-center mb-5'>
                         <h1 className='text-xl font-bold sm:text-2xl'>Your Community</h1>

@@ -6,7 +6,7 @@ const GroupCard = ({ community, joined, handleJoin }) => {
 
     return (
         <div className="card cursor-pointer card-compact bg-base-100 shadow-lg">
-            <Link to={'/community-home'} state={community} >
+            <Link to={joined ? '/community-home': ""} state={community} >
                 <figure>
                     <img src={`${import.meta.env.VITE_SERVER_URL}${community.image.path}`} alt="" className="w-full aspect-[2/1] object-cover" />
                 </figure>
