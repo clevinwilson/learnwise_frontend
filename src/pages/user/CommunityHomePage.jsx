@@ -9,6 +9,7 @@ import Feeds from '../../components/CommunityTabs/Feeds';
 import Members from '../../components/CommunityTabs/Members';
 import Groups from '../../components/CommunityTabs/Groups';
 import PostModal from '../../components/Modal/PostModal';
+import { BiPencil } from "react-icons/bi";
 
 
 function CommunityHomePage() {
@@ -63,7 +64,7 @@ function CommunityHomePage() {
                 </div>
                 <div className="w-full border-x border-base-300">
                     <div className="bg-base-100">
-                        <div>
+                        <div className='relative group transition-all duration-500 transition-delay-500'> 
                             <img
                                 src={community ? import.meta.env.VITE_SERVER_URL + community.image.path :" "}
                                 className="aspect-[2/1] md:aspect-[3/1] w-full object-cover "
@@ -106,6 +107,10 @@ function CommunityHomePage() {
                                             {tab.label}
                                         </div>
                                     ))}
+                            </div>
+
+                            <div className='hidden group-hover:flex cursor-pointer absolute  justify-center items-center bg-white px-4 shadow py-3 top-4 right-5 rounded'>
+                                <BiPencil />  <span className='ml-2'>Edit</span>
                             </div>
                         </div>
 
