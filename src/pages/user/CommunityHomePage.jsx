@@ -22,7 +22,6 @@ function CommunityHomePage() {
     //is community details is not there in state details will load from api 
     useEffect(() => {
             getCommunityDetails(state._id).then((response) => {
-                console.log(response.data);
                 setCommunitys(response.data.communityDetails);
                 setIsAdmin(response.data.admin);
             })
@@ -44,11 +43,11 @@ function CommunityHomePage() {
             case "Feed":
                 return <Feeds togglePostModal={togglePostModal} community={state} admin={isAdmin} />;
             case "Groups":
-                return <Groups />;
+                return <Groups community={state} />;
             case "Description":
                 return <p>{community?.description}</p>;
             case "Members":
-                return <Members />;
+                return <Members community={state} />;
             default:
                 return null;
         }
