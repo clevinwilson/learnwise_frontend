@@ -3,9 +3,10 @@ import { BiCloudUpload } from "react-icons/bi";
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from "react-toastify";
+import { createCommunityPost } from '../../services/userApi';
 
 
-function PostModal({ closePostModal }) {
+function PostModal({ closePostModal, communityId }) {
     //image input box 
     const fileInputRef = useRef();
     const handleClick = () => {
@@ -19,7 +20,7 @@ function PostModal({ closePostModal }) {
             .required('Message Required'),
     })
 
-    //formik for community form 
+    //formik for validation 
     const formik = useFormik({
         initialValues: {
             image: "",
@@ -27,19 +28,20 @@ function PostModal({ closePostModal }) {
         },
         validationSchema: validate,
         onSubmit: async (values) => {
-            console.log(values);
-            // createCommunity(values).then((response) => {
-            //     if (response.data.status) {
-            //         props.close()
-            //         toast.success(response.data.message, {
-            //             position: "top-center",
-            //         });
-            //     } else {
-            //         toast.error(response.data.message, {
-            //             position: "top-center",
-            //         });
-            //     }
-            // })
+            createCommunityPost({...values,communityId}).then((response)=>{
+                console.log(response);
+                if(response.data.status){
+                    closePostModal()
+                    toast.success(response.data.message, {
+                        position: "top-center",
+                    })
+
+                }else{
+                    toast.error(response.data.message, {
+                        position: "top-center",
+                    })
+                }
+            })
         }
     })
 
@@ -85,7 +87,7 @@ function PostModal({ closePostModal }) {
                                     : ""}
                                 <div>
                                     <div class={formik.values.image ? " items-center justify-center w-full hidden" : "flex items-center justify-center w-full"}>
-                                        <div className='w-full lg:w-2/3  md:w-1/2 sm:w-1/1'>
+                                        <div className='w-full'>
                                             <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                                     <BiCloudUpload size={22} />

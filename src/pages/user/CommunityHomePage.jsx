@@ -118,7 +118,7 @@ function CommunityHomePage() {
                     </div>
                 </div>
             </div>
-            {showModal ? <PostModal closePostModal={closePostModal} /> : ""}
+            {showModal ? <PostModal closePostModal={closePostModal} communityId={community._id} /> : ""}
             <CommunityNavigation />
         </>
 

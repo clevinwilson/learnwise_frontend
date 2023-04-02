@@ -65,6 +65,10 @@ export const getJoinedCommunity=()=>{
 }
 
 export const getCommunityDetails=(communityId)=>{
-    return userInstance.get(`/community-details/${communityId}`, { headers: getToken() })
+    return userInstance.get(`/community-details/${communityId}`)
 }
-// export { authUser, getTopCourse, getCourseDetails, handleCheckout, getCourses, getEnrolledCourse, isCourseEnrolled, search, createCommunity, getCommunity, joinCommunity, getJoinedCommunity, getCommunityDetails }
+
+
+export const createCommunityPost=(data)=>{
+    return userInstance.post('/create-communityPost', { ...data }, { headers: {  "Content-Type": "multipart/form-data" } })
+}
