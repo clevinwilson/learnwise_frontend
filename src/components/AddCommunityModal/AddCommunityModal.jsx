@@ -73,11 +73,18 @@ function AddCommunityModal(props) {
                             toast.success(response.data.message, {
                                 position: "top-center",
                             });
+                            props.loadAllCommunityDetails();
+                            props.loadJoinedCommunity();
                         } else {
                             toast.error(response.data.message, {
                                 position: "top-center",
                             });
                         }
+                    })
+                    .catch((response) => {
+                        toast.error(response.response.data.message, {
+                            position: "top-center",
+                        });
                     })
             }
         }
