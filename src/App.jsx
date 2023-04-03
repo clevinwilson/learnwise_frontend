@@ -14,15 +14,15 @@ function App() {
       {/* User Router */}
       <Routes>
         <Route path={'/*'} element={<UserRouter />} />
-      </Routes>
+      
 
       {/* Teacher Router */}
-      <Routes>
+      
         <Route path={'/teacher/*'} element={<TeacherRouter />} />
-      </Routes>
+   
 
       {/* Admin Router */}
-      <Routes>
+      
         <Route path={'/admin/*'} element={<AdminRouter />} />
       </Routes>
 

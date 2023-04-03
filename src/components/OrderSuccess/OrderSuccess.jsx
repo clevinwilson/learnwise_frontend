@@ -1,6 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom'
+
 
 function OrderSuccess() {
+    const navigate = useNavigate();
+    setTimeout(() => {
+        navigate('/my-enrollments')
+    }, 5000)
   return (
       <div class="bg-white-100 h-screen flex justify-center items-center">
               <div class="bg-white p-6  md:mx-auto">

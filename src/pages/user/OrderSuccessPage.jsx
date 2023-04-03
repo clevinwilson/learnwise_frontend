@@ -6,7 +6,6 @@ import UserHeader from '../../components/UserHeader/UserHeader'
 function OrderSuccessPage() {
   return (
     <React.Fragment>
-        <UserHeader/>
         <OrderSuccess/>
         <UserFooter/>
     </React.Fragment>

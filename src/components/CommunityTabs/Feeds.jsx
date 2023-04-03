@@ -42,9 +42,9 @@ function Feeds({ togglePostModal, community, admin }) {
             
             :
                 <>
-                    {feeds && feeds.map((post) => {
+                    {feeds && feeds.map((post,index) => {
                         return (
-                            <div className='w-full flex justify-center'>
+                            <div key={index} className='w-full flex justify-center'>
                                 <div className="px-5 w-full py-4 bg-white dark:bg-gray-800 shadow rounded-lg max-w-3xl">
                                     <div className="flex mb-4">
                                         <img className="w-12 h-12 rounded-full" src={post.user.picture} />

@@ -8,6 +8,7 @@ function Members({ community }) {
 
     useEffect(() => {
         getMembersDetails(community._id).then((response) => {
+            console.log(response);
             setMembers(response.data.community);
             setLoading(false)
         })

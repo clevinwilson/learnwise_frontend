@@ -15,6 +15,7 @@ import SearchPage from '../pages/user/SearchPage';
 import GroupPage from '../pages/user/GroupPage';
 import CommunityPage from '../pages/user/CommunityPage';
 import CommunityHomePage from '../pages/user/CommunityHomePage';
+import OrderFailedPage from '../pages/user/OrderFailedPage';
 
 function UserRouter() {
   return (
@@ -25,6 +26,7 @@ function UserRouter() {
         <Route element={<LearnPage />} path='/course/learn/:courseId' />
         <Route element={<OrderSuccessPage />} path='/order-success' />
         <Route element={<CommunityHomePage />} path='/community-home' />
+        <Route element={<OrderFailedPage />} path='/order-failed' />
 
       </Route>
 
