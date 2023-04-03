@@ -1,12 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { BiCloudUpload } from "react-icons/bi";
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { createCommunity, editCommunity } from '../../services/userApi';
-import { toast } from "react-toastify";
+import React from 'react'
 
-
-function AddCommunityModal(props) {
+function EditCommunityModal() {
 
     //image input box 
     const fileInputRef = useRef();
@@ -14,28 +8,16 @@ function AddCommunityModal(props) {
         fileInputRef.current.click();
     };
 
-    useEffect(() => {
-        if (props.edit) {
-            formik.setValues({
-                name: props.community.name,
-                type: props.community.type,
-                about: props.community.about,
-                description: props.community.description
-            });
-        }
-    }, [])
-
     //form validation 
     const validate = Yup.object({
         name: Yup.string()
             .required('Community Name Required'),
-        image: Yup.string(),
+        image: Yup.string()
+            .required('Image Required'),
         type: Yup.string()
             .required('Community type Required'),
         about: Yup.string()
             .required('About Required'),
-        description: Yup.string()
-            .required('Description Required')
     })
 
     //formik for community form 
@@ -45,45 +27,24 @@ function AddCommunityModal(props) {
             image: "",
             type: "",
             about: "",
-            description: ""
         },
         validationSchema: validate,
         onSubmit: async (values) => {
-            if (props.edit) {
-                //edit community api
-                editCommunity({ ...values, communityId: props.community._id })
-                    .then((response) => {
-                        props.loadCommuintData()
-                        props.close()
-                        toast.success(response.data.message, {
-                            position: "top-center",
-                        });
-                    })
-                    .catch((response) => {
-                        toast.error(response.response.data.message, {
-                            position: "top-center",
-                        });
-                    })
-            } else {
-                //add community api
-                createCommunity(values)
-                    .then((response) => {
-                        if (response.data.status) {
-                            props.close()
-                            toast.success(response.data.message, {
-                                position: "top-center",
-                            });
-                        } else {
-                            toast.error(response.data.message, {
-                                position: "top-center",
-                            });
-                        }
-                    })
-            }
+            createCommunity(values).then((response) => {
+                if (response.data.status) {
+                    props.close()
+                    toast.success(response.data.message, {
+                        position: "top-center",
+                    });
+                } else {
+                    toast.error(response.data.message, {
+                        position: "top-center",
+                    });
+                }
+            })
         }
     })
 
-    //formik input data
     const handleChange = (e) => {
         formik.setValues((prev) => {
             const formFields = { ...prev };
@@ -117,26 +78,16 @@ function AddCommunityModal(props) {
                                 </span>
                             </button>
                         </div>
-
-
-                        {/* //image section */}
+                        {/*body*/}
                         <div className="relative p-6 flex-auto">
                             <div className='mt-10'>
-                                {props.edit || formik.values.image ?
+                                {formik.values.image ?
                                     <div className='flex items-center justify-center w-full cursor-pointer ' >
-                                        {props.edit ?
-                                            <img class="h-auto max-w-lg rounded-lg w-full course-image" src={formik.values.image ? URL.createObjectURL(formik.values.image) : import.meta.env.VITE_SERVER_URL + props.community.image.path} alt="image description" onClick={handleClick}></img>
-
-                                            :
-                                            <img class="h-auto max-w-lg rounded-lg w-full course-image" src={formik.values.image ? URL.createObjectURL(formik.values.image) : ''} alt="image description" onClick={handleClick}></img>
-
-                                        }
-
-
+                                        <img class="h-auto max-w-lg rounded-lg w-full course-image" src={formik.values.image ? URL.createObjectURL(formik.values.image) : ""} alt="image description" onClick={handleClick}></img>
                                     </div>
                                     : ""}
                                 <div>
-                                    <div class={props.edit || formik.values.image ? " items-center justify-center w-full hidden" : "flex items-center justify-center w-full"}>
+                                    <div class={formik.values.image ? " items-center justify-center w-full hidden" : "flex items-center justify-center w-full"}>
                                         <div className='w-full lg:w-2/3  md:w-1/2 sm:w-1/1'>
                                             <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -166,8 +117,8 @@ function AddCommunityModal(props) {
                             <div className='flex  mt-5 '>
                                 <div className="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
                                     <div>
-                                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Community Name</label>
-                                        <input value={formik.values.name} type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='name' placeholder="Name" required
+                                        <label for="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Community Name</label>
+                                        <input type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='name' placeholder="Name" required
                                             onChange={(e) => { handleChange(e) }}
                                         />
                                     </div>
@@ -177,8 +128,8 @@ function AddCommunityModal(props) {
                                 </div>
                                 <div className="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
                                     <div>
-                                        <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Community Type</label>
-                                        <input value={formik.values.type} type="text" id="type" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='type' placeholder="Type" required
+                                        <label for="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Community Type</label>
+                                        <input type="text" id="type" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='type' placeholder="Type" required
                                             onChange={(e) => { handleChange(e) }}
                                         />
                                     </div>
@@ -192,29 +143,13 @@ function AddCommunityModal(props) {
                             <div className='flex  mt-1 '>
                                 <div className="relative mb-3  md:w-full m-3">
                                     <div>
-                                        <label htmlFor="about" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About </label>
-                                        <textarea id="about" value={formik.values.about} rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='about' placeholder="Short description about community"
+                                        <label for="about" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About </label>
+                                        <textarea id="about" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='about' placeholder="Short description about community"
                                             onChange={(e) => { handleChange(e) }}
                                         ></textarea>
                                     </div>
                                     {formik.touched.about && formik.errors.about ? (
                                         <p className="text-red-500 text-xs mt-2">{formik.errors.about}</p>
-                                    ) : null}
-                                </div>
-                            </div>
-
-
-                            {/* description community */}
-                            <div className='flex  mt-1 '>
-                                <div className="relative mb-3  md:w-full m-3">
-                                    <div>
-                                        <label htmlFor="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description </label>
-                                        <textarea value={formik.values.description} id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='description' placeholder="Description about community"
-                                            onChange={(e) => { handleChange(e) }}
-                                        ></textarea>
-                                    </div>
-                                    {formik.touched.description && formik.errors.description ? (
-                                        <p className="text-red-500 text-xs mt-2">{formik.errors.description}</p>
                                     ) : null}
                                 </div>
                             </div>
@@ -248,4 +183,4 @@ function AddCommunityModal(props) {
     )
 }
 
-export default AddCommunityModal
+export default EditCommunityModal

@@ -10,6 +10,7 @@ import Members from '../../components/CommunityTabs/Members';
 import Groups from '../../components/CommunityTabs/Groups';
 import PostModal from '../../components/Modal/PostModal';
 import { BiPencil } from "react-icons/bi";
+import AddCommunityModal from '../../components/AddCommunityModal/AddCommunityModal';
 
 
 function CommunityHomePage() {
@@ -17,25 +18,31 @@ function CommunityHomePage() {
     const { state } = useLocation();
     const [community, setCommunitys] = useState();
     const [activeTab, setActiveTab] = useState(CommunityTab[0].label);
-    const [showModal, setShowModal] = useState(false);
+    const [showFeedModal, setShowFeedModal] = useState(false);
     const [isAdmin,setIsAdmin]=useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+
+    const loadCommuintData=()=>{
+        getCommunityDetails(state._id).then((response) => {
+            setCommunitys(response.data.communityDetails);
+            setIsAdmin(response.data.admin);
+        })
+    }
+
+    
 
     //is community details is not there in state details will load from api 
     useEffect(() => {
-            getCommunityDetails(state._id).then((response) => {
-                setCommunitys(response.data.communityDetails);
-                setIsAdmin(response.data.admin);
-            })
-
+        loadCommuintData();
             // setCommunitys(state)
     }, [])
 
     const togglePostModal = () => {
-        setShowModal(true);
+        setShowFeedModal(true);
     }
 
     const closePostModal = () => {
-        setShowModal(false);
+        setShowFeedModal(false);
     }
 
     //tab items
@@ -109,9 +116,9 @@ function CommunityHomePage() {
                                     ))}
                             </div>
 
-                            <div className='hidden group-hover:flex cursor-pointer absolute  justify-center items-center bg-white px-4 shadow py-3 top-4 right-5 rounded'>
+                            {isAdmin ? <div onClick={() => { setShowEditModal(true) }} className='hidden group-hover:flex cursor-pointer absolute  justify-center items-center bg-white px-4 shadow py-3 top-4 right-5 rounded'>
                                 <BiPencil />  <span className='ml-2'>Edit</span>
-                            </div>
+                            </div> : ""}
                         </div>
 
                         <div className="p-2 md:p-8 bg-gray-50  dark:bg-gray-900  ">
@@ -122,7 +129,8 @@ function CommunityHomePage() {
                     </div>
                 </div>
             </div>
-            {showModal ? <PostModal closePostModal={closePostModal} communityId={community._id} /> : ""}
+            {showEditModal ? <AddCommunityModal close={() => { setShowEditModal(false) }} edit={true} community={community} loadCommuintData={loadCommuintData} /> : ""}
+            {showFeedModal ? <PostModal closePostModal={closePostModal} communityId={community._id} /> : ""}
             <CommunityNavigation />
         </>
 

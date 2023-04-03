@@ -82,3 +82,8 @@ export const getFeeds=(communityId)=>{
 export const getMembersDetails = (communityId)=>{
     return userInstance.get(`/community/members/${communityId}`)
 }
+
+//edit community
+export const editCommunity =(data)=>{
+    return userInstance.post('/edit-community', { ...data }, { headers: { "Content-Type": "multipart/form-data" } });
+}
