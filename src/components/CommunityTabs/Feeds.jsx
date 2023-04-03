@@ -3,25 +3,45 @@ import { useSelector } from 'react-redux';
 import { getFeeds } from '../../services/userApi';
 import { toast } from 'react-toastify';
 import Loader from '../Loader/Loader';
+import PostModal from '../../components/Modal/PostModal';
 
 
-function Feeds({ togglePostModal, community, admin }) {
+
+function Feeds({ community, admin }) {
     const user = useSelector(state => state.user);
     const [loading, setLoading] = useState(true);
     const [feeds, setFeeds] = useState([]);
+    const [showFeedModal, setShowFeedModal] = useState(false);
 
-    useEffect(() => {
-        getFeeds(community._id).then((response) => {
+    //geting community feeds api
+    const loadFeeds=()=>{
+        getFeeds(community._id)
+        .then((response) => {
             if (response.data.status) {
                 setFeeds(response.data.community.posts);
                 setLoading(false)
             } else {
                 toast.error(response.data.message, {
-                    position: "top-center",
+                    position: "bottom-center",
                 })
             }
         })
+        .catch((response=>{
+            toast.error(response.response.data.message, {
+                position: "top-center",
+            });
+        }))
+    }
+
+    //loading feeds
+    useEffect(() => {
+       loadFeeds()
     }, [])
+
+    //callback to close post feed modal
+    const closePostModal = () => {
+        setShowFeedModal(false);
+    }
 
     return (
 
@@ -29,7 +49,7 @@ function Feeds({ togglePostModal, community, admin }) {
 
             {admin ?
                 <div className='flex justify-center'>
-                    <div onClick={togglePostModal} className='w-full max-w-3xl flex p-5 bg-white shadow rounded-lg cursor-pointer'>
+                    <div onClick={() => { setShowFeedModal(true) }} className='w-full max-w-3xl flex p-5 bg-white shadow rounded-lg cursor-pointer'>
                         <img class="w-10 h-10 rounded-full mr-5" src={user.image} alt="Default avatar" />
                         <input type="text" id="first_name" class="bg-gray-100 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg w-full  " placeholder="What's on your mind ?" readOnly disabled />
                     </div>
@@ -38,11 +58,11 @@ function Feeds({ togglePostModal, community, admin }) {
 
             {loading ?
 
-            <Loader/>
-            
-            :
+                <Loader />
+
+                :
                 <>
-                    {feeds && feeds.map((post,index) => {
+                    {feeds && feeds.map((post, index) => {
                         return (
                             <div key={index} className='w-full flex justify-center'>
                                 <div className="px-5 w-full py-4 bg-white dark:bg-gray-800 shadow rounded-lg max-w-3xl">
@@ -75,8 +95,10 @@ function Feeds({ togglePostModal, community, admin }) {
                         )
                     })
                     }
+                    {showFeedModal ? <PostModal loadFeeds={loadFeeds} closePostModal={closePostModal} communityId={community._id} /> : ""}
+
                 </>
-                }
+            }
 
 
 

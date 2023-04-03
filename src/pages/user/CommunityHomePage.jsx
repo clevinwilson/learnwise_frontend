@@ -8,7 +8,6 @@ import CommunityTab from '../../utils/CommunityTab';
 import Feeds from '../../components/CommunityTabs/Feeds';
 import Members from '../../components/CommunityTabs/Members';
 import Groups from '../../components/CommunityTabs/Groups';
-import PostModal from '../../components/Modal/PostModal';
 import { BiPencil } from "react-icons/bi";
 import AddCommunityModal from '../../components/AddCommunityModal/AddCommunityModal';
 
@@ -18,7 +17,6 @@ function CommunityHomePage() {
     const { state } = useLocation();
     const [community, setCommunitys] = useState();
     const [activeTab, setActiveTab] = useState(CommunityTab[0].label);
-    const [showFeedModal, setShowFeedModal] = useState(false);
     const [isAdmin,setIsAdmin]=useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
 
@@ -37,19 +35,13 @@ function CommunityHomePage() {
             // setCommunitys(state)
     }, [])
 
-    const togglePostModal = () => {
-        setShowFeedModal(true);
-    }
-
-    const closePostModal = () => {
-        setShowFeedModal(false);
-    }
+    
 
     //tab items
     const loadTab = () => {
         switch (activeTab) {
             case "Feed":
-                return <Feeds togglePostModal={togglePostModal} community={state} admin={isAdmin} />;
+                return <Feeds community={state} admin={isAdmin} />;
             case "Groups":
                 return <Groups community={state} />;
             case "Description":
@@ -130,7 +122,6 @@ function CommunityHomePage() {
                 </div>
             </div>
             {showEditModal ? <AddCommunityModal close={() => { setShowEditModal(false) }} edit={true} community={community} loadCommuintData={loadCommuintData} /> : ""}
-            {showFeedModal ? <PostModal closePostModal={closePostModal} communityId={community._id} /> : ""}
             <CommunityNavigation />
         </>
 

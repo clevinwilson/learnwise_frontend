@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { createCommunityPost } from '../../services/userApi';
 
 
-function PostModal({ closePostModal, communityId }) {
+function PostModal({ loadFeeds, closePostModal, communityId }) {
     //image input box 
     const fileInputRef = useRef();
     const handleClick = () => {
@@ -35,6 +35,7 @@ function PostModal({ closePostModal, communityId }) {
                     toast.success(response.data.message, {
                         position: "top-center",
                     })
+                    loadFeeds();
 
                 }else{
                     toast.error(response.data.message, {
