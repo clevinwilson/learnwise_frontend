@@ -2,11 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { BiCloudUpload } from "react-icons/bi";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { createCommunity, editCommunity } from '../../services/userApi';
 import { toast } from "react-toastify";
+import { createGroup } from '../../services/userApi';
 
-
-function AddCommunityModal(props) {
+function CreateGroupModal(props) {
 
     //image input box 
     const fileInputRef = useRef();
@@ -18,8 +17,6 @@ function AddCommunityModal(props) {
         if (props.edit) {
             formik.setValues({
                 name: props.community.name,
-                type: props.community.type,
-                about: props.community.about,
                 description: props.community.description
             });
         }
@@ -28,12 +25,8 @@ function AddCommunityModal(props) {
     //form validation 
     const validate = Yup.object({
         name: Yup.string()
-            .required('Community Name Required'),
+            .required('Group Name Required'),
         image: Yup.string(),
-        type: Yup.string()
-            .required('Community type Required'),
-        about: Yup.string()
-            .required('About Required'),
         description: Yup.string()
             .required('Description Required')
     })
@@ -43,8 +36,6 @@ function AddCommunityModal(props) {
         initialValues: {
             name: "",
             image: "",
-            type: "",
-            about: "",
             description: ""
         },
         validationSchema: validate,
@@ -65,16 +56,18 @@ function AddCommunityModal(props) {
                         });
                     })
             } else {
-                //add community api
-                createCommunity(values)
+
+                //add group api
+                createGroup({ ...values, communityId: props.community._id })
                     .then((response) => {
+
                         if (response.data.status) {
                             props.close()
                             toast.success(response.data.message, {
                                 position: "top-center",
                             });
-                            props.loadAllCommunityDetails();
-                            props.loadJoinedCommunity();
+                            // props.loadAllCommunityDetails();
+                            // props.loadJoinedCommunity();
                         } else {
                             toast.error(response.data.message, {
                                 position: "top-center",
@@ -113,7 +106,7 @@ function AddCommunityModal(props) {
                         {/*header*/}
                         <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                             <h3 className="text-2xl font-semibold">
-                                Create New Community
+                                Create New Group
                             </h3>
                             <button
                                 className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -132,10 +125,10 @@ function AddCommunityModal(props) {
                                 {props.edit || formik.values.image ?
                                     <div className='flex items-center justify-center w-full cursor-pointer ' >
                                         {props.edit ?
-                                            <img className="h-auto max-w-lg rounded-lg w-full course-image" src={formik.values.image ? URL.createObjectURL(formik.values.image) : import.meta.env.VITE_SERVER_URL + props.community.image.path} alt="image description" onClick={handleClick}></img>
+                                            <img className=" max-w-lg w-64 h-64 rounded-full course-image" src={formik.values.image ? URL.createObjectURL(formik.values.image) : import.meta.env.VITE_SERVER_URL + props.community.image.path} alt="image description" onClick={handleClick}></img>
 
                                             :
-                                            <img className="h-auto max-w-lg rounded-lg w-full course-image" src={formik.values.image ? URL.createObjectURL(formik.values.image) : ''} alt="image description" onClick={handleClick}></img>
+                                            <img className=" max-w-lg rounded-full  w-64 h-64 course-image" src={formik.values.image ? URL.createObjectURL(formik.values.image) : ''} alt="image description" onClick={handleClick}></img>
 
                                         }
 
@@ -144,11 +137,11 @@ function AddCommunityModal(props) {
                                     : ""}
                                 <div>
                                     <div class={props.edit || formik.values.image ? " items-center justify-center w-full hidden" : "flex items-center justify-center w-full"}>
-                                        <div className='w-full lg:w-2/3  md:w-1/2 sm:w-1/1'>
-                                            <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                        <div className='w-full lg:w-2/3 flex justify-center md:w-1/2 sm:w-1/1'>
+                                            <label for="dropzone-file" className="flex flex-col items-center rounded-full justify-center w-64 h-64 border-2 border-gray-300 border-dashed  cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                                     <BiCloudUpload size={22} />
-                                                    <p>Community Image</p>
+                                                    <p>Group Image</p>
                                                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
                                                     <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                                 </div>
@@ -169,11 +162,11 @@ function AddCommunityModal(props) {
                                 </div>
                             </div>
 
-                            {/* //community name and type */}
+                            {/* //group name and type */}
                             <div className='flex  mt-5 '>
-                                <div className="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
+                                <div className="relative mb-3 w-full m-3" data-te-input-wrapper-init>
                                     <div>
-                                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Community Name</label>
+                                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Group Name</label>
                                         <input value={formik.values.name} type="text" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='name' placeholder="Name" required
                                             onChange={(e) => { handleChange(e) }}
                                         />
@@ -182,36 +175,13 @@ function AddCommunityModal(props) {
                                         <p className="text-red-500 text-xs mt-2">{formik.errors.name}</p>
                                     ) : null}
                                 </div>
-                                <div className="relative mb-3 w-full md:w-1/2 m-3" data-te-input-wrapper-init>
-                                    <div>
-                                        <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Community Type</label>
-                                        <input value={formik.values.type} type="text" id="type" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='type' placeholder="Type" required
-                                            onChange={(e) => { handleChange(e) }}
-                                        />
-                                    </div>
-                                    {formik.touched.type && formik.errors.type ? (
-                                        <p className="text-red-500 text-xs mt-2">{formik.errors.type}</p>
-                                    ) : null}
-                                </div>
-                            </div>
 
-                            {/* about community */}
-                            <div className='flex  mt-1 '>
-                                <div className="relative mb-3  md:w-full m-3">
-                                    <div>
-                                        <label htmlFor="about" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About </label>
-                                        <textarea id="about" value={formik.values.about} rows="2" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name='about' placeholder="Short description about community"
-                                            onChange={(e) => { handleChange(e) }}
-                                        ></textarea>
-                                    </div>
-                                    {formik.touched.about && formik.errors.about ? (
-                                        <p className="text-red-500 text-xs mt-2">{formik.errors.about}</p>
-                                    ) : null}
-                                </div>
                             </div>
 
 
-                            {/* description community */}
+
+
+                            {/* description group */}
                             <div className='flex  mt-1 '>
                                 <div className="relative mb-3  md:w-full m-3">
                                     <div>
@@ -255,4 +225,4 @@ function AddCommunityModal(props) {
     )
 }
 
-export default AddCommunityModal
+export default CreateGroupModal

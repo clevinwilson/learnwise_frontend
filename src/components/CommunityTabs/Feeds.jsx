@@ -15,7 +15,7 @@ function Feeds({ community, admin }) {
 
     //geting community feeds api
     const loadFeeds=()=>{
-        getFeeds(community._id)
+        getFeeds(community?._id)
         .then((response) => {
             if (response.data.status) {
                 setFeeds(response.data.community.posts);
@@ -50,8 +50,8 @@ function Feeds({ community, admin }) {
             {admin ?
                 <div className='flex justify-center'>
                     <div onClick={() => { setShowFeedModal(true) }} className='w-full max-w-3xl flex p-5 bg-white shadow rounded-lg cursor-pointer'>
-                        <img class="w-10 h-10 rounded-full mr-5" src={user.image} alt="Default avatar" />
-                        <input type="text" id="first_name" class="bg-gray-100 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg w-full  " placeholder="What's on your mind ?" readOnly disabled />
+                        <img className="w-10 h-10 rounded-full mr-5" src={user.image} alt="Default avatar" />
+                        <input type="text" id="first_name" className="bg-gray-100 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg w-full  " placeholder="What's on your mind ?" readOnly disabled />
                     </div>
                 </div>
                 : ""}
@@ -78,7 +78,7 @@ function Feeds({ community, admin }) {
                                         <div className='mt-5'>
                                             <img
                                                 src={import.meta.env.VITE_SERVER_URL + post.image.path}
-                                                class="h-auto w-full rounded-lg object-cover max-h-96"
+                                                className="h-auto w-full rounded-lg object-cover max-h-96"
                                                 alt="" />
                                         </div>
 

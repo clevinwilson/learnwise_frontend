@@ -8,8 +8,9 @@ import CommunityTab from '../../utils/CommunityTab';
 import Feeds from '../../components/CommunityTabs/Feeds';
 import Members from '../../components/CommunityTabs/Members';
 import Groups from '../../components/CommunityTabs/Groups';
-import { BiPencil } from "react-icons/bi";
+import { BiPencil, BiCollapseAlt } from "react-icons/bi";
 import AddCommunityModal from '../../components/AddCommunityModal/AddCommunityModal';
+import CreateGroupModal from '../../components/Modal/CreateGroupModal';
 
 
 function CommunityHomePage() {
@@ -19,6 +20,7 @@ function CommunityHomePage() {
     const [activeTab, setActiveTab] = useState(CommunityTab[0].label);
     const [isAdmin,setIsAdmin]=useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [createGroupModal,setCreateGroupModal]=useState(false);
 
     const loadCommuintData=()=>{
         getCommunityDetails(state._id).then((response) => {
@@ -91,7 +93,12 @@ function CommunityHomePage() {
                                             {community && community.members.length} members &nbsp; ● &nbsp; {community && community.groups.length} Groups
                                         </div>
                                     </div>
-                                    <button className="btn btn-primary">Join</button>
+                                    <button onClick={()=>{
+                                        setCreateGroupModal(true)
+                                    }} className="btn btn-primary bg-violet-500 hover:bg-violet-600 rounded-3xl">
+                                        <BiCollapseAlt/>
+                                        <span className='ml-3'>Create Group</span>
+                                        </button>
                                 </div>
                                 <p>{community && community.about}</p>
                             </div>
@@ -121,6 +128,11 @@ function CommunityHomePage() {
                     </div>
                 </div>
             </div>
+            {/* create group modal */}
+            {createGroupModal ? <CreateGroupModal close={() => { setCreateGroupModal(false) }} community={community} /> :""}
+
+
+            {/* add community modal */}
             {showEditModal ? <AddCommunityModal close={() => { setShowEditModal(false) }} edit={true} community={community} loadCommuintData={loadCommuintData} /> : ""}
             <CommunityNavigation />
         </>
