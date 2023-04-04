@@ -94,3 +94,7 @@ export const createGroup=(data)=>{
 
     return userInstance.post('/create-group', { ...data }, { headers: { "Content-Type": "multipart/form-data" } });
 }
+
+export const getCommunityGroups=(communityId)=>{
+    return userInstance.get(`/community/groups/${communityId}`)
+}
