@@ -95,7 +95,7 @@ function CommunityHomePage() {
                                     </div>
                                     <button onClick={()=>{
                                         setCreateGroupModal(true)
-                                    }} className="btn btn-primary bg-violet-500 hover:bg-violet-600 rounded-3xl">
+                                    }} className="btn btn-primary text-white bg-violet-500 hover:bg-violet-600 rounded-3xl">
                                         <BiCollapseAlt/>
                                         <span className='ml-3'>Create Group</span>
                                         </button>
