@@ -24,6 +24,7 @@ function CommunityHomePage() {
 
     const loadCommuintData=()=>{
         getCommunityDetails(state._id).then((response) => {
+            console.log(response.data.communityDetails.groups);
             setCommunitys(response.data.communityDetails);
             setIsAdmin(response.data.admin);
         })
@@ -73,10 +74,10 @@ function CommunityHomePage() {
                             />
                             <div className="flex gap-3">
                                 <div className="avatar-group mt-[-40px] ml-5 -space-x-12">
-                                    {groupsIcon.map((icon) => (
-                                        <div key={icon} className="avatar">
-                                            <div className="bg-base-200 p-3 text-2xl leading-tight">
-                                                {icon}
+                                    {community && community.groups.map((group,index) => (
+                                        <div key={index} className="avatar w-16">
+                                            <div className="bg-base-200 ">
+                                                <img className='rounded-full w-16 h-16' src={import.meta.env.VITE_SERVER_URL+group.image.path} alt="" />
                                             </div>
                                         </div>
                                     ))}
