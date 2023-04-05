@@ -98,3 +98,8 @@ export const createGroup=(data)=>{
 export const getCommunityGroups=(communityId)=>{
     return userInstance.get(`/community/groups/${communityId}`)
 }
+
+//join group
+export const joinGroup = (communityId, groupId)=>{
+    return userInstance.get(`/community/groups/join/${communityId}/${groupId}`)
+}

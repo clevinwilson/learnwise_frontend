@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getCommunityGroups } from '../../services/userApi';
+import { getCommunityGroups, joinGroup } from '../../services/userApi';
 import { toast } from 'react-toastify';
 import CardLoading from '../CardLoading/CardLoading'
 function Groups({ community }) {
@@ -24,9 +24,25 @@ function Groups({ community }) {
                     position: "bottom-center"
                 })
             })
-
-
     }
+
+    //join groups
+    const handleJoinGroup = (communityId, groupId) => {
+        joinGroup(communityId, groupId).then((response) => {
+            if (response.data.status) {
+                toast.success(response.data.message, {
+                    position: "top-center",
+                })
+            }
+        })
+        .catch((err) => {
+                toast.error(response.data.message, {
+                    position: "top-center"
+                })
+        })
+    };
+
+    //loading initial data
     useEffect(() => {
         loadCommunityGroups()
     }, [])
@@ -49,7 +65,7 @@ function Groups({ community }) {
                                         </h5>
                                         <div className="mr-3 cursor-pointer">
                                             <h2 className="font-bold"
-                                                onClick={() => { handleJoin(community._id) }}
+                                                onClick={() => { handleJoinGroup(community._id, group._id) }}
                                             >Join</h2>
                                         </div>
                                     </div>
