@@ -103,3 +103,8 @@ export const getCommunityGroups=(communityId)=>{
 export const joinGroup = (communityId, groupId)=>{
     return userInstance.get(`/community/groups/join/${communityId}/${groupId}`)
 }
+
+//leave from a community api
+export const leaveCommunity=(communityId)=>{
+    return userInstance.get(`/community/leave/${communityId}`)
+}
