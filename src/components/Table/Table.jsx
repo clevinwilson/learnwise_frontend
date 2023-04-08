@@ -1,88 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ToastContainer, toast } from "react-toastify";
-import { getTeachers, blockTeacher, unBlockTeacher } from '../../services/adminApi';
 
-
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-function ViewTeachers() {
-
-    const [teacher, setTeacher] = useState();
-
-    useEffect(() => {
-        getTeachers()
-            .then((response) => {
-                console.log(response.data);
-                setTeacher(response.data.teachers)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-
-    }, []);
-
-    const generateError = (err) => {
-        toast.error(err, {
-            position: "top-center",
-        });
-    };
-
-    const successMessaage = (message) => {
-        toast.success(message, {
-            position: 'top-center'
-        })
-    }
-
-
-    const handleBlock = (teacherId) => {
-        swal({
-            title: "Are you sure?",
-            text: "Are you sure you want to block!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                    blockTeacher(teacherId).then((response) => {
-                        if (response.data.status) {
-                            setTeacher(teacher.map((obj) => {
-                                if (obj._id == teacherId) {
-                                    obj.status = false
-                                }
-                                return obj;
-                            }));
-                            successMessaage(response.data.message);
-                        } else {
-                            generateError(response.data.message);
-                        }
-                    })
-
-                }
-            });
-
-    }
-
-    const handleUnblock = (teacherId) => {
-        unBlockTeacher(teacherId).then((response) => {
-            if (response.data.status) {
-                setTeacher(
-                    teacher.map((obj) => {
-                        if (obj._id == teacherId) {
-                            obj.status = true
-                        }
-                        return obj;
-                    })
-                )
-            }
-        })
-    }
+function Table({ tableHeader, data }) {
+    const [teacher, setTeacher] = useState([]);
 
     return (
         <div className="relative border overflow-x-auto shadow-md sm:rounded-lg p-5 md:mr-6 ">
@@ -152,7 +74,7 @@ function ViewTeachers() {
                 </div>
             </div>
             <table className="w-full text-sm mt-4 text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="p-4">
                             <div className="flex items-center">
@@ -160,29 +82,18 @@ function ViewTeachers() {
                                 <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
                             </div>
                         </th>
-                        <th scope="col" className="px-6 py-3">
-                            First Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Last Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Phone
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Status
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Email
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Action
-                        </th>
+                        {tableHeader.map((obj) => {
+                            return (
+                                <th scope="col" className="px-6 py-3">
+                                    {obj.title}
+                                </th>
+                            )
+                        })}
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        teacher && teacher.map((obj, index) => {
+                        data && data.map((obj, index) => {
                             return (
                                 <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td className="w-4 p-4">
@@ -192,14 +103,15 @@ function ViewTeachers() {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        {obj.firstName}
+                                        {obj.name}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {obj.lastName}
+                                        {obj.teacher.firstName}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {obj.phone}
+                                        {obj.duration}
                                     </td>
+                                    
                                     <td className="px-6 py-4">
                                         {obj.status ?
                                             <span className='text-green-600'>True</span>
@@ -279,4 +191,4 @@ function ViewTeachers() {
     )
 }
 
-export default ViewTeachers
+export default Table

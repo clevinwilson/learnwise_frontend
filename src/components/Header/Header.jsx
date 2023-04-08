@@ -30,7 +30,7 @@ function AdminHeader() {
                 font-bold rounded-xl transition duration-200"
                 onClick={()=>{
                     localStorage.removeItem('teacherJwtToken');
-                    navigate('/teacher/login')
+                    navigate('/teacher')
                 }}
                 >Logout</a>
             </nav>

@@ -6,6 +6,7 @@ import AddTeacherPage from '../pages/admin/AddTeacherPage';
 import PrivateRoutes from '../utils/PrivateRoutes';
 import ViewTeachersPage from '../pages/admin/ViewTeachersPage';
 import ViewUserPage from '../pages/admin/ViewUserPage';
+import ListCourse from '../pages/admin/ListCourse';
 
 function AdminRouter() {
   return (
@@ -15,6 +16,8 @@ function AdminRouter() {
         <Route path='/add-teacher' element={<AddTeacherPage />} />
         <Route path='/teacher' element={<ViewTeachersPage />} />
         <Route path='/user' element={<ViewUserPage/>} />
+        <Route path='/course' element={<ListCourse />} />
+
       </Route>
       
       <Route path='/' element={<AdminLogin />} />

@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from '../../Redux/Features/userSlice';
 import { setSidebar } from '../../Redux/Features/adminSidebarToogle';
 import { useNavigate } from 'react-router-dom';
-import adminLinks from '../../links/adminLinks';
-import teacherLinks from '../../links/teacherLinks'
+import adminLinks from '../../utils/adminSidebarLinks';
+import teacherLinks from '../../utils/teacherSidebarLinks'
 
 function Sidebar(props) {
-  const [sidebarLinks,setSidebarLinks]=useState([]);
+  const [sidebarLinks, setSidebarLinks] = useState([]);
   const sidebarToogle = useSelector((state) => state.adminSidebarToogle);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,13 +22,13 @@ function Sidebar(props) {
       }
     }
 
-    if(props.admin){
+    if (props.admin) {
       setSidebarLinks(adminLinks);
-    }else{
+    } else {
       setSidebarLinks(teacherLinks);
     }
 
-    
+
     handleResize();
 
     window.addEventListener('resize', handleResize);
@@ -43,28 +43,21 @@ function Sidebar(props) {
       <div className="overflow-y-auto overflow-x-hidden flex-grow">
         <ul className="flex flex-col py-4 space-y-1">
           {
-            sidebarLinks.map((obj,index) => {
+            sidebarLinks.map((obj, index) => {
               return (
                 <>
-                  <li  className="px-3" key={index}>
+                  <li className="p-1 md:px-3" key={index}>
                     <div className="flex flex-row items-center h-8">
-                      <div className="text-sm font-light tracking-wide text-gray-500">{obj.title}</div>
+                      <div className="text-sm  tracking-wide font-semibold text-gray-500">{obj.title}</div>
                     </div>
                   </li>
                   {
-                    obj.links.map((link,index)=>{
-                      return(
+                    obj.links.map((link, index) => {
+                      return (
                         <li key={index}>
-                          <a onClick={()=>{navigate(link.link)}} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
+                          <a onClick={() => { navigate(link.link) }} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
                             <span className="inline-flex justify-center items-center ml-4">
-                             {link.icon?
-                                <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" >
-                                  <path strokeLinecap="round" strokeLinejoin="round"
-                                   d= {link.icon}
-                                   />
-                                </svg>
-                                :""
-                             }
+                              {link.icon}
                             </span>
                             <span className="ml-2 sidebar-label text-sm tracking-wide truncate">{link.subTitle}</span>
                           </a>
@@ -72,14 +65,13 @@ function Sidebar(props) {
                       )
                     })
                   }
-                  
-                  
+
                 </>
               )
             })
           }
-          
-         
+
+
 
           {/* <li>
                 <a href="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
