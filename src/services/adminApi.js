@@ -55,12 +55,16 @@ const getAllCourse=()=>{
 
 //get community details
 const getAllCommunity=()=>{
-    return axiosInstance.get('/admin/community', { headers: getToken() })
+    return axiosInstance.get('/admin/community', { headers: getToken() });
 }
+const changeCommunityStatus = (id, status)=>{
+    return axiosInstance.get(`/admin/community/change-status/${id}/${status}`, { headers: getToken() })
+}
+
 
 //get all groups
 const getAllGroups=()=>{
     return axiosInstance.get('/admin/group', { headers: getToken() })
 }
 
-export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse, getAllCommunity, getAllGroups }
+export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse, getAllCommunity, getAllGroups, changeCommunityStatus }

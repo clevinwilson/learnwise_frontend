@@ -3,7 +3,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ToastContainer, toast } from "react-toastify";
 
-function Table({ tableHeader, data, type }) {
+function Table({ tableHeader, data, type, handleStatus }) {
     const [teacher, setTeacher] = useState([]);
 
     return (
@@ -127,7 +127,7 @@ function Table({ tableHeader, data, type }) {
                                             <td className="px-6 py-4 flex justify-center items-center">
 
                                                 <button type="button" className="text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm p-2.5  text-center mr-2 mb-2 dark:bg-red-400 dark:hover:bg-red-500 dark:focus:ring-red-900"
-                                                    onClick={() => { handleBlock(obj._id) }}
+                                                    onClick={() => { handleStatus(obj._id,'block') }}
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
@@ -140,7 +140,7 @@ function Table({ tableHeader, data, type }) {
                                             <td className="px-6 py-4 flex justify-center items-center">
 
                                                 <button type="button" className="text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm p-2.5  text-center mr-2 mb-2 dark:bg-green-400 dark:hover:bg-green-500 dark:focus:ring-green-900"
-                                                    onClick={() => { handleUnblock(obj._id) }}
+                                                    onClick={() => { handleStatus(obj._id,'unblock') }}
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
