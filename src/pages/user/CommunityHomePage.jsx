@@ -3,7 +3,7 @@ import CommunityNavigation from '../../components/CommunityNavigation/CommunityN
 import CommunitySidebar from '../../components/CommunitySidebar/CommunitySidebar'
 import UserHeader from '../../components/UserHeader/UserHeader'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getCommunityDetails, leaveCommunity } from '../../services/userApi';
+import { deleteCommunity, getCommunityDetails, leaveCommunity } from '../../services/userApi';
 import CommunityTab from '../../utils/CommunityTab';
 import Feeds from '../../components/CommunityTabs/Feeds';
 import Members from '../../components/CommunityTabs/Members';
@@ -14,7 +14,8 @@ import CreateGroupModal from '../../components/Modal/CreateGroupModal';
 import swal from 'sweetalert';
 import { IoLogInOutline } from "react-icons/io5";
 import { toast } from 'react-toastify';
-import { response } from '../../../../backend/app';
+import { MdOutlineDeleteOutline } from "react-icons/md";
+
 
 
 function CommunityHomePage() {
@@ -58,6 +59,40 @@ function CommunityHomePage() {
                     leaveCommunity(community._id)
                         .then((response) => {
                             if (response.data.status) {
+                                navigate('/community')
+                            } else {
+                                toast(response.data.message, {
+                                    position: 'top-center'
+                                })
+                            }
+                        })
+                        .catch((response) => {
+                            toast(response.data.message, {
+                                position: 'top-center'
+                            })
+                        })
+                }
+            });
+    }
+
+    //delete community 
+    const handleDeleteCommunity = () => {
+        swal({
+            title: "Are you sure?",
+            text: "All groups under this community will be deleted!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    //delete community api
+                    deleteCommunity(community._id)
+                        .then((response) => {
+                            if (response.data.status) {
+                                toast(response.data.message, {
+                                    position: 'top-center'
+                                });
                                 navigate('/community')
                             } else {
                                 toast(response.data.message, {
@@ -130,24 +165,33 @@ function CommunityHomePage() {
                                             {community && community.members.length} members &nbsp; ● &nbsp; {community && community.groups.length} Groups
                                         </div>
                                     </div>
+
                                     <div className='flex'>
                                         <button onClick={() => {
                                             setCreateGroupModal(true)
                                         }} className="btn btn-primary text-white bg-violet-500 hover:bg-violet-600 rounded-3xl">
                                             <BiCollapseAlt />
-                                            <span className='ml-3'>Create Group</span>
+                                            <span className='hidden md:block ml-3'>Create Group</span>
                                         </button>
 
                                         <div className='relative'>
-                                            <div onClick={() => { setLeaveBtn(!leaveBtn) }} className='flex ml-4 justify-center items-center h-10 w-10 rounded-full text-slate-500 border cursor-pointer hover:bg-slate-100 shadow-lg'>
+                                            <div onClick={() => { setLeaveBtn(!leaveBtn) }} className='flex ml-4 justify-center items-center h-12 w-12 rounded-full text-slate-500 border cursor-pointer hover:bg-slate-100 shadow-lg'>
                                                 <BiDotsVerticalRounded size={28} />
                                             </div>
 
                                             {leaveBtn ?
-                                                <div onClick={handleLeaveCommunity} className="z-50 absolute right-1 top-10  my-3 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+                                                <div className="z-50 absolute right-1 top-10  my-3 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
                                                     <ul className="py-2 px-2 cursor-pointer" aria-labelledby="user-menu-button">
+                                                        {isAdmin ? <li>
+                                                            <p className=" px-4 py-1 text-sm text-black flex justify-center items-center"
+                                                                onClick={handleDeleteCommunity}
+                                                            >
+                                                                <span className='mr-2'>Delete</span> <MdOutlineDeleteOutline size={16} />
+                                                            </p>
+                                                        </li>
+                                                            : ""}
                                                         <li>
-                                                            <p className=" px-4 py-1 text-sm text-red-500 flex justify-center items-center"><span className='mr-2'>Leave</span> <IoLogInOutline size={16} />
+                                                            <p onClick={handleLeaveCommunity} className=" px-4 py-1 text-sm text-red-500 flex justify-center items-center"><span className='mr-2'>Leave</span> <IoLogInOutline size={16} />
                                                             </p>
                                                         </li>
                                                     </ul>
@@ -158,6 +202,7 @@ function CommunityHomePage() {
                                 </div>
                                 <p>{community && community.about}</p>
                             </div>
+
                             <div className="home-tabs tabs mt-7  justify-between border-b border-base-300 px-5">
                                 {CommunityTab
                                     .map((tab) => (

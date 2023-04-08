@@ -1,32 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { authAdmin } from '../services/adminApi';
 import { authTeacher } from '../services/teacherApi';
 import { authUser } from '../services/userApi';
+import { toast } from 'react-toastify';
 
 
 
 function PrivateRoutes(props) {
   let [auth, setAuth] = useState(null);
+  const navigate=useNavigate();
   useEffect(() => {
     if (props.user) {
       authUser().then((response) => {
-        setAuth(response.data.status)
+        setAuth(response.data?.status)
       }).catch((response) => {
-        setAuth(response.data.status)
+        toast.error(response.message,{position:'top-center'})
+        setAuth(response.data?.status);
+        navigate('/');
       })
     } else if (props.admin) {
       authAdmin().then((response) => {
-        setAuth(response.data.status)
+        setAuth(response.data?.status)
       }).catch((response) => {
-        setAuth(response.data.status)
+        toast.error(response.message, { position: 'top-center' })
+        setAuth(response.data?.status)
+        navigate('/');
       })
 
     } else if(props.teacher) {
       authTeacher().then((response) => {
-        setAuth(response.data.status)
+        setAuth(response.data?.status)
       }).catch((response) => {
-        setAuth(response.data.status)
+        toast.error(response.message, { position: 'top-center' })
+        setAuth(response.data?.status)
+        navigate('/');
       })
     }
   }, [])

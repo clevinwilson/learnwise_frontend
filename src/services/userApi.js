@@ -108,3 +108,8 @@ export const joinGroup = (communityId, groupId)=>{
 export const leaveCommunity=(communityId)=>{
     return userInstance.get(`/community/leave/${communityId}`)
 }
+
+//delte community 
+export const deleteCommunity=(communityId)=>{
+    return userInstance.get(`/commuinty/delete/${communityId}`)
+}
