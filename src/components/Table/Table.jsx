@@ -3,7 +3,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ToastContainer, toast } from "react-toastify";
 
-function Table({ tableHeader, data }) {
+function Table({ tableHeader, data, type }) {
     const [teacher, setTeacher] = useState([]);
 
     return (
@@ -106,21 +106,18 @@ function Table({ tableHeader, data }) {
                                         {obj.name}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {obj.teacher.firstName}
+                                        {type == 'community' ? obj.members.length : type == 'group' ? "" : obj.teacher.firstName}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {obj.duration}
+                                        {type == 'community' ? obj.groups.length : type == 'group' ? "" : obj.duration}
                                     </td>
-                                    
+
                                     <td className="px-6 py-4">
                                         {obj.status ?
                                             <span className='text-green-600'>True</span>
                                             :
                                             <span className='text-red-600'>Blocked</span>
                                         }
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {obj.email}
                                     </td>
                                     {obj.status ?
                                         <td className="px-6 py-4 flex justify-center items-center">

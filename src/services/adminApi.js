@@ -53,4 +53,9 @@ const getAllCourse=()=>{
     return axiosInstance.get('/admin/course', { headers: getToken() })
 }
 
-export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse }
+//get community details
+const getAllCommunity=()=>{
+    return axiosInstance.get('/admin/community', { headers: getToken() })
+}
+
+export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse, getAllCommunity }
