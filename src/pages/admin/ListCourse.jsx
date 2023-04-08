@@ -35,7 +35,7 @@ function ListCourse() {
             <Sidebar admin={true} />
             <Header />
             <div className='admin-page p-3 ' >
-                <Table tableHeader={tableHeader} data={course} />
+                <Table tableHeader={tableHeader} data={course} type={'Course'} />
             </div>
         </div>
     )

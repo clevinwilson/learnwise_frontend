@@ -1,26 +1,29 @@
-import React,{useState,useEffect} from 'react'
-import { getAllCommunity } from '../../services/adminApi';
+import React, { useState, useEffect } from 'react'
+import { getAllCommunity, getAllGroups } from '../../services/adminApi';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
 import Table from '../../components/Table/Table';
+import { toast } from 'react-toastify';
 
-function ListCommunity() {
-    const [community, setCommunity] = useState();
+
+function ListGroup() {
+
+    const [group, setGroup] = useState();
 
     //table header
     const tableHeader = [
         { title: 'Name' },
         { title: "No Members" },
-        { title: "No Groups" },
+        { title: "Created At" },
         { title: "Status" },
         { title: "Action" }
     ];
 
     //get community Details
     useEffect(() => {
-        getAllCommunity()
+        getAllGroups()
             .then((response) => {
-                setCommunity(response.data.community)
+                setGroup(response.data.group)
             })
             .catch((response) => {
                 toast(response.data.message, {
@@ -34,10 +37,10 @@ function ListCommunity() {
           <Sidebar admin={true} />
           <Header />
           <div className='admin-page p-3 ' >
-              <Table tableHeader={tableHeader} data={community} type={'Community'} />
+              <Table tableHeader={tableHeader} data={group} type={'Group'} />
           </div>
       </div>
   )
 }
 
-export default ListCommunity
+export default ListGroup

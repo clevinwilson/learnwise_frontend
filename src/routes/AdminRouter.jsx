@@ -8,6 +8,7 @@ import ViewTeachersPage from '../pages/admin/ViewTeachersPage';
 import ViewUserPage from '../pages/admin/ViewUserPage';
 import ListCourse from '../pages/admin/ListCourse';
 import ListCommunity from '../pages/admin/ListCommunity';
+import ListGroup from '../pages/admin/ListGroup';
 
 function AdminRouter() {
   return (
@@ -19,7 +20,7 @@ function AdminRouter() {
         <Route path='/user' element={<ViewUserPage/>} />
         <Route path='/course' element={<ListCourse />} />
         <Route path='/community' element={<ListCommunity />} />
-
+        <Route path='/group' element={<ListGroup />} />
 
       </Route>
       
