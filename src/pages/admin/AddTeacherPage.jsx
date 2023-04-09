@@ -7,7 +7,7 @@ function AddTeacherPage() {
   return (
      <div className='relative '>
       <Sidebar admin={true} />
-      <Header />
+      <Header role={'admin'} />
       <div className='admin-page p-3 ' >
         <AddTeacher />
       </div>

@@ -49,7 +49,7 @@ function ListCommunity() {
     return (
         <div className='relative '>
             <Sidebar admin={true} />
-            <Header />
+            <Header role={'admin'} />
             <div className='admin-page p-3 ' >
                 <Table tableHeader={tableHeader} data={community} type={'Community'} handleStatus={handleStatus} />
             </div>

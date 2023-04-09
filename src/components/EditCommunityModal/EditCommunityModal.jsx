@@ -37,7 +37,7 @@ function EditCommunityModal() {
                         position: "top-center",
                     });
                 } else {
-                    toast.error(response.data.message, {
+                    toast.error(response.message, {
                         position: "top-center",
                     });
                 }

@@ -6,7 +6,7 @@ function TeacherDashboardPage() {
   return (
       <div className='relative '>
           <Sidebar />
-          <Header />
+          <Header role={'teacher'} />
           <div className='admin-page p-3 ' >
               Dashboard
           </div>

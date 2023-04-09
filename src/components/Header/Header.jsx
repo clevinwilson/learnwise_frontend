@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './AdminHeader.scss';
 import { setSidebar } from '../../Redux/Features/adminSidebarToogle';
 import { useDispatch, useSelector } from 'react-redux';
-import {useNavigate} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-function AdminHeader() {
+function AdminHeader({ role }) {
     const sidebarToogle = useSelector((state) => state.adminSidebarToogle)
     const dispatch = useDispatch();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
+    const [showDiv, setShowDiv]=useState(false)
     return (
         <div className='p-3'>
-            <nav style={{ border: "1px solid #e5e7eb", position: 'fixed', width: '100%', top: '0' ,left:'0',right:'0' }} className="relative  z-50 px-4 py-4 flex justify-between items-center bg-white">
-                <a className="text-3xl font-bold leading-none" href="#">
+            <nav style={{ border: "1px solid #e5e7eb", position: 'fixed', width: '100%', top: '0', left: '0', right: '0' }} className="relative  z-50 px-4 py-4 flex justify-between items-center bg-white">
+                <a className="hidden md:flex text-3xl font-bold leading-none" href="#">
                     <h1 className='text-violet-800 text-2xl'>LearnWise</h1>
                 </a>
                 <div className="lg:hidden">
@@ -25,14 +26,44 @@ function AdminHeader() {
                     </button>
                 </div>
 
-                <a className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="#">Sign In</a>
-                <a className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white 
-                font-bold rounded-xl transition duration-200"
-                onClick={()=>{
-                    localStorage.removeItem('teacherJwtToken');
-                    navigate('/teacher')
-                }}
-                >Logout</a>
+
+                <div className="  items-center md:order-2 cursor-pointer">
+                    <img onClick={() => { setShowDiv(!showDiv) }} className="w-9 h-9 rounded-full object-cover  " src='https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png' alt="user photo"
+                    />
+                    <div style={true ? { display: 'block' } : { display: 'none' }} className="z-50 absolute right-2 top-12  my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+                        {showDiv ?
+                            <>
+                                {role == 'teacher' ?
+                                    <ul className="py-2" aria-labelledby="user-menu-button">
+                                        <li>
+                                            <Link to={'/teacher/change-password'}>
+                                                <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Change Password</p>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                onClick={() => {
+                                                    localStorage.removeItem('teacherJwtToken');
+                                                    navigate('/teacher')
+                                                }}
+                                            >Logout</p>
+                                        </li>
+                                    </ul>
+                                    :
+                                    <ul className="py-2" aria-labelledby="user-menu-button">
+                                        <li>
+                                            <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                                onClick={() => {
+                                                    localStorage.removeItem('adminJwtToken');
+                                                    navigate('/admin')
+                                                }}
+                                            >Logout</p>
+                                        </li>
+                                    </ul>}
+                            </>
+                            : ""}
+                    </div>
+                </div>
             </nav>
 
         </div>

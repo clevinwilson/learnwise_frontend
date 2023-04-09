@@ -7,7 +7,7 @@ function EditCoursePage() {
   return (
     <div className='relative '>
       <Sidebar teacher={true} />
-      <Header />
+      <Header role={'teacher'} />
       <div className='admin-page p-3 ' >
         <EditCourse />
 

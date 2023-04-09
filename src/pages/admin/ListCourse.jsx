@@ -49,7 +49,7 @@ function ListCourse() {
     return (
         <div className='relative '>
             <Sidebar admin={true} />
-            <Header />
+            <Header role={'admin'} />
             <div className='admin-page p-3 ' >
                 <Table tableHeader={tableHeader} data={course} type={'Course'} handleStatus={handleStatus} />
             </div>

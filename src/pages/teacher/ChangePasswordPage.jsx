@@ -1,18 +1,18 @@
 import React from 'react';
-import AddCourse from '../../components/AddCourse/AddCourse';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
+import ChangePassword from '../../components/ChangePassword/ChangePassword';
 
-function AddCoursePage() {
+function ChangePasswordPage() {
   return (
       <div className='relative '>
           <Sidebar teacher={true} />
           <Header role={'teacher'} />
           <div className='admin-page p-3 ' >
-          <AddCourse/>
+              <ChangePassword/>
           </div>
       </div>
   )
 }
 
-export default AddCoursePage
+export default ChangePasswordPage

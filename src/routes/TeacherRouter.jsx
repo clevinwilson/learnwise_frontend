@@ -6,6 +6,7 @@ import TeacherDashboardPage from '../pages/teacher/TeacherDashboardPage';
 import AddCoursePage from '../pages/teacher/AddCoursePage';
 import ViewCoursePage from '../pages/teacher/ViewCoursePage';
 import EditCoursePage from '../pages/teacher/EditCoursePage';
+import ChangePasswordPage from '../pages/teacher/ChangePasswordPage';
 
 
 function TeacherRouter() {
@@ -16,6 +17,8 @@ function TeacherRouter() {
                 <Route element={<AddCoursePage />} path='/add-course' />
                 <Route element={<ViewCoursePage />} path='/course' />
                 <Route element={<EditCoursePage/>} path='/edit-course/:courseId'/>
+                <Route element={<ChangePasswordPage />} path='/change-password' />
+
             </Route>
             <Route element={<TeacherLoginPage />} path='/' />
         </Routes>

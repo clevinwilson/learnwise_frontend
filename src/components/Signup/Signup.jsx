@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Signup.css';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
-import TextField from '../TextField/TextField';
 import { useNavigate, Link } from "react-router-dom";
 import axiosInstance from '../../axios/axios';
 import 'boxicons/css/boxicons.min.css';
