@@ -45,6 +45,7 @@ function ListCourse() {
                 toast.error(response.message, { position: 'top-center' })
             })
     }
+    
     return (
         <div className='relative '>
             <Sidebar admin={true} />

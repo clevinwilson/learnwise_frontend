@@ -86,9 +86,9 @@ function Table({ tableHeader, data, type, handleStatus }) {
                                     <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
                                 </div>
                             </th>
-                            {tableHeader.map((obj) => {
+                            {tableHeader.map((obj,index) => {
                                 return (
-                                    <th scope="col" className="px-6 py-3">
+                                    <th key={index} scope="col" className="px-6 py-3">
                                         {obj.title}
                                     </th>
                                 )
