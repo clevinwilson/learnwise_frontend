@@ -53,6 +53,13 @@ const getAllCourse=()=>{
     return axiosInstance.get('/admin/course', { headers: getToken() })
 }
 
+const changeCourseStatus = (courseId, status)=>{
+    console.log(courseId, status);
+    return axiosInstance.get(`/admin/course/change-status/${courseId}/${status}`, { headers: getToken() })
+}
+
+
+
 //get community details
 const getAllCommunity=()=>{
     return axiosInstance.get('/admin/community', { headers: getToken() });
@@ -67,4 +74,4 @@ const getAllGroups=()=>{
     return axiosInstance.get('/admin/group', { headers: getToken() })
 }
 
-export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse, getAllCommunity, getAllGroups, changeCommunityStatus }
+export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse, getAllCommunity, getAllGroups, changeCommunityStatus, changeCourseStatus }

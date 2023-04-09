@@ -42,7 +42,7 @@ function ListCommunity() {
                 }))
                 toast.success(response.data.message, { position: 'top-center' })
             }).catch((response) => {
-                toast.error(response.data.message, { position: 'top-center' })
+                toast.error(response.message, { position: 'top-center' })
             })
     }
 
