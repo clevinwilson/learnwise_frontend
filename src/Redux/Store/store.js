@@ -5,6 +5,7 @@ import adminSlice from '../Features/adminSlice';
 import teacherSlice from '../Features/teacherSlice';
 import courseSlice from '../Features/courseSlice';
 import communitySlice from '../Features/communitySlice';
+import groupSlice from '../Features/groupSlice';
 
 
 
@@ -15,7 +16,8 @@ export default configureStore({
         admin:adminSlice,
         teacher:teacherSlice,
         course: courseSlice,
-        community: communitySlice
+        community: communitySlice,
+        group:groupSlice
     },
    
 })

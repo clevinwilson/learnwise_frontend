@@ -1,28 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import CommunitySidebarLink from '../../utils/CommunitySidebarLink';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllJoinedGroups } from '../../Redux/Actions/groupActions';
 
 function CommunitySidebar() {
-
-
-    const groups = [
-        {
-            label: "Dancers",
-            icon: "🕺",
-        },
-        {
-            label: "Guitarists",
-            icon: "🎸",
-        },
-        {
-            label: "Artists",
-            icon: "🎨",
-        },
-        {
-            label: "Cooks",
-            icon: "🍳",
-        },
-    ];
+    const groupData=useSelector(state=>state.group)
+   
   return (
       <>
           <ul className="menu hidden sm:flex overflow-y-auto bg-base-100 text-base xl:w-64">
@@ -46,13 +30,13 @@ function CommunitySidebar() {
                   <h3 className="hidden px-5 py-2 text-xs font-bold uppercase text-gray-500 xl:block">
                       Groups
                   </h3>
-                  {groups.map((item) => (
-                      <li key={item.label}>
-                          <div className="py-2">
-                              <span className="mask mask-circle bg-base-200 p-1 text-xl">
-                                  {item.icon}
+                  {groupData.groups.map((group,index) => (
+                      <li key={index}>
+                          <div className="py-1">
+                              <span className="mask mask-circle bg-base-200  text-xl">
+                                  <img class="w-10 h-10 rounded-full" src={import.meta.env.VITE_SERVER_URL + group.image.path} alt="Rounded avatar"/>
                               </span>
-                              <span className="hidden xl:block">{item.label}</span>
+                              {/* <span className="hidden xl:block">{item.label}</span> */}
                           </div>
                       </li>
                   ))}

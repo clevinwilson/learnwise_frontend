@@ -88,21 +88,7 @@ export const editCommunity =(data)=>{
     return userInstance.post('/edit-community', { ...data }, { headers: { "Content-Type": "multipart/form-data" } });
 }
 
-//commuinty groups
 
-export const createGroup=(data)=>{
-
-    return userInstance.post('/create-group', { ...data }, { headers: { "Content-Type": "multipart/form-data" } });
-}
-
-export const getCommunityGroups=(communityId)=>{
-    return userInstance.get(`/community/groups/${communityId}`)
-}
-
-//join group
-export const joinGroup = (communityId, groupId)=>{
-    return userInstance.get(`/community/groups/join/${communityId}/${groupId}`)
-}
 
 //leave from a community api
 export const leaveCommunity=(communityId)=>{
@@ -113,3 +99,28 @@ export const leaveCommunity=(communityId)=>{
 export const deleteCommunity=(communityId)=>{
     return userInstance.get(`/commuinty/delete/${communityId}`)
 }
+
+
+
+//group
+//commuinty groups
+
+export const createGroup = (data) => {
+
+    return userInstance.post('/create-group', { ...data }, { headers: { "Content-Type": "multipart/form-data" } });
+}
+
+export const getCommunityGroups = (communityId) => {
+    return userInstance.get(`/community/groups/${communityId}`)
+}
+
+//join group
+export const joinGroup = (communityId, groupId) => {
+    return userInstance.get(`/community/groups/join/${communityId}/${groupId}`)
+}
+
+//get all joined groups
+export const getJoinedGroups = () => {
+    return userInstance.get(`/community/group/joinedGroups`)
+}
+

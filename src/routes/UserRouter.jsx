@@ -16,6 +16,7 @@ import GroupPage from '../pages/user/GroupPage';
 import CommunityPage from '../pages/user/CommunityPage';
 import CommunityHomePage from '../pages/user/CommunityHomePage';
 import OrderFailedPage from '../pages/user/OrderFailedPage';
+import ProfilePage from '../pages/user/ProfilePage';
 
 function UserRouter() {
   return (
@@ -27,6 +28,8 @@ function UserRouter() {
         <Route element={<OrderSuccessPage />} path='/order-success' />
         <Route element={<CommunityHomePage />} path='/community-home' />
         <Route element={<OrderFailedPage />} path='/order-failed' />
+        <Route element={<ProfilePage />} path='/profile' />
+
 
       </Route>
 

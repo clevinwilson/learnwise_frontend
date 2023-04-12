@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { getCommunityGroups, joinGroup } from '../../services/userApi';
 import { toast } from 'react-toastify';
 import CardLoading from '../CardLoading/CardLoading'
+import { fetchAllJoinedGroups } from '../../Redux/Actions/groupActions';
+import { useDispatch } from 'react-redux';
+
+
 function Groups({ community }) {
+
+    const dispatch = useDispatch();
     const [groups, setGroups] = useState();
     const [loading, setLoading] = useState(true);
 
@@ -32,7 +38,10 @@ function Groups({ community }) {
             if (response.data.status) {
                 toast.success(response.data.message, {
                     position: "top-center",
-                })
+                });
+                
+                dispatch(fetchAllJoinedGroups())
+
             }
         })
         .catch((err) => {
