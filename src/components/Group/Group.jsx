@@ -1,101 +1,42 @@
-import React from 'react';
-import GroupCard from '../GroupCard/GroupCard';
-import Button from '../Button/Button';
-import { BiPlus } from 'react-icons/bi';
+import React, { useEffect, useState } from 'react';
+import Card from '../Card/Card';
+import { getAllGroups } from '../../services/userApi';
 
 function Group({ isTab }) {
+  const [groups, setGroups] = useState([]);
+  useEffect(() => {
+    getAllGroups().then((response) => {
+      console.log(response.data);
+      setGroups(response.data.group)
+    })
+  }, [])
 
-  const newGroups = [
-    {
-      id: "1",
-      name: "Cooks",
-      icon: "🍳",
-      image: "Cooks",
-      members: "100",
-    },
-    {
-      id: "2",
-      name: "Yoga - the art of living",
-      icon: "🧘‍♀️",
-      image: "Yoga",
-      members: "500",
-    },
-    {
-      id: "3",
-      name: "Magic",
-      icon: "🧙‍♀️",
-      image: "Magic",
-      members: "25",
-    },
-  ];
 
-  const discoverGroups = [
-    {
-      id: "1",
-      name: "Artists",
-      icon: "🎨",
-      image: "Artists",
-      members: "100",
-    },
-    {
-      id: "2",
-      name: "Guitarists",
-      icon: "🎸",
-      image: "Guitarists",
-      members: "500",
-    },
-    {
-      id: "3",
-      name: "Singers",
-      icon: "🎤",
-      image: "Singers",
-      members: "25",
-    },
-    {
-      id: "4",
-      name: "Dancers",
-      icon: "🕺",
-      image: "Dancers",
-      members: "75",
-    },
-    {
-      id: "5",
-      name: "Comedians",
-      icon: "🤡",
-      image: "Comedians",
-      members: "27",
-    },
-    {
-      id: "6",
-      name: "Cycling",
-      icon: "🚴‍♀️",
-      image: "Cycling",
-      members: "1267",
-    },
-  ];
+
   return (
     <div
       className={`w-full ${isTab ? "px-2 py-0" : "border-x px-5 py-3 sm:px-8"
         } border-base-300 `}
     >
 
-      <div className='flex justify-between items-center mb-5'>
-        <h1 className='text-xl font-bold sm:text-2xl'>Your groups</h1>
-        <Button >
-          <div className="flex justify-center items-center"> <BiPlus size={22} />  <span className='ml-4 hidden md:flex'>Create New</span></div>
-        </Button>
-      </div>
-      <div className="mt-3 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {newGroups.map((group) => (
-          <GroupCard key={group.id} group={group} />
-        ))}
-      </div>
-      <div className="mt-10 text-xl font-bold sm:text-2xl">Explore</div>
-      <div className="my-3 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {discoverGroups.map((group) => (
-          <GroupCard key={group.id} group={group} />
-        ))}
-      </div>
+      {groups.length > 0 ?
+        <>
+          <div className='flex justify-between items-center mb-5'>
+            <h1 className='text-xl font-bold sm:text-2xl'>Groups</h1>
+
+          </div>
+          <div className="mt-3 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {groups && groups.map((group) => (
+              <Card key={group.id} group={group} />
+            ))}
+          </div>
+        </>
+        :
+        <div className='lg:h-screen mt-20 lg:mt-0 flex flex-col p-8 justify-center items-center'>
+          <img className='w-96 object-cover' src="/images/groupbg.png" alt="" />
+          <p>No Group Found</p>
+        </div>
+      }
     </div>
   )
 }

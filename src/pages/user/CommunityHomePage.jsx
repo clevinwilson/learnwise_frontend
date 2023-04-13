@@ -15,23 +15,29 @@ import swal from 'sweetalert';
 import { IoLogInOutline } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { getCommunityGroups } from '../../services/userApi';
+import { fetchAllJoinedGroups } from '../../Redux/Actions/groupActions';
+import { useDispatch } from 'react-redux';
+
 
 
 
 function CommunityHomePage() {
-    const groupsIcon = ["🕺", "🎨", "🍳", "🎸"];
     const { state } = useLocation();
+    const dispatch=useDispatch();
     const navigate = useNavigate();
     const [community, setCommunitys] = useState();
     const [activeTab, setActiveTab] = useState(CommunityTab[0].label);
     const [isAdmin, setIsAdmin] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [createGroupModal, setCreateGroupModal] = useState(false);
-    const [leaveBtn, setLeaveBtn] = useState(false)
+    const [leaveBtn, setLeaveBtn] = useState(false);
+    const [groups, setGroups] = useState();
+    const [groupLoading, setGroupLoading] = useState(true);
+
 
     const loadCommuintData = () => {
         getCommunityDetails(state._id).then((response) => {
-            console.log(response.data.communityDetails.groups);
             setCommunitys(response.data.communityDetails);
             setIsAdmin(response.data.admin);
         })
@@ -107,8 +113,28 @@ function CommunityHomePage() {
                         })
                 }
             });
+    };
+    
+     //loading groups 
+    const loadCommunityGroups = () => {
+        getCommunityGroups(community._id)
+            .then((response) => {
+                if (response.data.status) {
+                    setGroups(response.data.community.groups);
+                    setGroupLoading(false);
+                    dispatch(fetchAllJoinedGroups())
+                } else {
+                    toast.error(response.data.message, {
+                        position: "bottom-center",
+                    })
+                }
+            })
+            .catch((err) => {
+                toast.error(response.data.message, {
+                    position: "bottom-center"
+                })
+            })
     }
-
 
 
     //tab items
@@ -117,7 +143,7 @@ function CommunityHomePage() {
             case "Feed":
                 return <Feeds community={state} admin={isAdmin} />;
             case "Groups":
-                return <Groups community={state} />;
+                return <Groups community={state} loadCommunityGroups={loadCommunityGroups} groups={groups} groupLoading={groupLoading} />;
             case "Description":
                 return <p>{community?.description}</p>;
             case "Members":
@@ -230,7 +256,7 @@ function CommunityHomePage() {
                 </div>
             </div>
             {/* create group modal */}
-            {createGroupModal ? <CreateGroupModal close={() => { setCreateGroupModal(false) }} community={community} /> : ""}
+            {createGroupModal ? <CreateGroupModal close={() => { setCreateGroupModal(false) }} loadCommunityGroups={loadCommunityGroups} community={community} /> : ""}
 
 
             {/* add community modal */}

@@ -29,8 +29,9 @@ function UserRouter() {
         <Route element={<CommunityHomePage />} path='/community-home' />
         <Route element={<OrderFailedPage />} path='/order-failed' />
         <Route element={<ProfilePage />} path='/profile' />
+        <Route element={<GroupPage />} path='/groups' />
 
-
+        
       </Route>
 
 

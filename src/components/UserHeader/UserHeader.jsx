@@ -8,6 +8,7 @@ import { setUserDetails, setSignoutState } from "../../Redux/Features/userSlice"
 function UserHeader() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
+    const navigate=useNavigate();
 
     useEffect(() => {
         if (!user.id) {
@@ -110,7 +111,7 @@ function UserHeader() {
                                         localStorage.removeItem('JwtToken');
                                         dispatch(setSignoutState());
                                         setProfileBox(false);
-                                        // navigate('/login');
+                                         navigate('/');
                                     }}
 
                                 >Sign out</p>
@@ -209,6 +210,7 @@ function UserHeader() {
                                 <div className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold  bg-green-400 hover:bg-green-500   rounded-xl" onClick={() => {
                                     localStorage.removeItem('JwtToken');
                                     dispatch(setSignoutState());
+                                    navigate('/')
                                 }}>Logout</div>
                             </div>
                         </div>

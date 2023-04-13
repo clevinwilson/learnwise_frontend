@@ -70,7 +70,7 @@ export const getCommunityDetails=(communityId)=>{
 
 
 export const createCommunityPost=(data)=>{
-    return userInstance.post('/create-communityPost', { ...data }, { headers: {  "Content-Type": "multipart/form-data" } })
+    return userInstance.post('/create-community/post', { ...data }, { headers: {  "Content-Type": "multipart/form-data" } })
 }
 
 //load community feeds 
@@ -106,7 +106,6 @@ export const deleteCommunity=(communityId)=>{
 //commuinty groups
 
 export const createGroup = (data) => {
-
     return userInstance.post('/create-group', { ...data }, { headers: { "Content-Type": "multipart/form-data" } });
 }
 
@@ -122,5 +121,10 @@ export const joinGroup = (communityId, groupId) => {
 //get all joined groups
 export const getJoinedGroups = () => {
     return userInstance.get(`/community/group/joinedGroups`)
+}
+
+//get all groups 
+export const getAllGroups=()=>{
+    return userInstance.get('/community/groups')
 }
 

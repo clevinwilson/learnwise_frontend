@@ -62,6 +62,7 @@ function CreateGroupModal(props) {
                     .then((response) => {
 
                         if (response.data.status) {
+                            props.loadCommunityGroups()
                             props.close()
                             toast.success(response.data.message, {
                                 position: "top-center",
