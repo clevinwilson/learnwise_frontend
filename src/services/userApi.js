@@ -128,3 +128,15 @@ export const getAllGroups=()=>{
     return userInstance.get('/community/groups')
 }
 
+
+//message
+//send message
+export const sendMessage=(message)=>{
+    return userInstance.post('/messages', message )
+}
+
+//load group messages
+export const getMessages=(groupId)=>{
+    return userInstance.get(`/messages/${groupId}`)
+}
+

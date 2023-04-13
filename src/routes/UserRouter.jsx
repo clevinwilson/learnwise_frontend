@@ -17,6 +17,7 @@ import CommunityPage from '../pages/user/CommunityPage';
 import CommunityHomePage from '../pages/user/CommunityHomePage';
 import OrderFailedPage from '../pages/user/OrderFailedPage';
 import ProfilePage from '../pages/user/ProfilePage';
+import MessengerPage from '../pages/user/MessengerPage';
 
 function UserRouter() {
   return (
@@ -31,7 +32,6 @@ function UserRouter() {
         <Route element={<ProfilePage />} path='/profile' />
         <Route element={<GroupPage />} path='/groups' />
 
-        
       </Route>
 
 
@@ -44,6 +44,9 @@ function UserRouter() {
       <Route element={<SearchPage />} path='/search' />
       <Route element={<GroupPage />} path='/groups' />
       <Route element={<CommunityPage />} path='/community' />
+
+      <Route element={<MessengerPage />} path='/messages' />
+
 
 
 
