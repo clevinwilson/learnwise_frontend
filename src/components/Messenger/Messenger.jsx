@@ -7,24 +7,48 @@ import { fetchAllJoinedGroups } from '../../Redux/Actions/groupActions';
 import { IoSend } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
 import { getMessages, sendMessage } from '../../services/userApi';
-import {io} from 'socket.io-client'
+import { io } from 'socket.io-client'
 
 function Messenger() {
     const dispatch = useDispatch();
     const [currentChat, setCurrentChat] = useState(null);
-    const [socket,setSocket]=useState(null);
-    const [messages,setMessages]=useState([]);
-    const [newMessage,setNewMessage]=useState("");
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState("");
     const groupData = useSelector(state => state.group);
     const user = useSelector(state => state.user);
-    const scrollRef=useRef();
+    const scrollRef = useRef();
+    const socket = useRef();
+
+    //socket io
+    //connecting to socket
+    useEffect(() => {
+        socket.current = io(import.meta.env.VITE_SOCKET_URL);
+    }, [user])
+
+    //Join the appropriate room for the current group
+    const handleConversation = (group) => {
+        setCurrentChat(group);
+        socket.current.emit('joinGroup', group._id);
+    };
+
+    //receive message and disconnect 
+    useEffect(() => {
+        //receive message
+        socket.current.on('receiveMessage', ({ userId, text }) => {
+            if (userId != user.id) {
+                setMessages(messages => [...messages, { sender: userId, text }]);
+            }
+        });
+        // Clean up when the component unmounts
+        return () => {
+            socket.current.disconnect();
+        };
+    }, [user])
 
 
-    //connection to socket server
-    useEffect(()=>{
-        setSocket(io("ws://localhost:3000"))
-    },[])
 
+
+    //group and messages
     //loading groups
     useEffect(() => {
         dispatch(fetchAllJoinedGroups())
@@ -33,35 +57,44 @@ function Messenger() {
     //get messages
     useEffect(() => {
         getMessages(currentChat?._id)
-        .then((response)=>{
-            setMessages(response.data)
-        })
-        .catch((err)=>{
-            console.log(err);
-        })
-      
+            .then((response) => {
+                setMessages(response.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }, [currentChat]);
 
     //send new message 
-    const handleSubmit=()=>{
-       if(newMessage != ""){
-           const message = {
-               user: user.id,
-               text: newMessage,
-               group: currentChat._id,
-               sender: { _id:user.id }
-           }
-           sendMessage(message).then((response) => {
-               setMessages([...messages, message]);
-               setNewMessage("");
-           })
-       }
+    const handleSubmit = () => {
+        if (newMessage != "") {
+            const message = {
+                user: user.id,
+                text: newMessage,
+                group: currentChat._id,
+                sender: { _id: user.id }
+            }
+            sendMessage(message)
+                .then((response) => {
+                    //sending message to socketio
+                    socket.current.emit('sendMessage', {
+                        userId: user.id,
+                        groupId: currentChat._id,
+                        text: newMessage
+                    })
+                    //update messages
+                    setMessages([...messages, message]);
+                    setNewMessage("");
+                })
+        }
     }
 
     //scrolling when new message load
-    useEffect(()=>{
-        scrollRef.current?.scrollIntoView({behavior:"smooth"})
-    },[messages])
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, [messages]);
+
+
     return (
         <div className="h-screen w-full flex antialiased text-gray-200 bg-gray-900 overflow-hidden">
             <div className="flex-1 flex flex-col">
@@ -83,7 +116,7 @@ function Messenger() {
                         </div>
                         <div className="contacts p-2 flex-1 overflow-y-scroll">
                             {groupData.groups && groupData.groups.map((group) => (
-                                <div onClick={() => { setCurrentChat(group) }}>
+                                <div onClick={() => { handleConversation(group) }}>
                                     <Conversation group={group} />
                                 </div>
                             ))}
@@ -94,10 +127,10 @@ function Messenger() {
                             <Chat currentChat={currentChat} />
 
                             <div className="chat-body p-4 flex-1 overflow-y-scroll">
-                                {currentChat && messages.map((message)=>{
-                                    return(
+                                {currentChat && messages.map((message) => {
+                                    return (
                                         <div ref={scrollRef}>
-                                            <Message message={message} own={user.id === message.sender._id} user={user} />
+                                            <Message message={message} currentChat={currentChat} own={user.id === message.sender._id} user={user} />
                                         </div>
                                     )
                                 })}
@@ -131,8 +164,8 @@ function Messenger() {
                                     <div className="relative flex-grow">
                                         <label>
                                             <input className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in" type="text" value={newMessage} placeholder="Message"
-                                            onChange={(e)=>{setNewMessage(e.target.value)}}
-                                             />
+                                                onChange={(e) => { setNewMessage(e.target.value) }}
+                                            />
                                             <button type="button" className="absolute top-0 right-0 mt-2 mr-3 flex flex-shrink-0 focus:outline-none  text-blue-600 hover:text-blue-700 w-6 h-6">
                                                 <BsEmojiSmile size={23} />
                                             </button>
@@ -140,8 +173,8 @@ function Messenger() {
                                     </div>
                                     <button type="button" className="flex flex-shrink-0 focus:outline-none mx-2 h-9 w-9 bg-blue-500 text-white  justify-center items-center rounded-full">
                                         <IoSend size={23}
-                                        onClick={handleSubmit}
-                                         />
+                                            onClick={handleSubmit}
+                                        />
                                     </button>
                                 </div>
                             </div>
