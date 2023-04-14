@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Chat from '../Chat/Chat';
 import Message from '../Message/Message';
 import Conversation from '../Conversation/Conversation';
@@ -7,14 +7,24 @@ import { fetchAllJoinedGroups } from '../../Redux/Actions/groupActions';
 import { IoSend } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
 import { getMessages, sendMessage } from '../../services/userApi';
+import {io} from 'socket.io-client'
 
 function Messenger() {
     const dispatch = useDispatch();
     const [currentChat, setCurrentChat] = useState(null);
+    const [socket,setSocket]=useState(null);
     const [messages,setMessages]=useState([]);
     const [newMessage,setNewMessage]=useState("");
     const groupData = useSelector(state => state.group);
     const user = useSelector(state => state.user);
+    const scrollRef=useRef();
+
+
+    //connection to socket server
+    useEffect(()=>{
+        setSocket(io("ws://localhost:3000"))
+    },[])
+
     //loading groups
     useEffect(() => {
         dispatch(fetchAllJoinedGroups())
@@ -34,15 +44,24 @@ function Messenger() {
 
     //send new message 
     const handleSubmit=()=>{
-        const message={
-            user:user.id,
-            text:newMessage,
-            group: currentChat._id
-        }
-        sendMessage(message).then((response)=>{
-            console.log(response.data);
-        })
+       if(newMessage != ""){
+           const message = {
+               user: user.id,
+               text: newMessage,
+               group: currentChat._id,
+               sender: { _id:user.id }
+           }
+           sendMessage(message).then((response) => {
+               setMessages([...messages, message]);
+               setNewMessage("");
+           })
+       }
     }
+
+    //scrolling when new message load
+    useEffect(()=>{
+        scrollRef.current?.scrollIntoView({behavior:"smooth"})
+    },[messages])
     return (
         <div className="h-screen w-full flex antialiased text-gray-200 bg-gray-900 overflow-hidden">
             <div className="flex-1 flex flex-col">
@@ -77,8 +96,9 @@ function Messenger() {
                             <div className="chat-body p-4 flex-1 overflow-y-scroll">
                                 {currentChat && messages.map((message)=>{
                                     return(
-                                        <Message message={message} own={true} />
-
+                                        <div ref={scrollRef}>
+                                            <Message message={message} own={user.id === message.sender._id} user={user} />
+                                        </div>
                                     )
                                 })}
 
