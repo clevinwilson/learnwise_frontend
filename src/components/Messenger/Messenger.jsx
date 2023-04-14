@@ -7,7 +7,8 @@ import { fetchAllJoinedGroups } from '../../Redux/Actions/groupActions';
 import { IoSend } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
 import { getMessages, sendMessage } from '../../services/userApi';
-import { io } from 'socket.io-client'
+import { io } from 'socket.io-client';
+import './Messenger.scss'
 
 function Messenger() {
     const dispatch = useDispatch();
