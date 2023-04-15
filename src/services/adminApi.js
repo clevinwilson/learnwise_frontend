@@ -21,9 +21,9 @@ const addTeacher = (values) => {
     )
 }
 
-const getTeachers=()=>{
+const getTeachers=(page)=>{
     const headers = { Authorization: `Bearer ${localStorage.getItem('adminJwtToken')}` };
-    return axiosInstance.get("/admin/teacher",{ headers })
+    return axiosInstance.get(`/admin/teacher?model=${"teacher"}&page=${page}&limit=${10}`,{ headers })
 }
 
 const blockTeacher =(teacherId)=>{
