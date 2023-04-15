@@ -49,8 +49,8 @@ const unBlockTeacher=(teacherId)=>{
 }
 
 //get course details
-const getAllCourse=()=>{
-    return axiosInstance.get('/admin/course', { headers: getToken() })
+const getAllCourse=(page)=>{
+    return axiosInstance.get(`/admin/course?model=${"course"}&page=${page}&limit=${10}`, { headers: getToken() })
 }
 
 const changeCourseStatus = (courseId, status)=>{
@@ -61,8 +61,8 @@ const changeCourseStatus = (courseId, status)=>{
 
 
 //get community details
-const getAllCommunity=()=>{
-    return axiosInstance.get('/admin/community', { headers: getToken() });
+const getAllCommunity=(page)=>{
+    return axiosInstance.get(`/admin/community?model=${"community"}&page=${page}&limit=${10}`, { headers: getToken() });
 }
 const changeCommunityStatus = (id, status)=>{
     return axiosInstance.get(`/admin/community/change-status/${id}/${status}`, { headers: getToken() })
@@ -70,8 +70,8 @@ const changeCommunityStatus = (id, status)=>{
 
 
 //get all groups
-const getAllGroups=()=>{
-    return axiosInstance.get('/admin/group', { headers: getToken() })
+const getAllGroups=(page)=>{
+    return axiosInstance.get(`/admin/group?model=${"group"}&page=${page}&limit=${10}`, { headers: getToken() })
 }
 
 const changeGroupStatus=(id,status)=>{

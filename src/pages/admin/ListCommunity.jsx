@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 
 function ListCommunity() {
     const [community, setCommunity] = useState();
+    const [pagination, setPagination] = useState();
+
 
     //table header
     const tableHeader = [
@@ -17,17 +19,23 @@ function ListCommunity() {
         { title: "Action" }
     ];
 
-    //get community Details
-    useEffect(() => {
-        getAllCommunity()
+    //get community details
+    const getCommunityDetails=(page)=>{
+        getAllCommunity(page)
             .then((response) => {
-                setCommunity(response.data.community)
+                setCommunity(response.data.community);
+                setPagination(response.data.pagination);
+
             })
             .catch((response) => {
                 toast(response.data.message, {
                     position: 'top-center'
                 })
             })
+    }
+    //get community Details
+    useEffect(() => {
+       getCommunityDetails(1);
     }, []);
 
     //cahange status
@@ -51,7 +59,7 @@ function ListCommunity() {
             <Sidebar admin={true} />
             <Header role={'admin'} />
             <div className='admin-page p-3 ' >
-                <Table tableHeader={tableHeader} data={community} type={'Community'} handleStatus={handleStatus} />
+                <Table tableHeader={tableHeader} data={community} type={'Community'} handleStatus={handleStatus} getDetails={getCommunityDetails} pagination={pagination} />
             </div>
         </div>
     )

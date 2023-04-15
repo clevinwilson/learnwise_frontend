@@ -7,6 +7,9 @@ import { toast } from 'react-toastify';
 
 function ListCourse() {
     const [course, setCourse] = useState();
+    const [pagination, setPagination] = useState();
+
+    
 
     //table header
     const tableHeader = [
@@ -18,16 +21,20 @@ function ListCourse() {
     ];
 
     //get course Details
+   const getCourseDetails=(page)=>{
+       getAllCourse(page)
+           .then((response) => {
+               setCourse(response.data.course);
+               setPagination(response.data.pagination);
+           })
+           .catch((response) => {
+               toast(response.data.message, {
+                   position: 'top-center'
+               })
+           })
+    }
     useEffect(() => {
-        getAllCourse()
-            .then((response) => {
-                setCourse(response.data.course)
-            })
-            .catch((response) => {
-                toast(response.data.message, {
-                    position: 'top-center'
-                })
-            })
+        getCourseDetails(1);
     }, []);
 
     //cahange course status
@@ -51,7 +58,7 @@ function ListCourse() {
             <Sidebar admin={true} />
             <Header role={'admin'} />
             <div className='admin-page p-3 ' >
-                <Table tableHeader={tableHeader} data={course} type={'Course'} handleStatus={handleStatus} />
+                <Table tableHeader={tableHeader} data={course} type={'Course'} handleStatus={handleStatus} getDetails={getCourseDetails} pagination={pagination} />
             </div>
         </div>
     )

@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 function ListGroup() {
 
     const [group, setGroup] = useState();
+    const [pagination, setPagination] = useState();
+
 
     //table header
     const tableHeader = [
@@ -19,17 +21,23 @@ function ListGroup() {
         { title: "Action" }
     ];
 
-    //get community Details
-    useEffect(() => {
-        getAllGroups()
+    //get group details
+    const getGroupsDetails=(page)=>{
+        getAllGroups(page)
             .then((response) => {
-                setGroup(response.data.group)
+                setGroup(response.data.group);
+                setPagination(response.data.pagination)
             })
             .catch((response) => {
                 toast(response.data.message, {
                     position: 'top-center'
                 })
             })
+    }
+
+    //get community Details
+    useEffect(() => {
+        getGroupsDetails(1);
     }, []);
 
     //cahange group status
@@ -54,7 +62,7 @@ function ListGroup() {
           <Sidebar admin={true} />
           <Header role={'admin'} />
           <div className='admin-page p-3 ' >
-              <Table tableHeader={tableHeader} data={group} type={'Group'} handleStatus={handleStatus} />
+              <Table tableHeader={tableHeader} data={group} type={'Group'} handleStatus={handleStatus} getDetails={getGroupsDetails} pagination={pagination} />
           </div>
       </div>
   )
