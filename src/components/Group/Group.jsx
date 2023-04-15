@@ -6,7 +6,6 @@ function Group({ isTab }) {
   const [groups, setGroups] = useState([]);
   useEffect(() => {
     getAllGroups().then((response) => {
-      console.log(response.data);
       setGroups(response.data.group)
     })
   }, [])

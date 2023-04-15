@@ -140,3 +140,20 @@ export const getMessages=(groupId)=>{
     return userInstance.get(`/messages/${groupId}`)
 }
 
+//get user full details
+export const getUserDetails=()=>{
+    return userInstance.get('/account')
+}
+
+//update user detals
+export const updateUserDetails=(data)=>{
+    return userInstance.patch('/update-profile',{...data})
+}
+
+//update user image
+export const updateUserAvatar=(image)=>{
+    console.log(image,'>>>>>>>>>>>');
+
+    return userInstance.patch('/udate-avatar', { ...image }, { headers: { "Content-Type": "multipart/form-data" } })
+}
+

@@ -16,8 +16,8 @@ import GroupPage from '../pages/user/GroupPage';
 import CommunityPage from '../pages/user/CommunityPage';
 import CommunityHomePage from '../pages/user/CommunityHomePage';
 import OrderFailedPage from '../pages/user/OrderFailedPage';
-import ProfilePage from '../pages/user/ProfilePage';
 import MessengerPage from '../pages/user/MessengerPage';
+import AccountPage from '../pages/user/AccountPage';
 
 function UserRouter() {
   return (
@@ -29,7 +29,7 @@ function UserRouter() {
         <Route element={<OrderSuccessPage />} path='/order-success' />
         <Route element={<CommunityHomePage />} path='/community-home' />
         <Route element={<OrderFailedPage />} path='/order-failed' />
-        <Route element={<ProfilePage />} path='/profile' />
+        <Route element={<AccountPage />} path='/profile' />
         <Route element={<GroupPage />} path='/groups' />
 
       </Route>
