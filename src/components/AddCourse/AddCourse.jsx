@@ -145,7 +145,7 @@ function AddCourse() {
     }
 
     return (
-        <div className='form-wrap w-3/3 mr-md-4'>
+        <div className='form-wrap w-3/3 mr-md-4 mt-7'>
             <div className='mb-4 pb-4 form-title-box ' >
                 <span className='text-base font-semibold text-violet-700'>Add Course</span>
             </div>

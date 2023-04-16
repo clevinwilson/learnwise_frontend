@@ -102,7 +102,7 @@ function ViewTeachers() {
             <div className='m-3 text-2xl font-semibold'>
                 <h1>Manage Teachers</h1>
             </div>
-            <div className="relative border overflow-x-auto shadow-md sm:rounded-lg p-5 md:mr-6 ">
+            <div className="relative bg-white border overflow-x-auto shadow-md sm:rounded-lg p-5 md:mr-6 ">
                 <div className="flex items-center justify-between pb-4">
                     <div>
                         <Menu as="div" className="relative inline-block text-left">

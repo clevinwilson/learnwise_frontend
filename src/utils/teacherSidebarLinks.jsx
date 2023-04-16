@@ -6,7 +6,7 @@ const teacherLinks = [
     {
         title: 'Home',
         links: [
-            { subTitle: "Dashboard", link: "/dashboard", icon: <BiHomeAlt size={22} /> },
+            { subTitle: "Dashboard", link: "/teacher/dashboard", icon: <BiHomeAlt size={22} /> },
         ]
     },
     {

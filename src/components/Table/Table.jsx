@@ -9,11 +9,11 @@ function Table({ tableHeader, data, type, handleStatus, getDetails, pagination }
     const [teacher, setTeacher] = useState([]);
 
     return (
-       <>
-            <div className='m-3 text-2xl font-semibold'>
-        <h1>Manage {type}</h1>
-       </div>
-            <div className="relative border overflow-x-auto shadow-md sm:rounded-lg p-5 md:mr-6 ">
+        <>
+            <div className='m-3 mt-7 text-2xl font-medium'>
+                <h1>Manage {type}</h1>
+            </div>
+            <div className="bg-white relative border overflow-x-auto shadow-md sm:rounded-lg p-5 md:mr-6 ">
                 <div className="flex items-center justify-between pb-4">
                     <div>
                         <Menu as="div" className="relative inline-block text-left">
@@ -88,7 +88,7 @@ function Table({ tableHeader, data, type, handleStatus, getDetails, pagination }
                                     <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
                                 </div>
                             </th>
-                            {tableHeader.map((obj,index) => {
+                            {tableHeader.map((obj, index) => {
                                 return (
                                     <th key={index} scope="col" className="px-6 py-3">
                                         {obj.title}
@@ -129,7 +129,7 @@ function Table({ tableHeader, data, type, handleStatus, getDetails, pagination }
                                             <td className="px-6 py-4 flex justify-center items-center">
 
                                                 <button type="button" className="text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm p-2.5  text-center mr-2 mb-2 dark:bg-red-400 dark:hover:bg-red-500 dark:focus:ring-red-900"
-                                                    onClick={() => { handleStatus(obj._id,'block') }}
+                                                    onClick={() => { handleStatus(obj._id, 'block') }}
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
@@ -142,7 +142,7 @@ function Table({ tableHeader, data, type, handleStatus, getDetails, pagination }
                                             <td className="px-6 py-4 flex justify-center items-center">
 
                                                 <button type="button" className="text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm p-2.5  text-center mr-2 mb-2 dark:bg-green-400 dark:hover:bg-green-500 dark:focus:ring-green-900"
-                                                    onClick={() => { handleStatus(obj._id,'unblock') }}
+                                                    onClick={() => { handleStatus(obj._id, 'unblock') }}
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -213,7 +213,7 @@ function Table({ tableHeader, data, type, handleStatus, getDetails, pagination }
                 <ToastContainer />
 
             </div>
-       </>
+        </>
     )
 }
 

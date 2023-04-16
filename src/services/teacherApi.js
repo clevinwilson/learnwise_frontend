@@ -41,5 +41,10 @@ const changePassword=(data)=>{
     return axiosInstance.put('/teacher/change-password', { ...data }, { headers: getToken() })
 }
 
+//dashboard details 
+const getDashboardDetails = () => {
+    return axiosInstance.get('/teacher/dashboard', { headers: getToken() })
+}
 
-export { authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails, updateCourse, changePassword }
+
+export { authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails, updateCourse, changePassword, getDashboardDetails }
