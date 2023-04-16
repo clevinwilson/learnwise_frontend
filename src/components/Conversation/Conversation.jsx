@@ -4,7 +4,7 @@ function Conversation({ group }) {
   return (
       
 
-        <div className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative cursor-pointer">
+      <div className="flex justify-between items-center p-3 border-b-2 border-[#1f2937] hover:bg-gray-800 relative cursor-pointer">
           <div className="w-16 h-16 relative flex flex-shrink-0">
               <img className="shadow-md rounded-full w-full h-full object-cover" src={import.meta.env.VITE_SERVER_URL+group.image.path}  />
               {/* <div className="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0">

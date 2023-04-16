@@ -74,7 +74,6 @@ function AddCourse() {
             setLesson([...lesson, values]);
             lessonFormik.setFieldValue('lessonName', '');
             lessonFormik.setFieldValue('videoUrl', '');
-
         }
     })
 
