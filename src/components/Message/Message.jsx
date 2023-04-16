@@ -6,7 +6,7 @@ function Message({ own, message, user }) {
         <>{
             own ?
                 <>
-                    <p className="p-4 text-center text-sm text-gray-500">12:40 PM</p>
+                    {/* <p className="p-4 text-center text-sm text-gray-500">12:40 PM</p> */}
                     <div className="flex flex-row justify-end">
                         <div className="messages text-sm text-white grid grid-flow-row">
                             <div className="flex items-center flex-row-reverse group">
@@ -25,7 +25,7 @@ function Message({ own, message, user }) {
 
                 :
                 <>
-                    <p className="p-4 text-center text-sm text-gray-500">SAT 2:10 PM</p>
+                    {/* <p className="p-4 text-center text-sm text-gray-500">SAT 2:10 PM</p> */}
                     <div className="flex flex-row justify-start mt-3">
                         <div className="w-8 h-8 relative flex flex-shrink-0 mr-4">
                             <img className="shadow-md rounded-full w-full h-full object-cover" src={message.sender.picture} alt />
