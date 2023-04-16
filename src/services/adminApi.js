@@ -78,4 +78,8 @@ const changeGroupStatus=(id,status)=>{
     return axiosInstance.get(`/admin/group/change-status/${id}/${status}`, { headers: getToken() })
 }
 
-export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse, getAllCommunity, getAllGroups, changeCommunityStatus, changeCourseStatus, changeGroupStatus }
+//dashboard details 
+const getDashboardDetails=()=>{
+    return axiosInstance.get('/admin/dashboard', { headers: getToken() })
+}
+export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse, getAllCommunity, getAllGroups, changeCommunityStatus, changeCourseStatus, changeGroupStatus, getDashboardDetails }

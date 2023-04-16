@@ -1,6 +1,7 @@
 .admin-page {
-    margin-top: 87px;
-    margin-left: 270px
+    margin-top: 27px;
+    margin-left: 256px;
+    background-color: rgb(240, 241, 244);
 }
 
 @media screen and (max-width:900px) {
@@ -41,4 +42,3 @@
 .tab-active {
     border-bottom: 3px solid #4b6bfb
 }
-
