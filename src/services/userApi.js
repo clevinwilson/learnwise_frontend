@@ -151,6 +151,6 @@ export const updateUserDetails=(data)=>{
 
 //update user image
 export const updateUserAvatar=(image)=>{
-    return userInstance.patch('/udate-avatar', { ...image }, { headers: { "Content-Type": "multipart/form-data" } })
+    return userInstance.patch('/update-avatar', { ...image }, { headers: { "Content-Type": "multipart/form-data" } })
 }
 
