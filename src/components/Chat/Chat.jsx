@@ -15,7 +15,7 @@ function Chat({ currentChat, isMobile, setshowMessagesDiv }) {
                         <BsArrowLeft size={19} />
                     </div> : ""}
                 <div className="w-12 h-12 mr-4 relative flex flex-shrink-0">
-                    <img className=" rounded-full w-full h-full object-cover" src={currentChat ? import.meta.env.VITE_SERVER_URL + currentChat.image.path : ""} alt />
+                    <img className=" rounded-full w-full h-full object-cover" src={currentChat ? import.meta.env.VITE_SERVER_URL + currentChat.image.path : ""}  />
                 </div>
                 <div className="text-sm flex justify-center items-center">
                     <p className="font-bold">{currentChat ? currentChat.name : ""}</p>

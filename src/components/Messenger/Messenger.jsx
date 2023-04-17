@@ -104,11 +104,11 @@ function Messenger() {
     return (
         <div className="h-screen w-full flex antialiased text-black bg-white overflow-hidden">
             <div className="flex-1 flex flex-col">
-                <main className="flex-grow flex flex-row min-h-0">
+                <main className="flex-grow border-t flex flex-row min-h-0">
                     { showMessagesDiv ? 
                     <section className="flex flex-col flex-none overflow-auto w-screen group border-r border-l border-[#dee2e7] lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
                         <div className="search-box border-b border-[#dee2e7] p-4 flex-none">
-                            <form onsubmit>
+                            <form >
                                 <div className="relative">
                                     <label>
                                         <input className="rounded-full py-2 pr-6 pl-10 w-full border border-gray-100 focus:border-gray-100 bg-gray-100 focus:bg-gray-100 focus:outline-none text-gray-800 focus:shadow-md transition duration-300 ease-in" type="text"  placeholder="Search Groups" />
@@ -122,8 +122,8 @@ function Messenger() {
                             </form>
                         </div>
                         <div className="contacts flex-1 overflow-y-scroll">
-                            {groupData.groups && groupData.groups.map((group) => (
-                                <div onClick={() => { handleConversation(group) }}>
+                            {groupData.groups && groupData.groups.map((group,index) => (
+                                <div key={index} onClick={() => { handleConversation(group) }}>
                                     <Conversation isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} group={group} />
                                 </div>
                             ))}
@@ -134,9 +134,9 @@ function Messenger() {
                         <section className="flex flex-col flex-auto">
                             <Chat isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} currentChat={currentChat} />
                             <div className="chat-body p-4 flex-1 overflow-y-scroll">
-                                {currentChat && messages.map((message) => {
+                                {currentChat && messages.map((message,index) => {
                                     return (
-                                        <div ref={scrollRef}>
+                                        <div key={index} ref={scrollRef}>
                                             <Message  message={message} currentChat={currentChat} own={user.id === message.sender._id} user={user} />
                                         </div>
                                     )

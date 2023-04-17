@@ -40,7 +40,7 @@ function CommunitySidebar() {
                           <li key={index}>
                               <div className="py-1">
                                   <span className="mask mask-circle bg-base-200  text-xl">
-                                      <img class="w-10 h-10 rounded-full" src={import.meta.env.VITE_SERVER_URL + group.image.path} alt="Rounded avatar" />
+                                      <img className="w-10 h-10 rounded-full" src={import.meta.env.VITE_SERVER_URL + group.image.path} alt="Rounded avatar" />
                                   </span>
                                   <span className="hidden xl:block">{group.name}</span>
                               </div>

@@ -8,64 +8,63 @@ const getToken = () => {
 
 //user authentication in useeffect
 export const authUser = () => {
-    return axiosInstance.get('/user-authenticate', { headers: getToken() })
+    return userInstance.get('/user-authenticate')
 }
 
 //top courses in home page 
 export const getTopCourse = () => {
-    return axiosInstance.get('/top-course');
+    return userInstance.get('/top-course');
 }
 
 //course details
 export const getCourseDetails = (courseId) => {
-    return axiosInstance.get(`/course-details/${courseId}`)
+    return userInstance.get(`/course-details/${courseId}`)
 }
 
 //checkout page
 export const handleCheckout = (values, courseId) => {
-    return axiosInstance.post('/create-checkout-session', { ...values, courseId }, { headers: getToken() })
+    return userInstance.post('/create-checkout-session', { ...values, courseId })
 }
 
 //get all courses
 export const getCourses = () => {
-    return axiosInstance.get('/course')
+    return userInstance.get('/course')
 }
 
 //get Enrolled Course
 export const getEnrolledCourse = () => {
-    return axiosInstance.get('/enrolled-course', { headers: getToken() })
+    return userInstance.get('/enrolled-course')
 }
 
 //check whether user alread enrolled the couser
 export const isCourseEnrolled = (courseId) => {
-    return axiosInstance.get(`/is-course-enrolled/${courseId}`, { headers: getToken() })
+    return userInstance.get(`/is-course-enrolled/${courseId}`)
 }
 
 //search course
 export const search = (query)=>{
-    return axiosInstance.get(`/search?q=${query}`)
+    return userInstance.get(`/search?q=${query}`)
 }
 
 //create community
 export const createCommunity=(data)=>{
-    const headers = { Authorization: `Bearer ${localStorage.getItem('JwtToken')}` };
-    return axiosInstance.post('/create-community',{...data}, { headers: { ...headers, "Content-Type": "multipart/form-data" } })
+    return userInstance.post('/create-community',{...data}, { headers: { "Content-Type": "multipart/form-data" } })
 }
 
 export const getCommunity=()=>{
-    return axiosInstance.get('/community',{headers:getToken()});
+    return userInstance.get('/community');
 }
 
 export const joinCommunity=(userId,communityId)=>{
-    return axiosInstance.put('/join-community', { userId, communityId }, { headers: getToken() });
+    return userInstance.put('/join-community', { userId, communityId });
 }
 
 export const getJoinedCommunity=()=>{
-    return axiosInstance.get('/joined-community', { headers: getToken() });
+    return userInstance.get('/joined-community');
 }
 
 export const getCommunityDetails=(communityId)=>{
-    return userInstance.get(`/community-details/${communityId}`)
+    return userInstance.get(`/community-details/${communityId}`);
 }
 
 
@@ -152,8 +151,6 @@ export const updateUserDetails=(data)=>{
 
 //update user image
 export const updateUserAvatar=(image)=>{
-    console.log(image,'>>>>>>>>>>>');
-
     return userInstance.patch('/udate-avatar', { ...image }, { headers: { "Content-Type": "multipart/form-data" } })
 }
 
