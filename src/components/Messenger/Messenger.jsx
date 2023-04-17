@@ -97,15 +97,15 @@ function Messenger() {
 
 
     return (
-        <div className="h-screen w-full flex antialiased text-gray-200 bg-gray-900 overflow-hidden">
+        <div className="h-screen w-full flex antialiased text-black bg-white overflow-hidden">
             <div className="flex-1 flex flex-col">
                 <main className="flex-grow flex flex-row min-h-0">
-                    <section className="flex flex-col flex-none overflow-auto w-24 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
-                        <div className="search-box p-4 flex-none">
+                    <section className="flex flex-col flex-none overflow-auto w-24 group border-r border-l border-[#dee2e7] lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
+                        <div className="search-box border-b border-[#dee2e7] p-4 flex-none">
                             <form onsubmit>
                                 <div className="relative">
                                     <label>
-                                        <input className="rounded-full py-2 pr-6 pl-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in" type="text"  placeholder="Search Groups" />
+                                        <input className="rounded-full py-2 pr-6 pl-10 w-full border border-gray-100 focus:border-gray-200 bg-gray-100 focus:bg-gray-200 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in" type="text"  placeholder="Search Groups" />
                                         <span className="absolute top-0 left-0 mt-2 ml-3 inline-block">
                                             <svg viewBox="0 0 24 24" className="w-6 h-6">
                                                 <path fill="#bbb" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
@@ -124,7 +124,7 @@ function Messenger() {
                         </div>
                     </section>
                     {currentChat ?
-                        <section className="flex flex-col flex-auto border-l border-gray-800">
+                        <section className="flex flex-col flex-auto">
                             <Chat currentChat={currentChat} />
 
                             <div className="chat-body p-4 flex-1 overflow-y-scroll">
@@ -135,12 +135,11 @@ function Messenger() {
                                         </div>
                                     )
                                 })}
-
                             </div>
 
 
 
-                            <div className="chat-footer flex-none">
+                            <div className="chat-footer border-t flex-none">
                                 <div className="flex flex-row items-center p-4">
                                     {/* <button type="button" className="flex flex-shrink-0 focus:outline-none mx-2  text-blue-600 hover:text-blue-700 w-6 h-6">
                                         <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
@@ -164,16 +163,16 @@ function Messenger() {
                                     </button> */}
                                     <div className="relative flex-grow">
                                         <label>
-                                            <input className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in" type="text" value={newMessage} placeholder="Message"
+                                            <input className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-100 focus:border-gray-200 bg-gray-100 focus:bg-gray-200 focus:outline-none text-black focus:shadow-md transition duration-300 ease-in" type="text" value={newMessage} placeholder="Message"
                                                 onChange={(e) => { setNewMessage(e.target.value) }}
                                             />
-                                            <button type="button" className="absolute top-0 right-0 mt-2 mr-3 flex flex-shrink-0 focus:outline-none  text-blue-600 hover:text-blue-700 w-6 h-6">
+                                            <button type="button" className="absolute top-0 right-0 mt-2 mr-4 flex flex-shrink-0 focus:outline-none  text-blue-600 hover:text-blue-700 w-6 h-6">
                                                 <BsEmojiSmile size={23} />
                                             </button>
                                         </label>
                                     </div>
-                                    <button onClick={handleSubmit} type="button" className="flex flex-shrink-0 focus:outline-none mx-2 h-9 w-9 bg-blue-500 text-white  justify-center items-center rounded-full">
-                                        <IoSend size={23}/>
+                                    <button onClick={handleSubmit} type="button" className="flex flex-shrink-0 focus:outline-none mx-2 h-9 w-9 bg-blue-600 text-white  justify-center items-center rounded-full">
+                                        <IoSend size={20}/>
                                     </button>
                                 </div>
                             </div>

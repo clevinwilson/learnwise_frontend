@@ -36,7 +36,7 @@ function UserHeader() {
     const [sidebar, setSidebar] = useState(false);
     const [profileBox, setProfileBox] = useState(false);
     return (
-        <div>
+        <div className='shadow-md'>
             <nav className="relative px-4 py-4 flex justify-between items-center bg-white">
                 <div className="lg:hidden"
                     onClick={() => {
