@@ -5,6 +5,7 @@ import './Otp.scss';
 import axiosInstance from '../../axios/axios';
 import 'boxicons/css/boxicons.min.css';
 import LoadingButton from '../LoadingButton/LoadingButton';
+import { verifyOtp } from '../../services/userApi';
 
 function Otp() {
     const navigate = useNavigate();
@@ -41,11 +42,9 @@ function Otp() {
     })
 
     const handleSubmit=(values)=>{
-        axiosInstance.post("/otp",
-            {
-                otp: values.otp.join(""),
-            },
-        ).then((response) => {
+        
+        verifyOtp(values)
+        .then((response) => {
             console.log(response.data);
             if (response.data.status) {
                 navigate("/login")

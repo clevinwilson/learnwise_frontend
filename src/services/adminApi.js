@@ -1,85 +1,76 @@
-import React from 'react';
 import axiosInstance from '../axios/axios';
 
 
-const getToken=()=>{
-    return { Authorization: `Bearer ${localStorage.getItem('adminJwtToken')}` };
+const adminLogin = (loginData)=>{
+    return axiosInstance("adminJwtToken").post("/admin/login", { ...loginData })
 }
 
 const authAdmin = () => {
-    const token = localStorage.getItem('adminJwtToken');
-    const headers = { Authorization: `Bearer ${token}` };
-    return axiosInstance.get('/admin/auth', { headers })
+    return axiosInstance("adminJwtToken").get('/admin/auth');
 }
 
 
 const addTeacher = (values) => {
-    const headers = { Authorization: `Bearer ${localStorage.getItem('adminJwtToken') }` };
-    return axiosInstance.post("/admin/add-teacher",
-        { ...values },
-        { headers }
-    )
+    return axiosInstance("adminJwtToken").post("/admin/add-teacher", { ...values })
 }
 
 const getTeachers=(page)=>{
-    const headers = { Authorization: `Bearer ${localStorage.getItem('adminJwtToken')}` };
-    return axiosInstance.get(`/admin/teacher?model=${"teacher"}&page=${page}&limit=${10}`,{ headers })
+    return axiosInstance("adminJwtToken").get(`/admin/teacher?model=${"teacher"}&page=${page}&limit=${10}`)
 }
 
 const blockTeacher =(teacherId)=>{
-    return axiosInstance.get(`/admin/block-teacher/${teacherId}`, { headers:getToken()})
+    return axiosInstance("adminJwtToken").get(`/admin/block-teacher/${teacherId}`)
 }
 
 const getUsers=()=>{
-    return axiosInstance.get('/admin/user',{headers:getToken()})
+    return axiosInstance("adminJwtToken").get('/admin/user');
 }
 
 
 const blockUser = (userId) => {
-    return axiosInstance.get(`/admin/block-user/${userId}`, { headers: getToken() })
+    return axiosInstance("adminJwtToken").get(`/admin/block-user/${userId}`);
 }
 
 const unBlockUser=(userId)=>{
-    return axiosInstance.get(`/admin/unblock-user/${userId}`, { headers: getToken() })
+    return axiosInstance("adminJwtToken").get(`/admin/unblock-user/${userId}`);
 
 }
 
 const unBlockTeacher=(teacherId)=>{
-    return axiosInstance.get(`/admin/unblock-teacher/${teacherId}`, { headers: getToken() }) 
+    return axiosInstance("adminJwtToken").get(`/admin/unblock-teacher/${teacherId}`);
 }
 
 //get course details
 const getAllCourse=(page)=>{
-    return axiosInstance.get(`/admin/course?model=${"course"}&page=${page}&limit=${10}`, { headers: getToken() })
+    return axiosInstance("adminJwtToken").get(`/admin/course?model=${"course"}&page=${page}&limit=${10}`);
 }
 
 const changeCourseStatus = (courseId, status)=>{
-    console.log(courseId, status);
-    return axiosInstance.get(`/admin/course/change-status/${courseId}/${status}`, { headers: getToken() })
+    return axiosInstance("adminJwtToken").get(`/admin/course/change-status/${courseId}/${status}`);
 }
 
 
 
 //get community details
 const getAllCommunity=(page)=>{
-    return axiosInstance.get(`/admin/community?model=${"community"}&page=${page}&limit=${10}`, { headers: getToken() });
+    return axiosInstance("adminJwtToken").get(`/admin/community?model=${"community"}&page=${page}&limit=${10}`);
 }
 const changeCommunityStatus = (id, status)=>{
-    return axiosInstance.get(`/admin/community/change-status/${id}/${status}`, { headers: getToken() })
+    return axiosInstance("adminJwtToken").get(`/admin/community/change-status/${id}/${status}`);
 }
 
 
 //get all groups
 const getAllGroups=(page)=>{
-    return axiosInstance.get(`/admin/group?model=${"group"}&page=${page}&limit=${10}`, { headers: getToken() })
+    return axiosInstance("adminJwtToken").get(`/admin/group?model=${"group"}&page=${page}&limit=${10}`);
 }
 
 const changeGroupStatus=(id,status)=>{
-    return axiosInstance.get(`/admin/group/change-status/${id}/${status}`, { headers: getToken() })
+    return axiosInstance("adminJwtToken").get(`/admin/group/change-status/${id}/${status}`);
 }
 
 //dashboard details 
 const getDashboardDetails=()=>{
-    return axiosInstance.get('/admin/dashboard', { headers: getToken() })
+    return axiosInstance("adminJwtToken").get('/admin/dashboard');
 }
-export { authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse, getAllCommunity, getAllGroups, changeCommunityStatus, changeCourseStatus, changeGroupStatus, getDashboardDetails }
+export { adminLogin, authAdmin, addTeacher, getTeachers, blockTeacher, getUsers, blockUser, unBlockUser, unBlockTeacher, getAllCourse, getAllCommunity, getAllGroups, changeCommunityStatus, changeCourseStatus, changeGroupStatus, getDashboardDetails }

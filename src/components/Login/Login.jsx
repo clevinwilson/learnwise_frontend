@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './Login.scss';
 import { useNavigate, Link } from 'react-router-dom';
-import axiosInstance from '../../axios/axios';
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Redux/Features/userSlice";
 import { setAdminDetails } from '../../Redux/Features/adminSlice';
 import { setTeacherDetails } from '../../Redux/Features/teacherSlice';
 import { useGoogleLogin } from '@react-oauth/google';
-import { authTeacher } from '../../services/teacherApi';
-import { authUser } from '../../services/userApi';
-import { authAdmin } from '../../services/adminApi'
+import { authTeacher, teacherLogin } from '../../services/teacherApi';
+import { authUser, loginWithGoogl, userLogin } from '../../services/userApi';
+import { adminLogin, authAdmin } from '../../services/adminApi'
 
 
 
@@ -48,14 +47,12 @@ function Login(props) {
         });
     };
 
-
+    //user login with google
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
             try {
-                console.log(codeResponse);
-                axiosInstance.post("/login/google", { ...codeResponse }).then((response) => {
+                loginWithGoogl(codeResponse).then((response) => {
                     localStorage.setItem('JwtToken', response.data.token);
-
                     dispatch(
                         setUserDetails({
                             name: response.data.user.firstName,
@@ -66,11 +63,11 @@ function Login(props) {
                         })
                     );
                     navigate("/");
-
                 }).catch((err) => { 
                     console.log(err);
                     generateError("Something went wrong please reload the page") })
             } catch (err) {
+                console.log(err);
                 generateError("Something went wrong please reload the page")
             }
         },
@@ -81,29 +78,11 @@ function Login(props) {
     });
 
 
-    const googleAuth = () => {
-
-        // const googleLoginURL = "http://localhost:3000/login/google"
-
-        // window.open(
-        //     googleLoginURL,
-        //     "_blank",
-        //     "width=500,height=600"
-        // )
-
-
-    }
-
-
-
+    //user login
     const handleSubmit = async () => {
         try {
-            const { data } = await axiosInstance.post(
-                "/login",
-                {
-                    ...loginData,
-                }
-            );
+            const { data } = await userLogin(loginData);
+            console.log(data,'user');
             if (data) {
                 if (data.login) {
                     localStorage.setItem('JwtToken', data.token);
@@ -121,24 +100,18 @@ function Login(props) {
                     generateError(data.message)
                 }
             } else {
-                console.log(data);
                 generateError("Error")
-
             }
-
         } catch (err) {
             generateError("something went wrong in server side");
         }
     }
 
+    //admin login
     const handleAdminSubmit = async () => {
         try {
-            const { data } = await axiosInstance.post(
-                "/admin/login",
-                {
-                    ...loginData,
-                }
-            );
+            adminLogin(loginData)
+            const { data } = await adminLogin(loginData) ;
             if (data.login) {
                 localStorage.setItem('adminJwtToken', data.token);
                 dispatch(
@@ -150,23 +123,17 @@ function Login(props) {
                 )
                 navigate('/admin/dashboard')
             } else {
-                generateError(data.message)
+                generateError(data.message);
             }
         } catch (err) {
-            generateError(err)
-
+            generateError(err);
         }
     }
 
+    //teacher login
     const handelTeacherSubmit = async () => {
         try {
-            const { data } = await axiosInstance.post(
-                "/teacher/login",
-                {
-                    ...loginData
-                }
-            );
-
+            const { data } =await teacherLogin(loginData)
             if (data.login) {
                 localStorage.setItem('teacherJwtToken', data.token);
                 dispatch(
@@ -186,6 +153,7 @@ function Login(props) {
             }
 
         } catch (err) {
+            console.log(err);
             generateError("something went wrong in server side")
         }
     }

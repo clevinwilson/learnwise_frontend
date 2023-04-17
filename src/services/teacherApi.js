@@ -1,50 +1,47 @@
-import React from 'react';
-import axiosInstance from '../axios/axios';
-
-const getToken = () => {
-    return { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
-}
+import axiosInstance from '../axios/axios'
 
 const authTeacher = () => {
-    const token = localStorage.getItem('teacherJwtToken');
-    const headers = { Authorization: `Bearer ${token}` };
-    return axiosInstance.get('/teacher/auth', { headers })
+    return axiosInstance("teacherJwtToken").get('/teacher/auth');
 }
 
+//login
+const teacherLogin = (loginData)=>{
+    return axiosInstance("teacherJwtToken").post("/teacher/login", { ...loginData })
+}
 
 const addCourse = (values, course, image) => {
     const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
-    return axiosInstance.post('/teacher/add-course', { ...values, course, image }, { headers: { ...headers, "Content-Type": "multipart/form-data" } })
+    return axiosInstance("teacherJwtToken").post('/teacher/add-course', { ...values, course, image }, { headers: { "Content-Type": "multipart/form-data" } })
 }
 
 const getCourses = () => {
     const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken') }` };
-    return axiosInstance.get('/teacher/course', { headers })
+    return axiosInstance("teacherJwtToken").get('/teacher/course', )
 }
 
 
 const deleteCourse=(courseId)=>{
     const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
-    return axiosInstance.delete(`/teacher/delete-course/${courseId}`, { headers })
+    return axiosInstance("teacherJwtToken").delete(`/teacher/delete-course/${courseId}`, )
 }
 
 const getCourseDetails=(courseId)=>{
-    return axiosInstance.get(`/teacher/course-details/${courseId}`, { headers: getToken()})
+    return axiosInstance("teacherJwtToken").get(`/teacher/course-details/${courseId}`)
 }
 
 const updateCourse = (values, course, image, courseId)=>{
     const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
-    return axiosInstance.put('/teacher/update-course', { ...values, course, image, courseId }, { headers: { ...headers, "Content-Type": "multipart/form-data" } })
+    return axiosInstance("teacherJwtToken").put('/teacher/update-course', { ...values, course, image, courseId }, { headers: { "Content-Type": "multipart/form-data" } })
 }
 
 const changePassword=(data)=>{
-    return axiosInstance.put('/teacher/change-password', { ...data }, { headers: getToken() })
+    return axiosInstance("teacherJwtToken").put('/teacher/change-password', { ...data }, )
 }
 
 //dashboard details 
 const getDashboardDetails = () => {
-    return axiosInstance.get('/teacher/dashboard', { headers: getToken() })
+    return axiosInstance("teacherJwtToken").get('/teacher/dashboard', )
 }
 
 
-export { authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails, updateCourse, changePassword, getDashboardDetails }
+export { teacherLogin,authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails, updateCourse, changePassword, getDashboardDetails }

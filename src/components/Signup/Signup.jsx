@@ -3,16 +3,20 @@ import './Signup.css';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, Link } from "react-router-dom";
-import axiosInstance from '../../axios/axios';
 import 'boxicons/css/boxicons.min.css';
 import LoadingButton from '../LoadingButton/LoadingButton';
+import { userSignup,loginWithGoogl } from '../../services/userApi';
+import { useGoogleLogin } from '@react-oauth/google';
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../../Redux/Features/userSlice";
+
 
 function Signup() {
 
   const [errorMessage, setErrorMessage] = useState(false)
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validate = Yup.object({
     firstName: Yup.string()
@@ -38,17 +42,17 @@ function Signup() {
     },
     validationSchema: validate,
     onSubmit: async (values) => {
-      setLoading(!loading);
-      const { data } = await axiosInstance.post("/signup",
-        {
-          ...values,
+      try {
+        setLoading(!loading);
+        const { data } = await userSignup(values);
+        if (data.status) {
+          navigate("/otp");
+        } else {
+          setLoading(false);
+          setErrorMessage(data.message)
         }
-      );
-      if (data.status) {
-        navigate("/otp");
-      } else {
-        setLoading(false);
-        setErrorMessage(data.message)
+      } catch (err) {
+        console.log(err);
       }
     }
 
@@ -61,6 +65,37 @@ function Signup() {
       return formFields
     })
   }
+
+  //user signup with google
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      try {
+        loginWithGoogl(codeResponse).then((response) => {
+          localStorage.setItem('JwtToken', response.data.token);
+          dispatch(
+            setUserDetails({
+              name: response.data.user.firstName,
+              id: response.data.user._id,
+              email: response.data.user.email,
+              image: response.data.user.picture,
+              token: response.data.token,
+            })
+          );
+          navigate("/");
+        }).catch((err) => {
+          console.log(err);
+          generateError("Something went wrong please reload the page")
+        })
+      } catch (err) {
+        console.log(err);
+        generateError("Something went wrong please reload the page")
+      }
+    },
+    onError: (error) => {
+      console.log('Login Failed:', error);
+      generateError("Login Failed")
+    }
+  });
 
   return (
     <Formik>
@@ -173,7 +208,7 @@ function Signup() {
                 </LoadingButton>
 
               </div>
-              <div className='flex justify-center success-box-border rounded p-2 mt-8'>
+              <div onClick={login} className='flex justify-center success-box-border rounded p-2 mt-8'>
                 <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
                 <p className='ml-4'>Google</p>
               </div>
