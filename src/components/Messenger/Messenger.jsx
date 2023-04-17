@@ -8,7 +8,9 @@ import { IoSend } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
 import { getMessages, sendMessage } from '../../services/userApi';
 import { io } from 'socket.io-client';
-import './Messenger.scss'
+import './Messenger.scss';
+import { useMediaQuery } from "react-responsive";
+
 
 function Messenger() {
     const dispatch = useDispatch();
@@ -19,6 +21,9 @@ function Messenger() {
     const user = useSelector(state => state.user);
     const scrollRef = useRef();
     const socket = useRef();
+    const [showMessagesDiv, setshowMessagesDiv]=useState(true);
+    const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+
 
     //socket io
     //connecting to socket
@@ -100,12 +105,13 @@ function Messenger() {
         <div className="h-screen w-full flex antialiased text-black bg-white overflow-hidden">
             <div className="flex-1 flex flex-col">
                 <main className="flex-grow flex flex-row min-h-0">
-                    <section className="flex flex-col flex-none overflow-auto w-24 group border-r border-l border-[#dee2e7] lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
+                    { showMessagesDiv ? 
+                    <section className="flex flex-col flex-none overflow-auto w-screen group border-r border-l border-[#dee2e7] lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
                         <div className="search-box border-b border-[#dee2e7] p-4 flex-none">
                             <form onsubmit>
                                 <div className="relative">
                                     <label>
-                                        <input className="rounded-full py-2 pr-6 pl-10 w-full border border-gray-100 focus:border-gray-200 bg-gray-100 focus:bg-gray-200 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in" type="text"  placeholder="Search Groups" />
+                                        <input className="rounded-full py-2 pr-6 pl-10 w-full border border-gray-100 focus:border-gray-100 bg-gray-100 focus:bg-gray-100 focus:outline-none text-gray-800 focus:shadow-md transition duration-300 ease-in" type="text"  placeholder="Search Groups" />
                                         <span className="absolute top-0 left-0 mt-2 ml-3 inline-block">
                                             <svg viewBox="0 0 24 24" className="w-6 h-6">
                                                 <path fill="#bbb" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
@@ -118,20 +124,20 @@ function Messenger() {
                         <div className="contacts flex-1 overflow-y-scroll">
                             {groupData.groups && groupData.groups.map((group) => (
                                 <div onClick={() => { handleConversation(group) }}>
-                                    <Conversation group={group} />
+                                    <Conversation isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} group={group} />
                                 </div>
                             ))}
                         </div>
                     </section>
+                        : ""}
                     {currentChat ?
                         <section className="flex flex-col flex-auto">
-                            <Chat currentChat={currentChat} />
-
+                            <Chat isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} currentChat={currentChat} />
                             <div className="chat-body p-4 flex-1 overflow-y-scroll">
                                 {currentChat && messages.map((message) => {
                                     return (
                                         <div ref={scrollRef}>
-                                            <Message message={message} currentChat={currentChat} own={user.id === message.sender._id} user={user} />
+                                            <Message  message={message} currentChat={currentChat} own={user.id === message.sender._id} user={user} />
                                         </div>
                                     )
                                 })}

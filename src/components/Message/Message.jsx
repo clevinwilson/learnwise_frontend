@@ -18,7 +18,6 @@ function Message({ own, message, user }) {
                         <div className="w-8 h-8 relative flex flex-shrink-0 ml-2">
                             <img className="shadow-md rounded-full w-full h-full object-cover" src={user.image} alt />
                         </div>
-                        
                     </div>
                     
                 </>
