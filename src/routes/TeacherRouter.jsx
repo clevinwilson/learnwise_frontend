@@ -13,7 +13,7 @@ import DashboardPage from '../pages/teacher/DashboardPage';
 function TeacherRouter() {
     return (
         <Routes>
-            <Route element={<PrivateRoutes teacher={true} />} >
+            <Route element={<PrivateRoutes role={"teacher"} route={"/teacher"} />} >
                 <Route element={<AddCoursePage />} path='/add-course' />
                 <Route element={<ViewCoursePage />} path='/course' />
                 <Route element={<EditCoursePage/>} path='/edit-course/:courseId'/>

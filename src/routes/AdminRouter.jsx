@@ -13,7 +13,7 @@ import ListGroup from '../pages/admin/ListGroup';
 function AdminRouter() {
   return (
     <Routes>
-      <Route element={<PrivateRoutes admin={true} />} >
+      <Route element={<PrivateRoutes role={"admin"} route={'/admin'} />} >
         <Route path='/dashboard' element={<DashboardPage />} />
         <Route path='/add-teacher' element={<AddTeacherPage />} />
         <Route path='/teacher' element={<ViewTeachersPage />} />
@@ -21,7 +21,6 @@ function AdminRouter() {
         <Route path='/course' element={<ListCourse />} />
         <Route path='/community' element={<ListCommunity />} />
         <Route path='/group' element={<ListGroup />} />
-
       </Route>
       
       <Route path='/' element={<AdminLogin />} />

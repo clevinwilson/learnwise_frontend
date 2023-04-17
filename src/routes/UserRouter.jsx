@@ -22,7 +22,7 @@ import AccountPage from '../pages/user/AccountPage';
 function UserRouter() {
   return (
     <Routes>
-      <Route element={<PrivateRoutes user={true} />} >
+      <Route element={<PrivateRoutes role={"user"} route={"/login"} />} >
         <Route element={< OrderSummaryPage />} path='/course-payment/:courseId' />
         <Route element={<EnrolledCoursesPage />} path='/my-enrollments' />
         <Route element={<LearnPage />} path='/course/learn/:courseId' />
@@ -31,7 +31,6 @@ function UserRouter() {
         <Route element={<OrderFailedPage />} path='/order-failed' />
         <Route element={<AccountPage />} path='/profile' />
         <Route element={<GroupPage />} path='/groups' />
-
       </Route>
 
 
@@ -44,11 +43,7 @@ function UserRouter() {
       <Route element={<SearchPage />} path='/search' />
       <Route element={<GroupPage />} path='/groups' />
       <Route element={<CommunityPage />} path='/community' />
-
       <Route element={<MessengerPage />} path='/messages' />
-
-
-
 
 
     </Routes>

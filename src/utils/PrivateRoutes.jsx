@@ -7,11 +7,11 @@ import { toast } from 'react-toastify';
 
 
 
-function PrivateRoutes(props) {
+function PrivateRoutes({ role, route }) {
   let [auth, setAuth] = useState(null);
   const navigate=useNavigate();
   useEffect(() => {
-    if (props.user) {
+    if (role==="user") {
       authUser().then((response) => {
         setAuth(response.data?.status)
       }).catch((response) => {
@@ -19,7 +19,7 @@ function PrivateRoutes(props) {
         setAuth(response.data?.status);
         navigate('/');
       })
-    } else if (props.admin) {
+    } else if (role==="admin") {
       authAdmin().then((response) => {
         setAuth(response.data?.status)
       }).catch((response) => {
@@ -28,7 +28,7 @@ function PrivateRoutes(props) {
         navigate('/');
       })
 
-    } else if(props.teacher) {
+    } else if(role==="teacher") {
       authTeacher().then((response) => {
         setAuth(response.data?.status)
       }).catch((response) => {
@@ -44,7 +44,7 @@ function PrivateRoutes(props) {
   if (auth == null) return
   
   return (
-    auth ? <Outlet /> : props.user ? < Navigate to="/login" /> : props.admin ? < Navigate to="/admin" /> : < Navigate to="/teacher" />
+    auth ? <Outlet /> :  < Navigate to={route} />
   )
 }
 
