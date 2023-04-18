@@ -11,6 +11,7 @@ function EnrolledCoursesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     try {
       getEnrolledCourse().then((response) => {
         console.log(response.data.enrolledCourse);

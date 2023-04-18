@@ -14,6 +14,7 @@ function CourseDetails() {
     let [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         getCourseDetails(courseId).then((response) => {
             if (response.data.status) {
                 response.data.courseDetails.course = response.data.courseDetails.course.map(obj => {

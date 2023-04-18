@@ -55,6 +55,10 @@ function Learn() {
 
 
     useEffect(() => {
+        //scroll to top
+        window.scrollTo(0, 0);
+        
+        //details fetching api
         if (!courseDetails) {
             getCourseDetails(courseId).then((response) => {
                 const course = response.data.courseDetails.course.map(obj => {
