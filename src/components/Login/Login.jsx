@@ -64,15 +64,12 @@ function Login(props) {
                     );
                     navigate("/");
                 }).catch((err) => { 
-                    console.log(err);
                     generateError("Something went wrong please reload the page") })
             } catch (err) {
-                console.log(err);
                 generateError("Something went wrong please reload the page")
             }
         },
         onError: (error) => {
-            console.log('Login Failed:', error);
             generateError("Login Failed")
         }
     });

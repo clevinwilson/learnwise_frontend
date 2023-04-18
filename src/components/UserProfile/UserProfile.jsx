@@ -78,7 +78,7 @@ function UserProfile() {
                 }))
             })
             .catch((error) => {
-                toast.Error(response.message, {
+                toast.error(error.response.data.message, {
                     position: 'top-center'
                 })
             })
@@ -104,6 +104,13 @@ function UserProfile() {
                                 :
                                 <span className="ml-auto"><span className="bg-red-500 py-1 px-2 rounded text-white text-sm">Blocked</span></span>
                             }
+                        </li>
+                    </ul>
+                    <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                      
+                        <li class="flex items-center py-3">
+                            <span>Member since</span>
+                            <span class="ml-auto">{new Date(user?.createdAt).toString().slice(0, 16)}</span>
                         </li>
                     </ul>
                 </div>
