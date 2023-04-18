@@ -43,7 +43,7 @@ function Groups({ community, loadCommunityGroups, groups, groupLoading }) {
                                 <div className="flex justify-center">
                                     <div className="block w-full rounded-lg bg-white shadow-lg dark:bg-neutral-700">
                                         <a className='w-full' data-te-ripple-init data-te-ripple-color="light">
-                                            <img className="h-[180px] w-full rounded-t-lg" src={import.meta.env.VITE_SERVER_URL + group.image.path} alt />
+                                            <img className="h-[180px] w-full rounded-t-lg object-cover" src={import.meta.env.VITE_SERVER_URL + group.image.path} alt />
                                         </a>
                                         <div className="p-6 flex justify-between">
                                             <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">

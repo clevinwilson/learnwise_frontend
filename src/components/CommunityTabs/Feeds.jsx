@@ -50,16 +50,14 @@ function Feeds({ community, admin }) {
             {admin ?
                 <div className='flex justify-center'>
                     <div onClick={() => { setShowFeedModal(true) }} className='w-full max-w-3xl flex p-5 bg-white shadow rounded-lg cursor-pointer'>
-                        <img className="w-10 h-10 rounded-full mr-5" src={user.image} alt="Default avatar" />
+                        <img className="w-10 h-10 rounded-full mr-5 object-cover" src={user.image} alt="Default avatar" />
                         <input type="text" id="first_name" className="bg-gray-100 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg w-full  " placeholder="What's on your mind ?" readOnly disabled />
                     </div>
                 </div>
                 : ""}
 
             {loading ?
-
                 <Loader />
-
                 :
                 <>
                     {feeds && feeds.map((post, index) => {
@@ -67,7 +65,7 @@ function Feeds({ community, admin }) {
                             <div key={index} className='w-full flex justify-center'>
                                 <div className="px-5 w-full py-4 bg-white dark:bg-gray-800 shadow rounded-lg max-w-3xl">
                                     <div className="flex mb-4">
-                                        <img className="w-12 h-12 rounded-full" src={post.user.picture} />
+                                        <img className="w-12 h-12 rounded-full object-cover" src={post.user.picture} />
                                         <div className="ml-2 mt-0.5">
                                             <span className="block font-medium text-base leading-snug text-black dark:text-gray-100">{post.user.firstName}</span>
                                             <span className="block text-sm text-gray-500 dark:text-gray-400 font-light leading-snug">{new Date(post.createdAt).toString().slice(0, 21)}</span>

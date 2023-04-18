@@ -179,7 +179,7 @@ function CommunityHomePage() {
                                         </div>
                                     ))}
                                 </div>
-                                <div className="mt-1 text-sm">Created in May, 2021</div>
+                                <div className="mt-2 text-sm">{new Date(community?.createdAt).toString().slice(0,16)}</div>
                             </div>
                             <div className="mt-2 flex flex-col gap-3 px-5 sm:px-8">
                                 <div className="flex flex-wrap items-start justify-between gap-3">
