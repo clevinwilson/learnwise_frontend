@@ -20,7 +20,7 @@ const CommunitySidebarLink = [
     {
         label: "Events",
         icon: <MdEvent size={22} />,
-        to: "/events",
+        to: "",
     },
 ];
 
