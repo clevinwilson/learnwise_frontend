@@ -31,6 +31,8 @@ function UserRouter() {
         <Route element={<OrderFailedPage />} path='/order-failed' />
         <Route element={<AccountPage />} path='/profile' />
         <Route element={<GroupPage />} path='/groups' />
+        <Route element={<MessengerPage />} path='/messages' />
+
       </Route>
 
 
@@ -43,7 +45,6 @@ function UserRouter() {
       <Route element={<SearchPage />} path='/search' />
       <Route element={<GroupPage />} path='/groups' />
       <Route element={<CommunityPage />} path='/community' />
-      <Route element={<MessengerPage />} path='/messages' />
 
 
     </Routes>
