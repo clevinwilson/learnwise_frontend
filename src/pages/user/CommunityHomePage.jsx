@@ -247,7 +247,7 @@ function CommunityHomePage() {
                             </div> : ""}
                         </div>
 
-                        <div className="p-2 md:p-8 bg-gray-50  dark:bg-gray-900  ">
+                        <div className="p-2 md:p-8 bg-gray-50 pb-16  dark:bg-gray-900  ">
                             {loadTab()}
 
                         </div>

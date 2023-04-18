@@ -137,7 +137,7 @@ function Messenger() {
                     </section>
                         : ""}
                     {currentChat ?
-                        <section className="flex flex-col flex-auto">
+                        <section className="flex flex-col flex-auto pb-12 sm:pb-0">
                             <Chat isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} currentChat={currentChat} />
                             <div className="chat-body p-4 flex-1 overflow-y-scroll">
                                 {currentChat && messages.map((message,index) => {

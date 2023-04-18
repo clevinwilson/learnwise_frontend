@@ -17,14 +17,13 @@ function Group({ isTab }) {
       className={`w-full ${isTab ? "px-2 py-0" : "border-x px-5 py-3 sm:px-8"
         } border-base-300 `}
     >
-
       {groups.length > 0 ?
         <>
           <div className='flex justify-between items-center mb-5'>
             <h1 className='text-xl font-bold sm:text-2xl'>Groups</h1>
 
           </div>
-          <div className="mt-3 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-3 pb-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {groups && groups.map((group) => (
               <Card key={group.id} group={group} />
             ))}
