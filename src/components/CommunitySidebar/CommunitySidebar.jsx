@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CommunitySidebarLink from '../../utils/CommunitySidebarLink';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllJoinedGroups } from '../../Redux/Actions/groupActions';
@@ -14,21 +14,24 @@ function CommunitySidebar() {
   return (
       <>
           <ul className="menu hidden sm:flex overflow-y-auto bg-base-100 text-base xl:w-64">
-              {CommunitySidebarLink.map((item) => (
-                  <li
-                      key={item.label}
-                      className={
-                          item.to === location.pathname
-                              ? "bordered"
-                              : "border-l-4 border-base-100"
-                      }
-                  >
-                      <Link to={item.to}>
-                          {item.icon}
-                          <span className="hidden xl:block">{item.label}</span>
-                      </Link>
-                  </li>
-              ))}
+              {CommunitySidebarLink.map((item) => {
+                !user.email && item.label=="Messages" ? item.to='/login' :""
+                return(
+                    <li
+                        key={item.label}
+                        className={
+                            item.to === location.pathname
+                                ? "bordered"
+                                : "border-l-4 border-base-100"
+                        }
+                    >
+                        <Link to={item.to}>
+                            {item.icon}
+                            <span className="hidden xl:block">{item.label}</span>
+                        </Link>
+                    </li>
+                )
+              })}
               <div className="my-3 border-t border-base-300" />
 
               {user.email && groupData.groups?

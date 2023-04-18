@@ -121,13 +121,19 @@ function Messenger() {
                                 </div>
                             </form>
                         </div>
-                        <div className="contacts flex-1 overflow-y-scroll">
-                            {groupData.groups && groupData.groups.map((group,index) => (
-                                <div key={index} onClick={() => { handleConversation(group) }}>
-                                    <Conversation isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} group={group} />
+                       {groupData.groups?
+                                <div className="contacts flex-1 overflow-y-scroll">
+                                    {groupData.groups && groupData.groups.map((group, index) => (
+                                        <div key={index} onClick={() => { handleConversation(group) }}>
+                                            <Conversation isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} group={group} />
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
+                        :
+                                <div className='w-full h-full flex justify-center items-center'>
+                                    No Joined Groups.
+                                </div>
+                        }
                     </section>
                         : ""}
                     {currentChat ?

@@ -4,30 +4,24 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminRouter from './routes/AdminRouter';
 import UserRouter from './routes/UserRouter';
 import TeacherRouter from './routes/TeacherRouter';
-import swal from 'sweetalert';
 import { ToastContainer, toast } from "react-toastify";
 
 function App() {
   return (
     <BrowserRouter>
-
-      {/* User Router */}
       <Routes>
+
+        {/* User Router */}
         <Route path={'/*'} element={<UserRouter />} />
-      
 
-      {/* Teacher Router */}
-      
+        {/* Teacher Router */}
         <Route path={'/teacher/*'} element={<TeacherRouter />} />
-   
 
-      {/* Admin Router */}
-      
+        {/* Admin Router */}
         <Route path={'/admin/*'} element={<AdminRouter />} />
+
       </Routes>
-
       <ToastContainer />
-
     </BrowserRouter>
 
   )
