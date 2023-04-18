@@ -7,7 +7,7 @@ function CourseCard({ course }) {
             <Link to={`/course-details/${course._id}`}>
                 <img className="rounded-t-lg w-full  object-cover " style={{ height: "174px" }} src={import.meta.env.VITE_SERVER_URL+course.image.path}  />
                 <div className="p-4">
-                    <h5 className="mb-2 text-xl font-bold tracking-tigsht text-theme-color dark:text-white">{course.name}</h5>
+                    <h5 className="mb-2 text-lg font-bold tracking-tigsht text-theme-color dark:text-white">{course.name}</h5>
                     <p className="mb-2 font-normal text-gray-700 dark:text-gray-400">{course.teacher.firstName}</p>
                     <div>
                         <h5 className='text-base font-semibold mt-3'>₹ {course.price}</h5>
