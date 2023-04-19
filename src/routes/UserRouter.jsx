@@ -18,6 +18,7 @@ import CommunityHomePage from '../pages/user/CommunityHomePage';
 import OrderFailedPage from '../pages/user/OrderFailedPage';
 import MessengerPage from '../pages/user/MessengerPage';
 import AccountPage from '../pages/user/AccountPage';
+import ErrorPage from '../pages/user/ErrorPage';
 
 function UserRouter() {
   return (
@@ -32,9 +33,9 @@ function UserRouter() {
         <Route element={<AccountPage />} path='/profile' />
         <Route element={<GroupPage />} path='/groups' />
         <Route element={<MessengerPage />} path='/messages' />
-
       </Route>
 
+      <Route element={<ErrorPage />} path='/*' />
 
       <Route element={<HomePage />} path='/' />
       <Route element={<OtpPage />} path='/otp' />
@@ -45,6 +46,7 @@ function UserRouter() {
       <Route element={<SearchPage />} path='/search' />
       <Route element={<GroupPage />} path='/groups' />
       <Route element={<CommunityPage />} path='/community' />
+
 
 
     </Routes>

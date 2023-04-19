@@ -8,6 +8,7 @@ import ViewCoursePage from '../pages/teacher/ViewCoursePage';
 import EditCoursePage from '../pages/teacher/EditCoursePage';
 import ChangePasswordPage from '../pages/teacher/ChangePasswordPage';
 import DashboardPage from '../pages/teacher/DashboardPage';
+import ErrorPage from '../pages/user/ErrorPage';
 
 
 function TeacherRouter() {
@@ -20,6 +21,7 @@ function TeacherRouter() {
                 <Route element={<ChangePasswordPage />} path='/change-password' />
                 <Route element={<DashboardPage />} path='/dashboard' />
             </Route>
+            <Route element={<ErrorPage />} path='/*' />
             <Route element={<TeacherLoginPage />} path='/' />
         </Routes>
     )
