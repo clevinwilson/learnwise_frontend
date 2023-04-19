@@ -5,9 +5,10 @@ import UserFooter from '../UserFooter/UserFooter';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCourseDetails } from '../../Redux/Features/courseSlice';
 import getYouTubeID from 'get-youtube-id';
-import { Link } from 'react-router-dom'
-import { getCourseDetails } from '../../services/userApi';
+import { Link, useNavigate } from 'react-router-dom'
+import { getCourseDetails, getCourseFullDetails } from '../../services/userApi';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 function Learn() {
@@ -16,6 +17,7 @@ function Learn() {
     const courseDetails = useSelector((state) => state.course.value);
     const [videoId, setVideoId] = useState();
     const { courseId } = useParams();
+    const navigate=useNavigate();
 
 
     //toggle dropdown
@@ -60,11 +62,18 @@ function Learn() {
         
         //details fetching api
         if (!courseDetails) {
-            getCourseDetails(courseId).then((response) => {
+            getCourseFullDetails(courseId)
+            .then((response) => {
                 const course = response.data.courseDetails.course.map(obj => {
                     return { ...obj, open: false };
                 });
                 dispatch(setCourseDetails({ ...response.data.courseDetails, courseInfo: { ...response.data.courseDetails }, course }))
+            })
+            .catch((error)=>{
+                toast.error(error.response.data.err, {
+                    position: "top-center",
+                });
+                navigate('/')
             })
         }
 

@@ -60,6 +60,12 @@ export const search = (query)=>{
     return axiosInstance("JwtToken").get(`/search?q=${query}`)
 }
 
+//get course full details
+export const getCourseFullDetails = (courseId)=>{
+    return axiosInstance("JwtToken").get(`/course/learn/${courseId}`)
+}
+
+//community
 //create community
 export const createCommunity=(data)=>{
     return axiosInstance("JwtToken").post('/create-community',{...data}, { headers: { "Content-Type": "multipart/form-data" } })

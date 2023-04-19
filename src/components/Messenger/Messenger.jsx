@@ -11,6 +11,7 @@ import { io } from 'socket.io-client';
 import './Messenger.scss';
 import { useMediaQuery } from "react-responsive";
 import GroupInfo from '../GroupInfo/GroupInfo';
+import SendImageModal from '../SendImageModal/SendImageModal';
 
 
 function Messenger() {
@@ -123,7 +124,7 @@ function Messenger() {
             <div className="flex-1 flex flex-col">
                 <main className="flex-grow border-t flex flex-row min-h-0">
                     {showMessagesDiv ?
-                        <section className="flex flex-col flex-none overflow-auto w-screen group border-r border-l border-[#dee2e7] lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
+                        <section className="z-50 flex flex-col flex-none overflow-auto w-screen group border-r border-l border-[#dee2e7] lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
                             <div className="search-box border-b border-[#dee2e7] p-4 flex-none">
                                 <form >
                                     <div className="relative">
@@ -182,13 +183,15 @@ function Messenger() {
                                         <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
                                             <path d="M10,1.6c-4.639,0-8.4,3.761-8.4,8.4s3.761,8.4,8.4,8.4s8.4-3.761,8.4-8.4S14.639,1.6,10,1.6z M15,11h-4v4H9  v-4H5V9h4V5h2v4h4V11z" />
                                         </svg>
-                                    </button>
+                                    </button> */}
+            {/* <SendImageModal/> */}
+
                                     <button type="button" className="flex flex-shrink-0 focus:outline-none mx-2  text-blue-600 hover:text-blue-700 w-6 h-6">
                                         <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
                                             <path d="M11,13 L8,10 L2,16 L11,16 L18,16 L13,11 L11,13 Z M0,3.99406028 C0,2.8927712 0.898212381,2 1.99079514,2 L18.0092049,2 C19.1086907,2 20,2.89451376 20,3.99406028 L20,16.0059397 C20,17.1072288 19.1017876,18 18.0092049,18 L1.99079514,18 C0.891309342,18 0,17.1054862 0,16.0059397 L0,3.99406028 Z M15,9 C16.1045695,9 17,8.1045695 17,7 C17,5.8954305 16.1045695,5 15,5 C13.8954305,5 13,5.8954305 13,7 C13,8.1045695 13.8954305,9 15,9 Z" />
                                         </svg>
                                     </button>
-                                    <button type="button" className="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-6 h-6">
+                                    {/* <button type="button" className="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-6 h-6">
                                         <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
                                             <path d="M0,6.00585866 C0,4.89805351 0.893899798,4 2.0048815,4 L5,4 L7,2 L13,2 L15,4 L17.9951185,4 C19.102384,4 20,4.89706013 20,6.00585866 L20,15.9941413 C20,17.1019465 19.1017876,18 18.0092049,18 L1.99079514,18 C0.891309342,18 0,17.1029399 0,15.9941413 L0,6.00585866 Z M10,16 C12.7614237,16 15,13.7614237 15,11 C15,8.23857625 12.7614237,6 10,6 C7.23857625,6 5,8.23857625 5,11 C5,13.7614237 7.23857625,16 10,16 Z M10,14 C11.6568542,14 13,12.6568542 13,11 C13,9.34314575 11.6568542,8 10,8 C8.34314575,8 7,9.34314575 7,11 C7,12.6568542 8.34314575,14 10,14 Z" />
                                         </svg>
@@ -200,7 +203,7 @@ function Messenger() {
                                     </button> */}
                                             <div className="relative flex-grow">
                                                 <label>
-                                                    <input className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-100 focus:border-gray-200 bg-gray-100 focus:bg-gray-200 focus:outline-none text-black focus:shadow-md transition duration-300 ease-in" type="text" value={newMessage}  placeholder="Message"
+                                                    <input className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-100 focus:border-gray-100 bg-gray-100 focus:bg-gray-100 focus:outline-none text-black focus:shadow-md transition duration-300 ease-in" type="text" value={newMessage}  placeholder="Message"
                                                         onChange={(e) => { setNewMessage(e.target.value) }}
                                                         onKeyDown={keyDownHandler}
                                                     />
