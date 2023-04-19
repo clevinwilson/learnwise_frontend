@@ -10,6 +10,7 @@ import { getMessages, sendMessage } from '../../services/userApi';
 import { io } from 'socket.io-client';
 import './Messenger.scss';
 import { useMediaQuery } from "react-responsive";
+import GroupInfo from '../GroupInfo/GroupInfo';
 
 
 function Messenger() {
@@ -24,6 +25,7 @@ function Messenger() {
     const [showMessagesDiv, setshowMessagesDiv] = useState(true);
     const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
     const [searchTerm, setSearchTerm] = useState('');
+    const [showAbout,setShowAbout]=useState(false)
     
     
 
@@ -129,7 +131,7 @@ function Messenger() {
                             {groupData.groups ?
                                 <div className="contacts flex-1 overflow-y-scroll">
                                     {groupData.groups && groupData.groups.map((group, index) => (
-                                        <div key={index} onClick={() => { handleConversation(group) }}>
+                                        <div key={index} onClick={() => { handleConversation(group); setShowAbout(false) }}>
                                             <Conversation isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} group={group} />
                                         </div>
                                     ))}
@@ -142,23 +144,29 @@ function Messenger() {
                         </section>
                         : ""}
                     {currentChat ?
-                        <section className="flex flex-col flex-auto pb-12 sm:pb-0">
-                            <Chat isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} currentChat={currentChat} />
-                            <div className="chat-body p-4 flex-1 overflow-y-scroll">
-                                {currentChat && messages.map((message, index) => {
-                                    return (
-                                        <div key={index} ref={scrollRef}>
-                                            <Message message={message} currentChat={currentChat} own={user.id === message.sender._id} user={user} />
-                                        </div>
-                                    )
-                                })}
-                            </div>
+                        <>
+                        {showAbout ? 
+
+                                <GroupInfo setShowAbout={setShowAbout} currentChat={currentChat} groupData={groupData} setCurrentChat={setCurrentChat} />
+                        
+                        :
+                                <section className="flex flex-col flex-auto pb-12 sm:pb-0">
+                                    <Chat isMobile={isMobile} setShowAbout={setShowAbout} setshowMessagesDiv={setshowMessagesDiv} currentChat={currentChat} />
+                                    <div className="chat-body p-4 flex-1 overflow-y-scroll">
+                                        {currentChat && messages.map((message, index) => {
+                                            return (
+                                                <div key={index} ref={scrollRef}>
+                                                    <Message message={message} currentChat={currentChat} own={user.id === message.sender._id} user={user} />
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
 
 
 
-                            <div className="chat-footer border-t flex-none">
-                                <div className="flex flex-row items-center p-4">
-                                    {/* <button type="button" className="flex flex-shrink-0 focus:outline-none mx-2  text-blue-600 hover:text-blue-700 w-6 h-6">
+                                    <div className="chat-footer border-t flex-none">
+                                        <div className="flex flex-row items-center p-4">
+                                            {/* <button type="button" className="flex flex-shrink-0 focus:outline-none mx-2  text-blue-600 hover:text-blue-700 w-6 h-6">
                                         <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
                                             <path d="M10,1.6c-4.639,0-8.4,3.761-8.4,8.4s3.761,8.4,8.4,8.4s8.4-3.761,8.4-8.4S14.639,1.6,10,1.6z M15,11h-4v4H9  v-4H5V9h4V5h2v4h4V11z" />
                                         </svg>
@@ -178,22 +186,23 @@ function Messenger() {
                                             <path d="M9,18 L9,16.9379599 C5.05368842,16.4447356 2,13.0713165 2,9 L4,9 L4,9.00181488 C4,12.3172241 6.6862915,15 10,15 C13.3069658,15 16,12.314521 16,9.00181488 L16,9 L18,9 C18,13.0790094 14.9395595,16.4450043 11,16.9378859 L11,18 L14,18 L14,20 L6,20 L6,18 L9,18 L9,18 Z M6,4.00650452 C6,1.79377317 7.79535615,0 10,0 C12.209139,0 14,1.79394555 14,4.00650452 L14,8.99349548 C14,11.2062268 12.2046438,13 10,13 C7.790861,13 6,11.2060545 6,8.99349548 L6,4.00650452 L6,4.00650452 Z" />
                                         </svg>
                                     </button> */}
-                                    <div className="relative flex-grow">
-                                        <label>
-                                            <input className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-100 focus:border-gray-200 bg-gray-100 focus:bg-gray-200 focus:outline-none text-black focus:shadow-md transition duration-300 ease-in" type="text" value={newMessage} placeholder="Message"
-                                                onChange={(e) => { setNewMessage(e.target.value) }}
-                                            />
-                                            <button type="button" className="absolute top-0 right-0 mt-2 mr-4 flex flex-shrink-0 focus:outline-none  text-blue-600 hover:text-blue-700 w-6 h-6">
-                                                <BsEmojiSmile size={23} />
+                                            <div className="relative flex-grow">
+                                                <label>
+                                                    <input className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-100 focus:border-gray-200 bg-gray-100 focus:bg-gray-200 focus:outline-none text-black focus:shadow-md transition duration-300 ease-in" type="text" value={newMessage} placeholder="Message"
+                                                        onChange={(e) => { setNewMessage(e.target.value) }}
+                                                    />
+                                                    <button type="button" className="absolute top-0 right-0 mt-2 mr-4 flex flex-shrink-0 focus:outline-none  text-blue-600 hover:text-blue-700 w-6 h-6">
+                                                        <BsEmojiSmile size={23} />
+                                                    </button>
+                                                </label>
+                                            </div>
+                                            <button onClick={handleSubmit} type="button" className="flex flex-shrink-0 focus:outline-none mx-2 h-9 w-9 bg-blue-600 text-white  justify-center items-center rounded-full">
+                                                <IoSend size={20} />
                                             </button>
-                                        </label>
+                                        </div>
                                     </div>
-                                    <button onClick={handleSubmit} type="button" className="flex flex-shrink-0 focus:outline-none mx-2 h-9 w-9 bg-blue-600 text-white  justify-center items-center rounded-full">
-                                        <IoSend size={20} />
-                                    </button>
-                                </div>
-                            </div>
-                        </section>
+                                </section>}
+                        </>
                         :
 
                         <div className='w-full flex justify-center items-center'>

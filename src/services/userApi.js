@@ -141,6 +141,11 @@ export const getAllGroups=()=>{
     return axiosInstance("JwtToken").get('/community/groups')
 }
 
+//exit group
+export const exitGroup=(groupId)=>{
+    return axiosInstance("JwtToken").get(`/community/groups/exit/${groupId}`);
+}
+
 
 //message
 //send message
