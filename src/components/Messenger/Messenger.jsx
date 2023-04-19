@@ -128,7 +128,7 @@ function Messenger() {
                                     </div>
                                 </form>
                             </div>
-                            {groupData.groups ?
+                            {groupData.groups.length ?
                                 <div className="contacts flex-1 overflow-y-scroll">
                                     {groupData.groups && groupData.groups.map((group, index) => (
                                         <div key={index} onClick={() => { handleConversation(group); setShowAbout(false) }}>
