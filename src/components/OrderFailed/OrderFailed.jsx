@@ -16,7 +16,7 @@ function OrderFailed() {
 
 
                 <div class="text-center">
-                    <h3 class="md:text-2xl text-base text-gray-900 font-semibold text-center">Oh no, your payment
+                    <h3 class="md:text-2xl text-base text-gray-900 font-semibold text-center">Your payment
                         failed
                     </h3>
                     <p class="text-gray-600 my-2">Dont worry. We'l ry your payment again over the next few

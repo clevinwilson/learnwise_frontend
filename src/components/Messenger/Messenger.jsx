@@ -69,7 +69,6 @@ function Messenger() {
     useEffect(() => {
         getMessages(currentChat?._id)
             .then((response) => {
-                console.log(response.data);
                 setMessages(response.data);
             })
             .catch((err) => {
@@ -80,6 +79,7 @@ function Messenger() {
     //send new message 
     const handleSubmit = () => {
         if (newMessage != "") {
+            console.log('new me');
             const message = {
                 text: newMessage,
                 group: currentChat._id,
@@ -97,6 +97,9 @@ function Messenger() {
                     setMessages([...messages, message]);
                     setNewMessage("");
                 })
+                .catch((err)=>{
+                    console.log(err);
+                })
         }
     }
 
@@ -104,6 +107,16 @@ function Messenger() {
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [messages]);
+
+
+    //submit data when user click enter
+    const keyDownHandler = event => {
+        if (event.key == 'Enter') {
+            event.preventDefault();
+            // ️ call submit function here
+            handleSubmit();
+        }
+    };
 
     return (
         <div className="h-screen w-full flex antialiased text-black bg-white overflow-hidden">
@@ -187,8 +200,9 @@ function Messenger() {
                                     </button> */}
                                             <div className="relative flex-grow">
                                                 <label>
-                                                    <input className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-100 focus:border-gray-200 bg-gray-100 focus:bg-gray-200 focus:outline-none text-black focus:shadow-md transition duration-300 ease-in" type="text" value={newMessage} placeholder="Message"
+                                                    <input className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-100 focus:border-gray-200 bg-gray-100 focus:bg-gray-200 focus:outline-none text-black focus:shadow-md transition duration-300 ease-in" type="text" value={newMessage}  placeholder="Message"
                                                         onChange={(e) => { setNewMessage(e.target.value) }}
+                                                        onKeyDown={keyDownHandler}
                                                     />
                                                     <button type="button" className="absolute top-0 right-0 mt-2 mr-4 flex flex-shrink-0 focus:outline-none  text-blue-600 hover:text-blue-700 w-6 h-6">
                                                         <BsEmojiSmile size={23} />
