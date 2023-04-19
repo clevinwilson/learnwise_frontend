@@ -81,7 +81,6 @@ function Messenger() {
     const handleSubmit = () => {
         if (newMessage != "") {
             const message = {
-                user: user.id,
                 text: newMessage,
                 group: currentChat._id,
                 sender: { _id: user.id }

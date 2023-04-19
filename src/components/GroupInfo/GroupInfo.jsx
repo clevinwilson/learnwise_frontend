@@ -11,7 +11,7 @@ function GroupInfo({ setShowAbout, currentChat, groupData, setCurrentChat }) {
     
     const handleOnclick=()=>{
         swal({
-            text: `Exit ${currentChat?.name} group ?`,
+            text: `Exit  "${currentChat?.name}"  group ?`,
             buttons: true,
             dangerMode: true,
         })
@@ -31,7 +31,6 @@ function GroupInfo({ setShowAbout, currentChat, groupData, setCurrentChat }) {
     }
     return (
         <div className="w-full p-3 bg-white">
-
             <div className="flex flex-col items-center mt-6">
                 <img src={currentChat ? import.meta.env.VITE_SERVER_URL + currentChat.image.path : ""} alt className="w-24 h-24 rounded-full" />
                 <span className="text-2xl mt-1 text-gray-700">{currentChat ? currentChat.name : ""}</span>
