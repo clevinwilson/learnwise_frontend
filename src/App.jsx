@@ -5,6 +5,7 @@ import AdminRouter from './routes/AdminRouter';
 import UserRouter from './routes/UserRouter';
 import TeacherRouter from './routes/TeacherRouter';
 import { ToastContainer, toast } from "react-toastify";
+import AccountSuspended from './pages/user/AccountSuspended';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
 
         {/* Admin Router */}
         <Route path={'/admin/*'} element={<AdminRouter />} />
+
+        {/* account suspended */}
+        <Route path={'/account/suspended'} element={<AccountSuspended/>}/>
 
       </Routes>
       <ToastContainer />

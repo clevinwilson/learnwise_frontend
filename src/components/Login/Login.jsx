@@ -51,19 +51,25 @@ function Login(props) {
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
             try {
-                loginWithGoogl(codeResponse).then((response) => {
-                    localStorage.setItem('JwtToken', response.data.token);
-                    dispatch(
-                        setUserDetails({
-                            name: response.data.user.firstName,
-                            id: response.data.user._id,
-                            email: response.data.user.email,
-                            image: response.data.user.picture,
-                            token: response.data.token,
-                        })
-                    );
-                    navigate("/");
-                }).catch((err) => { 
+                loginWithGoogl(codeResponse)
+                .then((response) => {
+                    if (response.data.status === "Blocked") {
+                        navigate('/account/suspended');
+                    }else{
+                        localStorage.setItem('JwtToken', response.data.token);
+                        dispatch(
+                            setUserDetails({
+                                name: response.data.user.firstName,
+                                id: response.data.user._id,
+                                email: response.data.user.email,
+                                image: response.data.user.picture,
+                                token: response.data.token,
+                            })
+                        );
+                        navigate("/");
+                    }
+                }).catch((err) => {
+                    console.log(err); 
                     generateError("Something went wrong please reload the page") })
             } catch (err) {
                 generateError("Something went wrong please reload the page")
@@ -81,9 +87,11 @@ function Login(props) {
             const { data } = await userLogin(loginData);
             console.log(data,'user');
             if (data) {
+                if (data.status ==='Blocked'){
+                    navigate('/account/suspended')
+                }
                 if (data.login) {
                     localStorage.setItem('JwtToken', data.token);
-
                     dispatch(
                         setUserDetails({
                             name: data.user.firstName,

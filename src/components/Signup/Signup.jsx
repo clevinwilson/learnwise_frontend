@@ -70,7 +70,12 @@ function Signup() {
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {
       try {
-        loginWithGoogl(codeResponse).then((response) => {
+        loginWithGoogl(codeResponse)
+        .then((response) => {
+          if (response.data.status === "Blocked") {
+            navigate('/account/suspended');
+          }
+          
           localStorage.setItem('JwtToken', response.data.token);
           dispatch(
             setUserDetails({
