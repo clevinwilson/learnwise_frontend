@@ -164,6 +164,13 @@ export const getMessages=(groupId)=>{
     return axiosInstance("JwtToken").get(`/messages/${groupId}`)
 }
 
+//send image 
+export const sendImage = (message)=>{
+    return axiosInstance('JwtToken').post(`/messages/send/file/`, { ...message }, { headers: { "Content-Type": "multipart/form-data" }})
+}
+
+
+//account
 //get user full details
 export const getUserDetails=()=>{
     return axiosInstance("JwtToken").get('/account')
