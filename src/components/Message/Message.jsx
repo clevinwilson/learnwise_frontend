@@ -17,15 +17,18 @@ function Message({ own, message, user }) {
                                             <a class="block w-64 h-64 relative flex-shrink-0 max-w-xs lg:max-w-md">
                                                 <img class="absolute  w-full h-full rounded-lg object-cover" src={message.image} alt="hiking" />s
                                             </a>
-
                                         </div>
-                                        <p className='mt-2 ml-2'>{message.text ? message.text : ""}</p>
+                                        {message.text ?
+                                            <p className='mt-2 text-black ml-2'>{message.text}</p>
+                                            :
+                                            null
+                                        }
                                     </p>
                                 </div>
                                 <time className="text-right text-black text-[10px] opacity-50 "><TimeAgo datetime={message.createdAt} /></time>
                             </div>
                             <div className="w-8 h-8 relative flex flex-shrink-0 ml-2">
-                                <img className="shadow-md rounded-full w-full h-full object-cover" src={user?.image ? user?.image:""} alt />
+                                <img className=" rounded-full w-full h-full object-cover" src={user?.image ? user?.image : ""} alt />
                             </div>
                         </div>
                         :
@@ -38,7 +41,7 @@ function Message({ own, message, user }) {
                                 <time className="text-right text-black text-[10px] opacity-50 "><TimeAgo datetime={message.createdAt} /></time>
                             </div>
                             <div className="w-8 h-8 relative flex flex-shrink-0 ml-2">
-                                <img className="shadow-md rounded-full w-full h-full object-cover" src={user?.image  ? user?.image :""} alt />
+                                <img className=" rounded-full w-full h-full object-cover" src={user?.image ? user?.image : ""} alt />
                             </div>
                         </div>
 
@@ -54,28 +57,31 @@ function Message({ own, message, user }) {
                     {message.type === 'file' ?
                         <div className="flex flex-row justify-start mt-3">
                             <div className="w-8 h-8 relative flex flex-shrink-0 mr-2">
-                                <img className="shadow-md rounded-full w-full h-full object-cover" src={user?.image?  user?.image:""} alt />
+                                <img className=" rounded-full w-full h-full object-cover" src={user?.image ? user?.image : ""} alt />
                             </div>
                             <div className="messages text-sm text-white grid grid-flow-row">
                                 <div className="flex items-center flex-row-reverse group">
                                     <p className="p-2  rounded-r-xl rounded-bl-xl bg-gray-200 max-w-xs lg:max-w-md">
+                                        <p className='text-xs text-blue-600 font-semibold text-left mb-2'>{message.sender?.firstName}</p>
                                         <div class="flex items-center flex-row-reverse group">
                                             <a class="block w-64 h-64 relative flex-shrink-0 max-w-xs lg:max-w-md">
                                                 <img class="absolute  w-full h-full rounded-lg object-cover" src={message.image} alt="hiking" />s
                                             </a>
-
                                         </div>
-                                        <p className='mt-2 text-black ml-2'>{message.text ? message.text : ""}</p>
+                                        {message.text ?
+                                            <p className='mt-2 text-black ml-2'>{message.text}</p>
+                                            :
+                                            null
+                                        }
                                     </p>
                                 </div>
-                                <time className="text-right text-black text-[10px] opacity-50 "><TimeAgo datetime={message.createdAt} /></time>
+                                <time className="text-right flex text-black text-[10px] opacity-50 "><TimeAgo datetime={message.createdAt} /></time>
                             </div>
-                           
                         </div>
                         :
                         <div className="flex flex-row justify-start mt-3">
                             <div className="w-8 h-8 relative flex flex-shrink-0 mr-2">
-                                <img className="shadow-md rounded-full w-full h-full object-cover" src={message.sender?.picture?  message.sender?.picture:""} />
+                                <img className=" rounded-full w-full h-full object-cover" src={message.sender?.picture ? message.sender?.picture : ""} />
                             </div>
                             <div className="messages text-sm text-gray-700 grid grid-flow-row gap-2">
                                 <div className="flex items-center group">
@@ -84,8 +90,7 @@ function Message({ own, message, user }) {
                                         <span className='mt-3'>{message.text}</span>
                                     </p>
                                 </div>
-                                <time className="text-black text-[10px] opacity-50 "><TimeAgo datetime={message.createdAt} /></time>
-
+                                <time className="text-black flex  text-[10px] opacity-50 "><TimeAgo datetime={message.createdAt} /></time>
                             </div>
                         </div>
                     }
