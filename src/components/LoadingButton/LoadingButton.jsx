@@ -1,6 +1,6 @@
-import './Loadingbutton.scss';
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
+import './LoadingButton.scss'
 
 const Button = (props) => {
     const btnRef = useRef();
