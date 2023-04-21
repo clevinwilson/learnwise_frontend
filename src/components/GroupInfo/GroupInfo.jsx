@@ -5,6 +5,7 @@ import { IoExitOutline } from "react-icons/io5";
 import { exitGroup } from '../../services/userApi';
 import { useDispatch } from 'react-redux';
 import { fetchAllJoinedGroups } from '../../Redux/Actions/groupActions';
+import { BsArrowLeft } from "react-icons/bs";
 
 function GroupInfo({ setShowAbout, currentChat, groupData, setCurrentChat }) {
     const dispatch = useDispatch();
@@ -31,6 +32,11 @@ function GroupInfo({ setShowAbout, currentChat, groupData, setCurrentChat }) {
     }
     return (
         <div className="w-full p-3 bg-white">
+            <div className='flex justify-start items-center mr-4' onClick={() => {
+                setShowAbout(false);
+            }}>
+                <BsArrowLeft size={19} />
+            </div>
             <div className="flex flex-col items-center mt-6">
                 <img src={currentChat ? import.meta.env.VITE_SERVER_URL + currentChat.image.path : ""} alt className="w-24 h-24 rounded-full" />
                 <span className="text-2xl mt-1 text-gray-700">{currentChat ? currentChat.name : ""}</span>

@@ -49,7 +49,7 @@ function Messenger() {
     useEffect(() => {
         //receive message
         socket.current.on('receiveMessage', ({ sender, text, type, image }) => {
-
+            console.log(image);
             if (sender._id != user.id) {
                 setMessages(messages => [...messages, { sender: sender, text, type, image }]);
             }
@@ -159,9 +159,7 @@ function Messenger() {
                     {currentChat ?
                         <>
                             {showAbout ?
-
                                 <GroupInfo setShowAbout={setShowAbout} currentChat={currentChat} groupData={groupData} setCurrentChat={setCurrentChat} />
-
                                 :
                                 <section className="flex flex-col flex-auto pb-12 sm:pb-0">
                                     <Chat isMobile={isMobile} setShowAbout={setShowAbout} setshowMessagesDiv={setshowMessagesDiv} currentChat={currentChat} />

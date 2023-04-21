@@ -1,5 +1,4 @@
 import React from 'react';
-import { BsFillTelephoneFill, BsCameraVideoFill, BsFillInfoCircleFill } from "react-icons/bs";
 import { BsArrowLeft } from "react-icons/bs";
 
 

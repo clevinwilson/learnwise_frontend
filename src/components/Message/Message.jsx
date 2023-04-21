@@ -14,12 +14,11 @@ function Message({ own, message, user }) {
                                 <div className="flex items-center flex-row-reverse group">
                                     <p className="p-2  rounded-l-xl rounded-br-xl bg-blue-500 max-w-xs lg:max-w-md">
                                         <div class="flex items-center flex-row-reverse group">
-                                            <a class="block w-64 h-64 relative flex-shrink-0 max-w-xs lg:max-w-md">
-                                                <img class="absolute  w-full h-full rounded-lg object-cover" src={message.image} alt="hiking" />s
-                                            </a>
+                                            <img class="  w-full max-w-[224px] h-full rounded-lg object-cover" src={message.image} alt="image" />
+
                                         </div>
                                         {message.text ?
-                                            <p className='mt-2 text-black ml-2'>{message.text}</p>
+                                            <p className='mt-2 text-white ml-2'>{message.text}</p>
                                             :
                                             null
                                         }
@@ -27,9 +26,11 @@ function Message({ own, message, user }) {
                                 </div>
                                 <time className="text-right text-black text-[10px] opacity-50 "><TimeAgo datetime={message.createdAt} /></time>
                             </div>
+                            {user?.image ?
                             <div className="w-8 h-8 relative flex flex-shrink-0 ml-2">
-                                <img className=" rounded-full w-full h-full object-cover" src={user?.image ? user?.image : ""} alt />
+                                    <img className=" rounded-full w-full h-full object-cover" src={user?.image}/>
                             </div>
+                            :null}
                         </div>
                         :
                         <div className="flex flex-row justify-end mt-3">
@@ -40,9 +41,11 @@ function Message({ own, message, user }) {
                                 </div>
                                 <time className="text-right text-black text-[10px] opacity-50 "><TimeAgo datetime={message.createdAt} /></time>
                             </div>
-                            <div className="w-8 h-8 relative flex flex-shrink-0 ml-2">
-                                <img className=" rounded-full w-full h-full object-cover" src={user?.image ? user?.image : ""} alt />
-                            </div>
+                            {user?.image ?
+                                <div className="w-8 h-8 relative flex flex-shrink-0 ml-2">
+                                    <img className=" rounded-full w-full h-full object-cover" src={user?.image} />
+                                </div>
+                                : null}
                         </div>
 
 
@@ -56,17 +59,18 @@ function Message({ own, message, user }) {
 
                     {message.type === 'file' ?
                         <div className="flex flex-row justify-start mt-3">
-                            <div className="w-8 h-8 relative flex flex-shrink-0 mr-2">
-                                <img className=" rounded-full w-full h-full object-cover" src={user?.image ? user?.image : ""} alt />
-                            </div>
+                            {message.sender?.picture ?
+                                <div className="w-8 h-8 relative flex flex-shrink-0 mr-2">
+                                    <img className=" rounded-full w-full h-full object-cover" src={message.sender?.picture} />
+                                </div>
+                                : null}
                             <div className="messages text-sm text-white grid grid-flow-row">
                                 <div className="flex items-center flex-row-reverse group">
                                     <p className="p-2  rounded-r-xl rounded-bl-xl bg-gray-200 max-w-xs lg:max-w-md">
                                         <p className='text-xs text-blue-600 font-semibold text-left mb-2'>{message.sender?.firstName}</p>
                                         <div class="flex items-center flex-row-reverse group">
-                                            <a class="block w-64 h-64 relative flex-shrink-0 max-w-xs lg:max-w-md">
-                                                <img class="absolute  w-full h-full rounded-lg object-cover" src={message.image} alt="hiking" />s
-                                            </a>
+                                            <img class="  w-full max-w-[224px]  h-full rounded-lg object-cover" src={message.image} alt="hiking" />
+
                                         </div>
                                         {message.text ?
                                             <p className='mt-2 text-black ml-2'>{message.text}</p>
@@ -80,9 +84,11 @@ function Message({ own, message, user }) {
                         </div>
                         :
                         <div className="flex flex-row justify-start mt-3">
-                            <div className="w-8 h-8 relative flex flex-shrink-0 mr-2">
-                                <img className=" rounded-full w-full h-full object-cover" src={message.sender?.picture ? message.sender?.picture : ""} />
-                            </div>
+                            {message.sender?.picture ?
+                                <div className="w-8 h-8 relative flex flex-shrink-0 mr-2">
+                                    <img className=" rounded-full w-full h-full object-cover" src={message.sender?.picture} />
+                                </div>
+                                : null}
                             <div className="messages text-sm text-gray-700 grid grid-flow-row gap-2">
                                 <div className="flex items-center group">
                                     <p className="px-6  py-1 rounded-t-full rounded-r-full bg-gray-100 max-w-xs lg:max-w-md text-gray-800">

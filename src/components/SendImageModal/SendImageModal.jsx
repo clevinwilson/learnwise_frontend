@@ -37,7 +37,7 @@ function SendImageModal({ image, setImage, group, user, socket, setMessages }) {
                                     <label htmlFor="caption" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Caption</label>
                                     <input type="text" name="caption" id="caption" onChange={(e) => { setCaption(e.target.value) }} value={caption} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                                 </div>
-                                <div className='flex justify-end'>
+                                <div className='flex justify-end mt-3'>
                                     <button className=" text-blue-600 font-semibold bg-white hover:bg-gray-100  focus:outline-none  rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => { setImage(false) }}>Cancel</button>
                                     <button type="submit" className="text-blue-600 font-semibold bg-white hover:bg-gray-100  focus:outline-none  rounded-lg text-sm px-5 py-2.5 text-center"
                                     onClick={handleSubmit}
