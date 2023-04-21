@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --max_old_space_size=4096  --host",
-    "build": "vite --max_old_space_size=4096  build",
+    "dev": "vite --host",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
