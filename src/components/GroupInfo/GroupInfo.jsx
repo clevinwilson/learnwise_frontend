@@ -32,7 +32,7 @@ function GroupInfo({ setShowAbout, currentChat, groupData, setCurrentChat }) {
     }
     return (
         <div className="w-full p-3 bg-white">
-            <div className='flex justify-start items-center mr-4' onClick={() => {
+            <div className='flex justify-start items-center mr-4 cursor-pointer' onClick={() => {
                 setShowAbout(false);
             }}>
                 <BsArrowLeft size={19} />

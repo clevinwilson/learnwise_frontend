@@ -8,14 +8,12 @@ function Message({ own, message, user }) {
                 <>
                     {/* <p className="p-4 text-center text-sm text-gray-500">12:40 PM</p> */}
                     {message.type === 'file' ?
-
                         <div className="flex flex-row justify-end mt-3">
                             <div className="messages text-sm text-white grid grid-flow-row">
                                 <div className="flex items-center flex-row-reverse group">
                                     <p className="p-2  rounded-l-xl rounded-br-xl bg-blue-500 max-w-xs lg:max-w-md">
                                         <div class="flex items-center flex-row-reverse group">
                                             <img class="  w-full max-w-[224px] h-full rounded-lg object-cover" src={message.image} alt="image" />
-
                                         </div>
                                         {message.text ?
                                             <p className='mt-2 text-white ml-2'>{message.text}</p>
@@ -47,10 +45,7 @@ function Message({ own, message, user }) {
                                 </div>
                                 : null}
                         </div>
-
-
                     }
-
                 </>
 
                 :

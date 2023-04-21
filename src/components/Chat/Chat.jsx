@@ -13,13 +13,15 @@ function Chat({ setShowAbout, currentChat, isMobile, setshowMessagesDiv }) {
                     }}>
                         <BsArrowLeft size={19} />
                     </div> : ""}
-                <div className="w-12 h-12 mr-4 relative flex flex-shrink-0">
-                    <img className=" rounded-full w-full h-full object-cover" src={currentChat ? import.meta.env.VITE_SERVER_URL + currentChat.image.path : ""}  />
-                </div>
-                <div onClick={() => { setShowAbout(true)}} className="text-sm cursor-pointer flex justify-center items-center">
-                    <p className="font-bold">{currentChat ? currentChat.name : ""}</p>
-                    {/* <p>Active 1h ago</p> */}
-                </div>
+                <div className='flex cursor-pointer' onClick={() => { setShowAbout(true) }} >
+                    <div className="w-12 h-12 mr-4 relative flex flex-shrink-0">
+                        <img className=" rounded-full w-full h-full object-cover" src={currentChat ? import.meta.env.VITE_SERVER_URL + currentChat.image.path : ""} />
+                    </div>
+                    <div className="text-sm cursor-pointer flex justify-center items-center">
+                        <p className="font-bold">{currentChat ? currentChat.name : ""}</p>
+                        {/* <p>Active 1h ago</p> */}
+                    </div>
+               </div>
             </div>
             <div className="flex">
                 {/* <a href="#" className="block rounded-full hover:bg-gray-700 text-blue-500 bg-gray-800 w-10 h-10 p-2">
