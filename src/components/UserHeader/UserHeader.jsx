@@ -194,10 +194,12 @@ function UserHeader() {
                                 </Link>
                             </li>
                             <li className="mb-1">
-                                <a className="block p-4 text-sm  text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="#">Community</a>
+                                <Link to={'/community'}>
+                                <a className="block p-4 text-sm  text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Community</a>
+                                </Link>
                             </li>
                             <li className="mb-1">
-                                <a className="block p-4 text-sm  text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="#">Challenges</a>
+                                <a className="block p-4 text-sm  text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Challenges</a>
                             </li>
 
                         </ul>

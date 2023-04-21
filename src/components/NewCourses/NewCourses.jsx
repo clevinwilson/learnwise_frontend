@@ -8,10 +8,10 @@ function NewCourses() {
 
       <div className='mt-10 grid grid-cols-1 sm:grid-cols-2 '>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-7 p-5'>
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
+          <CategoryCard title={"JavaScript"} />
+          <CategoryCard title={"Python"} />
+          <CategoryCard title={"Java"} />
+          <CategoryCard title={"C++"} />
         </div>
         <div className='p-5 flex justify-center ml-0  md:ml-10  flex-col'>
           <h2 className='text-3xl sm:text-4xl  lg:text-5xl font-black mb-3 tracking-wide banner-title'>Learn Without Limits</h2>

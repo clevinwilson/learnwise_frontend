@@ -1,9 +1,10 @@
 import React from 'react';
 import './BannerWithSearch.scss';
 import Button from '../Button/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function BannerWithSearch() {
+    const navigate=useNavigate();
     return (
         <div className='homepage-banner grid sm:grind-cols-1 md:grid-cols-3 ' style={{ backgroundImage: "url(../../../public/images/homeBanner.PNG)" }}>
             <div className='col-span-2 h-full flex flex-col justify-center m-5 md:ml-14'>
@@ -18,7 +19,7 @@ function BannerWithSearch() {
                     <p className='text-xs sm:text-base sm:leading-5 md:leading-6'>Learn the skills you need to take the next step and every step <br />
                         after. Log in now to save on courses through March 1.</p>
                 </div>
-                <div className='mb-10'>
+                <div onClick={() => { navigate('/courses')}} className='mb-10'>
                     <Button >
                         Explore courses
                     </Button>
