@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 function BannerWithSearch() {
     const navigate=useNavigate();
     return (
-        <div className='homepage-banner grid sm:grind-cols-1 md:grid-cols-3 ' style={{ backgroundImage: "url(../../../public/images/homeBanner.PNG)" }}>
+        <div className='homepage-banner grid sm:grind-cols-1 md:grid-cols-3 ' style={{ backgroundImage: "url(/images/homeBanner.PNG)" }}>
             <div className='col-span-2 h-full flex flex-col justify-center m-5 md:ml-14'>
                 <div>
                     <h2 className="serach-banner-title font-black text-3xl md:text-5xl mb-10  tracking-wide">
