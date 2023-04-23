@@ -2,7 +2,7 @@ import React from 'react'
 
 function CardLoading() {
     return (
-        <div className="container px-3 py-18 mx-auto">
+        <div className="containers mt-5 px-3  mx-auto">
   <div className="flex flex-wrap -m-4">
     <div className="p-2 w-full md:w-2/4 lg:w-1/3">
       <div className="h-full border-2 border-gray-200 rounded-lg overflow-hidden">
