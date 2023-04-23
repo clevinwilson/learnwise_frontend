@@ -5,16 +5,16 @@ import './LoadingButton.scss'
 const Button = (props) => {
     const btnRef = useRef();
 
-    useEffect(() => {
-        const btnWidth = btnRef.current.clientWidth + 19;
-        btnRef.current.style.width = btnWidth + 'px';
-    }, []);
+    // useEffect(() => {
+    //     const btnWidth = btnRef.current.clientWidth + 19;
+    //     btnRef.current.style.width = btnWidth + 'px';
+    // }, []);
 
     return (
         <button
             type="button"
             ref={btnRef}
-            className='loading-btn form-btn mt-2 font-medium rounded'
+            className='loading-btn w-auto form-btn mt-2 font-medium rounded'
             onClick={props.onClick}
         >
             <span className={`spinner ${props.loading ? 'active' : ''}`}>
