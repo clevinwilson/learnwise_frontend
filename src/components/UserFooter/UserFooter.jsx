@@ -7,7 +7,7 @@ function UserFooter() {
                     <div className="md:flex md:justify-between">
                         <div className="mb-6 md:mb-0">
                             <a href="/" className="flex items-center">
-                                <img src="../../../public/images/LearnWise-logo.png" className="h-8 mr-3" alt="FlowBite Logo" />
+                                <img src="/images/LearnWise-logo.png" className="h-8 mr-3" alt="FlowBite Logo" />
                             </a>
                         </div>
                         <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
