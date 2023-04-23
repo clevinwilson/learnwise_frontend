@@ -17,11 +17,7 @@ const CommunitySidebarLink = [
         icon: <MdOutlineMessage size={22} />,
         to: "/messages",
     },
-    {
-        label: "Events",
-        icon: <MdEvent size={22} />,
-        to: "",
-    },
+    
 ];
 
 export default CommunitySidebarLink
