@@ -7,7 +7,7 @@ function NewCourses() {
       {/* <h1 className='text-3xl font-semibold'>Top Courses</h1> */}
 
       <div className='mt-10 grid grid-cols-1 sm:grid-cols-2 '>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-7 p-5'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-7'>
           <CategoryCard title={"JavaScript"} />
           <CategoryCard title={"Python"} />
           <CategoryCard title={"Java"} />
