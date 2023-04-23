@@ -18,7 +18,7 @@ function BuyNowCard({ courseDetails }) {
       }
     },[])
     return (
-        <div className="max-w-sm mt-8 bg-white border border-gray-200 rounded-lg w-80 shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className="max-w-sm mt-8 bg-white border border-gray-200 rounded-lg w-full md:w-80 shadow dark:bg-gray-800 dark:border-gray-700">
             <div className='p-5'>
                 <img className="rounded w-full object-cover" src={import.meta.env.VITE_SERVER_URL +courseDetails.image.path} alt />
             </div>
