@@ -165,7 +165,7 @@ function Login(props) {
     return (
         <section className='section-box'>
             <form action="">
-                <div className='grid-cols-1  form-box p-10'>
+                <div className='grid-cols-1  shadow-none sm:shadow-xl form-box p-10'>
                     <h2 className='text-center text-2xl font-medium pb-8'>{props.admin ? "Admin" : props.teacher ? "Teacher" : " "} Login</h2>
 
                     <div className="relative mb-6" data-te-input-wrapper-init>

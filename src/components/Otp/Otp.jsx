@@ -132,7 +132,7 @@ function Otp() {
     return (
         <section className='section-box'>
             <form action="">
-                <div className='grid-cols-1  form-box p-7'>
+                <div className='grid-cols-1 shadow-none sm:shadow-xl form-box p-7'>
                     <h2 style={{ color: "#6255a4" }} className='text-center text-2xl font-medium pb-5'>Enter OTP</h2>
                     <p className='text-center pb-6'>We sent you a verification code to your email</p>
                     <Formik>

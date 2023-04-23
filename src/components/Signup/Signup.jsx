@@ -106,7 +106,7 @@ function Signup() {
     <Formik>
       <section className='section-box'>
         <form >
-          <div className='grid-cols-1  form-box p-10'>
+          <div className='grid-cols-1 shadow-none sm:shadow-xl  form-box p-10'>
             <h2 className='text-center text-2xl font-medium pb-8'>Sign Up</h2>
             {errorMessage ? <div className='text-red-500 pb-6 text-center'>{errorMessage}</div> : ""}
             <div className="relative mb-6" data-te-input-wrapper-init>
