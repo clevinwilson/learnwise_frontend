@@ -34,11 +34,20 @@ function EnrolledCoursesPage() {
         <Loader />
         :
         <div>
-          {enrolledCourse && enrolledCourse.map((courseDetails) => {
-            return (
-              <HorizontalCourseCard key={courseDetails._id} courseDetails={courseDetails} />
-            )
-          })
+          {enrolledCourse.length ?
+            <>
+              {enrolledCourse && enrolledCourse.map((courseDetails) => {
+                return (
+                  <HorizontalCourseCard key={courseDetails._id} courseDetails={courseDetails} />
+                )
+              })
+              }
+            </>
+            :
+            <div className='flex justify-center flex-col items-center mb-10'>
+              <img src="/images/nocourse.svg" alt="" />
+              <p>No enrolled courses</p>
+            </div>
           }
         </div>
       }
