@@ -21,7 +21,7 @@ function AllCourses() {
       {loading ?
         <Loader />
         :
-        <div className='mt-10 grid-cols-1 gap-12  sm:grid-cols-2 grid md:grid-cols-3 lg:grid-cols-4 '>
+        <div className='mt-10 grid-cols-1 gap-12  sm:grid-cols-2 grid md:grid-cols-3 xl:grid-cols-4 '>
           {course.map((course) => {
             return (
               <CourseCard key={course._id} course={course} />
