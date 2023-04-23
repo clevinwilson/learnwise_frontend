@@ -208,7 +208,7 @@ function Login(props) {
                                 <div className='flex justify-center success-box-border rounded p-2 mt-8'
                                     onClick={login}
                                 >
-                                    <img src="../public/images/Screenshot 2023-03-01 111718.png" alt="" />
+                                    <img src="/images/Screenshot 2023-03-01 111718.png" alt="" />
                                     <p className='ml-4'>Google</p>
                                 </div>
 
