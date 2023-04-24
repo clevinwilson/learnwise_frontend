@@ -3,7 +3,7 @@ import GroupCard from '../GroupCard/GroupCard';
 import Button from '../Button/Button';
 import { BiPlus } from 'react-icons/bi';
 import AddCommunityModal from '../AddCommunityModal/AddCommunityModal';
-import { getCommunity, getJoinedCommunity, joinCommunity } from '../../services/userApi';
+import { getCommunity, getJoinedCommunity, getUserDetails, joinCommunity } from '../../services/userApi';
 import { toast } from "react-toastify";
 import { useSelector } from 'react-redux';
 import Loader from '../Loader/Loader';
@@ -17,6 +17,7 @@ function Community({ isTab }) {
     const [communitys, setCommunitys] = useState([]);
     const [joinedCommunity, setJoinedCommunity] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [yourCommunity,setYourCommunity]=useState()
     
 
     const handleJoin = (communityId) => {
@@ -27,6 +28,7 @@ function Community({ isTab }) {
                         position: "top-center",
                     });
                     loadJoinedCommunity()
+                    setYourCommunity([...yourCommunity,communityId])
                 } else {
                     toast.error(response.data.message, {
                         position: "top-center",
@@ -67,6 +69,13 @@ function Community({ isTab }) {
 
         //get all community
         loadAllCommunityDetails();
+
+        //get user details
+        
+        getUserDetails()
+            .then((response) => {
+                setYourCommunity(response.data.userDetails.community)
+            })
     }, [])
 
 
@@ -132,7 +141,7 @@ function Community({ isTab }) {
                     <div className="my-3 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                         <>
                             {communitys.map((community) => (
-                                <GroupCard key={community._id} community={community} handleJoin={handleJoin} />
+                                <GroupCard key={community._id} joinedStatus={yourCommunity && yourCommunity.includes(community._id)} community={community} handleJoin={handleJoin} />
                             ))}
                         </>
 

@@ -18,6 +18,7 @@ function Groups({ community, loadCommunityGroups, groups, groupLoading }) {
                     position: "top-center",
                 });
                 dispatch(fetchAllJoinedGroups())
+                setJoinedGroups([...joinedGroups,groupId])
             }
         })
             .catch((err) => {

@@ -1,14 +1,14 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const GroupCard = ({ community, joined, handleJoin }) => {
+const GroupCard = ({ community, joined, handleJoin, joinedStatus }) => {
     const user = useSelector((state) => state.user);
 
     return (
         <div className="card cursor-pointer card-compact bg-base-100 shadow-lg">
-            <Link to={joined ? '/community-home': ""} state={community} >
+            <Link to={joined ? '/community-home' : ""} state={community} >
                 <figure>
-                    <img src={`${import.meta.env.VITE_SERVER_URL}${community.image.path}`} alt="" className="w-full aspect-[2/1] object-cover" />
+                    <img src={`${import.meta.env.VITE_SERVER_URL}${community.image?.path}`} alt="" className="w-full aspect-[2/1] object-cover" />
                 </figure>
             </Link>
             <div className="p-3">
@@ -34,11 +34,14 @@ const GroupCard = ({ community, joined, handleJoin }) => {
                         :
                         user.email ?
                             <div>
-                                <div className="mr-3 cursor-pointer">
-                                    <h2 className="font-bold"
-                                        onClick={() => { handleJoin(community._id) }}
-                                    >Join</h2>
-                                </div>
+                                {joinedStatus ? ""
+                                    :
+                                    <div className="mr-3 cursor-pointer">
+                                        <h2 className="font-bold"
+                                            onClick={() => { handleJoin(community._id) }}
+                                        >Join</h2>
+                                    </div>}
+
                             </div>
                             : null
                     }
