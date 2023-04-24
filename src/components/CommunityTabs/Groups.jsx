@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { joinGroup } from '../../services/userApi';
+import { getUserDetails, joinGroup } from '../../services/userApi';
 import { toast } from 'react-toastify';
 import CardLoading from '../CardLoading/CardLoading'
 import { fetchAllJoinedGroups } from '../../Redux/Actions/groupActions';
@@ -7,8 +7,8 @@ import { useDispatch } from 'react-redux';
 
 
 function Groups({ community, loadCommunityGroups, groups, groupLoading }) {
-
     const dispatch = useDispatch();
+    const [joinedGroups,setJoinedGroups]=useState();
 
     //join groups
     const handleJoinGroup = (communityId, groupId) => {
@@ -30,6 +30,12 @@ function Groups({ community, loadCommunityGroups, groups, groupLoading }) {
     //loading initial data
     useEffect(() => {
         loadCommunityGroups()
+
+        //loading user groups
+        getUserDetails()
+        .then((response)=>{
+            setJoinedGroups(response.data.userDetails.group)
+        })
     }, [])
     return (
         <>
@@ -49,11 +55,16 @@ function Groups({ community, loadCommunityGroups, groups, groupLoading }) {
                                             <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
                                                 {group.name}
                                             </h5>
-                                            <div className="mr-3 cursor-pointer">
-                                                <h2 className="font-bold"
-                                                    onClick={() => { handleJoinGroup(community._id, group._id) }}
-                                                >Join</h2>
-                                            </div>
+                                            {joinedGroups && joinedGroups.includes(group._id)?
+                                            ""
+                                            :
+                                                <div className="mr-3 cursor-pointer">
+                                                    <h2 className="font-bold"
+                                                        onClick={() => { handleJoinGroup(community._id, group._id) }}
+                                                    >Join</h2>
+                                                </div>
+
+                                            }
                                         </div>
                                     </div>
                                 </div>
