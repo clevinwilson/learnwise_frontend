@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SyllabusDropdown from '../SyllabusDropdown/SyllabusDropdown';
 import BuyNowCard from '../BuyNowCard/BuyNowCard';
 import './CourseDetails.scss'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getCourseDetails } from '../../services/userApi';
 import Loader from '../Loader/Loader';
 
@@ -12,10 +12,12 @@ function CourseDetails() {
     const { courseId } = useParams();
     const [courseDetails, setCourseDetails] = useState({});
     let [loading, setLoading] = useState(true);
+    const navigate=useNavigate(); 
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        getCourseDetails(courseId).then((response) => {
+        getCourseDetails(courseId)
+        .then((response) => {
             if (response.data.status) {
                 response.data.courseDetails.course = response.data.courseDetails.course.map(obj => {
                     return { ...obj, open: false };
@@ -23,6 +25,9 @@ function CourseDetails() {
                 setCourseDetails(response.data.courseDetails);
                 setLoading(false);
             }
+        })
+        .catch((response)=>{
+            navigate('/*')
         })
 
     }, [])

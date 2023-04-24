@@ -92,11 +92,13 @@ function Login(props) {
                 }
                 if (data.login) {
                     localStorage.setItem('JwtToken', data.token);
+                    console.log(data);
                     dispatch(
                         setUserDetails({
                             name: data.user.firstName,
                             id: data.user._id,
                             email: data.user.email,
+                            image: data.user.picture,
                             token: data.token,
                         })
                     );
