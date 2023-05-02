@@ -147,7 +147,7 @@ function CreateGroupModal(props) {
                                                     <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                                 </div>
                                                 <input id="dropzone-file" type="file" name='image' className="hidden" required
-                                                    ref={fileInputRef}
+             z                                       ref={fileInputRef}
                                                     onChange={(e) => { handleChange(e) }}
 
                                                 // onChange={(e) => {

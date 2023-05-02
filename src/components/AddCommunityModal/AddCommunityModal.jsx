@@ -107,7 +107,7 @@ function AddCommunityModal(props) {
         <>
             <div
                 className="justify-center items-center flex overflow-x-hidden overflow-y-scrool fixed inset-0 z-50 outline-none focus:outline-none" >
-                <div className="relative w-full my-6 mx-auto max-w-3xl">
+                <div className="relative w-full md:mt-60 mt-24 my-6 mx-auto max-w-3xl">
                     {/*content*/}
                     <div className="border-0 mt-48 sm:mt-32  lg:mt-20 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         {/*header*/}
@@ -196,7 +196,7 @@ function AddCommunityModal(props) {
                             </div>
 
                             {/* about community */}
-                            <div className='flex  mt-1 '>
+                            <div className='flex flex-col md:flex-row  mt-1 '>
                                 <div className="relative mb-3  md:w-full m-3">
                                     <div>
                                         <label htmlFor="about" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About </label>
@@ -212,7 +212,7 @@ function AddCommunityModal(props) {
 
 
                             {/* description community */}
-                            <div className='flex  mt-1 '>
+                            <div className='flex flex-col md:flex-row  mt-1 '>
                                 <div className="relative mb-3  md:w-full m-3">
                                     <div>
                                         <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description </label>
