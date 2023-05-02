@@ -101,9 +101,9 @@ function CreateGroupModal(props) {
         <>
             <div
                 className="justify-center items-center flex overflow-x-hidden overflow-y-scrool fixed inset-0 z-50 outline-none focus:outline-none" >
-                <div className="relative w-full my-6 mx-auto max-w-3xl">
+                <div className="relative  w-full my-6 mx-auto max-w-3xl">
                     {/*content*/}
-                    <div className="border-0 mt-48 sm:mt-32  lg:mt-20 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                    <div className="border-0 mt-32 md:mt-60  rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         {/*header*/}
                         <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                             <h3 className="text-2xl font-semibold">
@@ -164,7 +164,7 @@ function CreateGroupModal(props) {
                             </div>
 
                             {/* //group name and type */}
-                            <div className='flex  mt-5 '>
+                            <div className='flex   mt-5 '>
                                 <div className="relative mb-3 w-full m-3" data-te-input-wrapper-init>
                                     <div>
                                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Group Name</label>
@@ -183,7 +183,7 @@ function CreateGroupModal(props) {
 
 
                             {/* description group */}
-                            <div className='flex  mt-1 '>
+                            <div className='flex flex-col md:flex-row  mt-1 '>
                                 <div className="relative mb-3  md:w-full m-3">
                                     <div>
                                         <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description </label>
