@@ -15,7 +15,6 @@ import { adminLogin, authAdmin } from '../../services/adminApi'
 
 function Login(props) {
 
-    const { teacher } = useSelector((state) => state)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loginData, setLoginData] = useState({
@@ -69,7 +68,6 @@ function Login(props) {
                         navigate("/");
                     }
                 }).catch((err) => {
-                    console.log(err); 
                     generateError("Something went wrong please reload the page") })
             } catch (err) {
                 generateError("Something went wrong please reload the page")
@@ -85,14 +83,12 @@ function Login(props) {
     const handleSubmit = async () => {
         try {
             const { data } = await userLogin(loginData);
-            console.log(data,'user');
             if (data) {
                 if (data.status ==='Blocked'){
                     navigate('/account/suspended')
                 }
                 if (data.login) {
                     localStorage.setItem('JwtToken', data.token);
-                    console.log(data);
                     dispatch(
                         setUserDetails({
                             name: data.user.firstName,
@@ -109,8 +105,8 @@ function Login(props) {
             } else {
                 generateError("Error")
             }
-        } catch (err) {
-            generateError("something went wrong in server side");
+        } catch (error) {
+            generateError(error.message);
         }
     }
 
@@ -133,7 +129,8 @@ function Login(props) {
                 generateError(data.message);
             }
         } catch (err) {
-            generateError(err);
+            generateError(error.message);
+
         }
     }
 
@@ -154,14 +151,12 @@ function Login(props) {
                     })
                 )
                 navigate('/teacher/dashboard')
-                console.log(data);
             } else {
                 generateError(data.message)
             }
-
         } catch (err) {
-            console.log(err);
-            generateError("something went wrong in server side")
+            generateError(error.message);
+
         }
     }
     return (

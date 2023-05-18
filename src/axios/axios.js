@@ -9,11 +9,17 @@ const axiosInstance =(tokenName)=>{
         }
     });
 
+    //instance request interceptor 
     instance.interceptors.request.use((request) => {
         const token = localStorage.getItem(tokenName)
         request.headers.Authorization = `Bearer ${token}`
         return request
     })
+
+    // instance response interceptor 
+    instance.interceptors.response.use(response => response,
+        error => Promise.reject(error.response.data)
+    )
 
     return instance;
 }
