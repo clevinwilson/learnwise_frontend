@@ -15,6 +15,7 @@ function UserProfile() {
     const dispatch=useDispatch();
     const initialValues = {}
     
+    //fetching the user details
     useEffect(() => {
         getUserDetails()
             .then((response) => {
@@ -50,13 +51,14 @@ function UserProfile() {
                     setUser({ ...user, firstName: values.firstName, lastName: values.lastName })
                 })
                 .catch((error) => {
-                    toast.Error(response.message, {
+                    toast.Error(error.message, {
                         position: 'top-center'
                     })
                 })
         }
     })
 
+    //handling the input box changes
     const handleChange = (event) => {
         formik.setValues((prev) => {
             const formFields = { ...prev };
@@ -65,11 +67,13 @@ function UserProfile() {
         })
     }
 
-    //update user in redux
+    //update user profile photo
     const handleFileSelect = (event) => {
+        //updating the state
         setImage(event.target.files[0]);
         updateUserAvatar({ image: event.target.files[0] })
             .then((response) => {
+                //seting user details to redux
                 dispatch(setUserDetails({
                     name:user.firstName,
                     id:user._id,
@@ -78,7 +82,7 @@ function UserProfile() {
                 }))
             })
             .catch((error) => {
-                toast.error(error.response.data.message, {
+                toast.error(error.message, {
                     position: 'top-center'
                 })
             })
@@ -90,9 +94,9 @@ function UserProfile() {
                 {/* Profile Card */}
                 <div className="bg-white p-3 rounded-md border-t-4 border-green-400">
                     <div className="image overflow-hidden relative">
-                        <img className="h-48 w-48 object-cover mx-auto rounded-full" src={!image ? user?.picture : URL.createObjectURL(image)} alt />
-                        <div class="ab bg-green-500 text-xs absolute bottom-1 right-4 font-bold  rounded-full w-10 h-10  text-white flex justify-center items-center   float-left hover:bg-gray-300 hover:text-gray-600  overflow-hidden cursor-pointer">
-                            <input type="file" name="photo" onchange="loadFile(event)" class="absolute inset-0  opacity-0 cursor-pointer" onChange={handleFileSelect} /> <FiEdit2 size={14} />
+                        <img className="h-48 w-48 object-cover mx-auto rounded-full" src={!image ? user?.picture : URL.createObjectURL(image)}  />
+                        <div className="ab bg-green-500 text-xs absolute bottom-1 right-4 font-bold  rounded-full w-10 h-10  text-white flex justify-center items-center   float-left hover:bg-gray-300 hover:text-gray-600  overflow-hidden cursor-pointer">
+                            <input type="file" name="photo"  className="absolute inset-0  opacity-0 cursor-pointer" onChange={handleFileSelect} /> <FiEdit2 size={14} />
                         </div>
                     </div>
                     <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{user?.firstName}</h1>
@@ -108,9 +112,9 @@ function UserProfile() {
                     </ul>
                     <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                       
-                        <li class="flex items-center py-3">
+                        <li className="flex items-center py-3">
                             <span>Member since</span>
-                            <span class="ml-auto">{new Date(user?.createdAt).toString().slice(0, 16)}</span>
+                            <span className="ml-auto">{new Date(user?.createdAt).toString().slice(0, 16)}</span>
                         </li>
                     </ul>
                 </div>
@@ -134,7 +138,7 @@ function UserProfile() {
                         <div className="grid md:grid-cols-2 text-sm gap-2">
                             <div className="grid ">
                                 <div className=" py-2  font-semibold">First Name</div>
-                                <input class="mt-2 border-2 border-gray-200   block w-full rounded-lg text-base text-gray-900 focus:outline-none focus:border-indigo-500" type="text" value={formik.values.firstName} name="firstName"
+                                <input className="mt-2 border-2 border-gray-200   block w-full rounded-lg text-base text-gray-900 focus:outline-none focus:border-indigo-500" type="text" value={formik.values.firstName} name="firstName"
                                     onChange={(event) => {
                                         handleChange(event)
                                     }}
@@ -146,8 +150,8 @@ function UserProfile() {
 
                             <div className="grid ">
                                 <div className=" py-2  font-semibold">Last Name</div>
-                                <input class="mt-2 border-2 border-gray-200   block w-full rounded-lg text-base text-gray-900 focus:outline-none focus:border-indigo-500" type="text" value={formik.values.lastName} name="lastName"
-                                    onChange={() => { handleChange(event) }}
+                                <input className="mt-2 border-2 border-gray-200   block w-full rounded-lg text-base text-gray-900 focus:outline-none focus:border-indigo-500" type="text" value={formik.values.lastName} name="lastName"
+                                    onChange={(event) => { handleChange(event) }}
                                 />
                                 {formik.touched.lastName && formik.errors.lastName ? (
                                     <div className='text-red-500 mt-1'>{formik.errors.lastName}</div>
@@ -178,7 +182,7 @@ function UserProfile() {
                             </div>
                         </div>
                         <div className='flex justify-end mt-16'>
-                            <button type="button" class="w-full md:w-32 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                            <button type="button" className="w-full md:w-32 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                                 onClick={() => formik.handleSubmit()}
                             >Update</button>
                         </div>
