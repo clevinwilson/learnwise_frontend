@@ -65,9 +65,9 @@ function Feeds({ community, admin }) {
                             <div key={index} className='w-full flex justify-center'>
                                 <div className="px-5 w-full py-4 bg-white dark:bg-gray-800 shadow rounded-lg max-w-3xl">
                                     <div className="flex mb-4">
-                                        <img className="w-12 h-12 rounded-full object-cover" src={post.user.picture} />
+                                        <img className="w-12 h-12 rounded-full object-cover" src={post.user && post.user.picture} />
                                         <div className="ml-2 mt-0.5">
-                                            <span className="block font-medium text-base leading-snug text-black dark:text-gray-100">{post.user.firstName}</span>
+                                            <span className="block font-medium text-base leading-snug text-black dark:text-gray-100">{post.user && post.user.firstName}</span>
                                             <span className="block text-sm text-gray-500 dark:text-gray-400 font-light leading-snug">{new Date(post.createdAt).toString().slice(0, 21)}</span>
                                         </div>
                                     </div>

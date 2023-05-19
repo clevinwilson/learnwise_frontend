@@ -53,7 +53,7 @@ function Search() {
                         <div key={index} className='mx-3 lg:mx-20 mb-10'>
                             <div className="flex justify-center mt-4 sm:mx-10 m-3">
                                 <div className="flex p-4 w-full max-w-screen-lg hover:bg-violet-50 flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                    <img className="rounded-md mt-4 sm:mt-0 w-56 h-32 object-cover" src={"http://localhost:3000/" + obj.image.path} />
+                                    <img className="rounded-md mt-4 sm:mt-0 w-56 h-32 object-cover" src={import.meta.env.VITE_SERVER_URL + obj.image.path} />
                                     <div className="flex flex-col ml-0 sm:ml-3 justify-between mt-2 sm:0 p-4 leading-normal">
                                         <h5 className="mb-2 text-xl  font-bold tracking-tight text-gray-900 dark:text-white">{obj.name}</h5>
                                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{obj.description}</p>
