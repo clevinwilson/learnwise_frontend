@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { useNavigate, Link } from "react-router-dom";
 import 'boxicons/css/boxicons.min.css';
 import LoadingButton from '../LoadingButton/LoadingButton';
-import { userSignup,loginWithGoogl } from '../../services/userApi';
+import { userSignup, loginWithGoogl } from '../../services/userApi';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Redux/Features/userSlice";
@@ -18,6 +18,7 @@ function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  //Yup form validation
   const validate = Yup.object({
     firstName: Yup.string()
       .max(15, 'Must be 15 characters or less')
@@ -33,6 +34,7 @@ function Signup() {
       .required('Confirm Password is Required ')
   });
 
+  //formik state
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -41,8 +43,10 @@ function Signup() {
       confirmpassword: ''
     },
     validationSchema: validate,
+    //submiting the form data
     onSubmit: async (values) => {
       try {
+        //seting the loading state
         setLoading(!loading);
         const { data } = await userSignup(values);
         if (data.status) {
@@ -51,13 +55,16 @@ function Signup() {
           setLoading(false);
           setErrorMessage(data.message)
         }
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        toast.error(error.message, {
+          position: "top-center",
+        });
       }
     }
 
   })
 
+  //handle the input changes
   const handleChange = (event) => {
     formik.setValues((prev) => {
       const formFields = { ...prev };
@@ -66,17 +73,19 @@ function Signup() {
     })
   }
 
-  //user signup with google
+  //user signup with google for user
   const login = useGoogleLogin({
+    //onsuccess login
     onSuccess: (codeResponse) => {
-      try {
-        loginWithGoogl(codeResponse)
+      loginWithGoogl(codeResponse)
         .then((response) => {
+          //checking the user status
           if (response.data.status === "Blocked") {
             navigate('/account/suspended');
           }
-          
+          //seting the token to localstorage
           localStorage.setItem('JwtToken', response.data.token);
+          //seting the user details to redux
           dispatch(
             setUserDetails({
               name: response.data.user.firstName,
@@ -86,19 +95,19 @@ function Signup() {
               token: response.data.token,
             })
           );
+          //nvaigate to home page
           navigate("/");
         }).catch((err) => {
-          console.log(err);
-          generateError("Something went wrong please reload the page")
+          toast.error("Something went wrong please reload the page", {
+            position: "top-center",
+          });
         })
-      } catch (err) {
-        console.log(err);
-        generateError("Something went wrong please reload the page")
-      }
     },
+    //login error
     onError: (error) => {
-      console.log('Login Failed:', error);
-      generateError("Login Failed")
+      toast.error("Login Failed", {
+        position: "top-center",
+      });
     }
   });
 
@@ -128,21 +137,6 @@ function Signup() {
               ) : null}
             </div>
 
-            {/* <div class="relative mb-6" data-te-input-wrapper-init>
-              <input
-                type="text"
-                class="peer  block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 input-box-border"
-                id="exampleFormControlInput2"
-                name=''
-                onChange={() => { handleChange(event) }}
-
-                placeholder="Last Name" />
-              <label
-                for="exampleFormControlInput2"
-                class="input-box-lable pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.7rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
-              >Last Name
-              </label>
-            </div> */}
 
             <div className="relative mb-6" data-te-input-wrapper-init>
               <input

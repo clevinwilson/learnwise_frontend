@@ -22,6 +22,7 @@ function Login(props) {
         password: "",
     });
 
+    //checking the props for each role
     useEffect(() => {
 
         if (props.admin) {
@@ -40,6 +41,7 @@ function Login(props) {
 
     }, [])
 
+    //tostify error
     const generateError = (err) => {
         toast.error(err, {
             position: "top-center",
