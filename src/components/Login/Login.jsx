@@ -51,7 +51,6 @@ function Login(props) {
     //user login with google
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
-            try {
                 loginWithGoogl(codeResponse)
                 .then((response) => {
                     if (response.data.status === "Blocked") {
@@ -69,11 +68,8 @@ function Login(props) {
                         );
                         navigate("/");
                     }
-                }).catch((err) => {
-                    generateError("Something went wrong please reload the page") })
-            } catch (err) {
-                generateError("Something went wrong please reload the page")
-            }
+                }).catch((error) => {
+                    generateError(error.message) })
         },
         onError: (error) => {
             generateError("Login Failed")
