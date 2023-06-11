@@ -21,6 +21,7 @@ function EditCourse() {
     const [chapterDetails, setChapterDetails] = useState(null);
     const navigate = useNavigate();
 
+    //geting course details
     useEffect(() => {
         try {
             if (!courseDetailsRedux) {
@@ -42,13 +43,14 @@ function EditCourse() {
         }
     }, [])
 
-
+    //error message section
     const generateError = (err) => {
         toast.error(err, {
             position: "top-center",
         });
     };
 
+    //success message section
     const successMessaage = (message) => {
         toast.success(message, {
             position: 'top-center'
@@ -56,6 +58,7 @@ function EditCourse() {
     }
 
 
+    //handle state
     const handleClick = () => {
         fileInputRef.current.click();
     };
@@ -70,6 +73,7 @@ function EditCourse() {
             .required('Video Link  Required'),
     })
 
+    //formik section
     const lessonFormik = useFormik({
         initialValues: {
             chapterName: "",
@@ -108,6 +112,8 @@ function EditCourse() {
             .required('Price Required'),
         description: Yup.string()
             .required('Description Required'),
+        about: Yup.string()
+            .required('About Required'),
     });
 
     const formik = useFormik({
@@ -118,7 +124,8 @@ function EditCourse() {
             duration: courseDetailsRedux ? courseDetailsRedux.duration : "",
             language: courseDetailsRedux ? courseDetailsRedux.language : "",
             price: courseDetailsRedux ? courseDetailsRedux.price : "",
-            description: courseDetailsRedux ? courseDetailsRedux.description : ""
+            description: courseDetailsRedux ? courseDetailsRedux.description : "",
+            about: courseDetailsRedux ? courseDetailsRedux.about : ""
         },
         validationSchema: validate,
         onSubmit: async (values) => {
@@ -306,6 +313,18 @@ function EditCourse() {
                             placeholder="Price" />
                         {formik.touched.price && formik.errors.price ? (
                             <p className="text-red-500 text-xs ">{formik.errors.price}</p>
+                        ) : null}
+                    </div>
+
+                    <div className="w-full md:w-1/2 px-3">
+                        <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="about">
+                            About
+                        </label>
+                        <textarea id="about" rows="3" name='about' className="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."
+                            onChange={(e) => { handleChange(e) }}
+                        >{formik.values.about}</textarea>
+                        {formik.touched.about && formik.errors.about ? (
+                            <p className="text-red-500 text-xs ">{formik.errors.about}</p>
                         ) : null}
                     </div>
                 </div>

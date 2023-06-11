@@ -14,6 +14,7 @@ function CourseDetails() {
     let [loading, setLoading] = useState(true);
     const navigate=useNavigate(); 
 
+    //geting course details
     useEffect(() => {
         window.scrollTo(0, 0);
         getCourseDetails(courseId)
@@ -33,6 +34,7 @@ function CourseDetails() {
     }, [])
 
 
+    //toggle dropdown
     const toggleDropdown = index => {
 
         let course = courseDetails.course.map((course, i) => {
@@ -62,7 +64,7 @@ function CourseDetails() {
                         <div className="w-full lg:w-7/12 ">
                             <div className='hidden sm:block xl:ml-1 mb-8'>
                                 <h1 className="text-3xl font-semibold mb-4">{courseDetails.name}</h1>
-                                <p className='mb-3 mr-6'>{courseDetails.description}</p>
+                                <p className='mb-3 mr-6'>{courseDetails.about}</p>
                                 <h3 className="text-theme-color text-2xl font-semibold mb-3">Syllabus</h3>
                             </div>
 
@@ -100,9 +102,9 @@ function CourseDetails() {
                             </div>
 
                             <div>
-                                <h3 className="text-2xl  mt-8 font-semibold mb-4 ">About</h3>
+                                <h3 className="text-2xl  mt-8 font-semibold mb-4 ">Description</h3>
                                 <div className='border rounded-md p-3 '>
-                                    {courseDetails.about}
+                                    {courseDetails.description}
                                     <p className='text-slate-600 mt-4'></p>
                                 </div>
                             </div>

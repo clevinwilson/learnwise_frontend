@@ -98,6 +98,7 @@ function AddCourse() {
             category: "",
             duration: "",
             language: "",
+            about: "",
             price:"",
             description: ""
         },
@@ -252,6 +253,20 @@ function AddCourse() {
                             <p className="text-red-500 text-xs ">{formik.errors.price}</p>
                         ) : null}
                     </div>
+
+                    <div className="w-full md:w-1/2 px-3">
+                        <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlfor="about">
+                            About
+                        </label>
+
+                        <textarea id="about" rows="3" name='about' className="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."
+                            onChange={(e) => { handleChange(e) }}
+                        >{formik.values.price}</textarea>
+                        {formik.touched.about && formik.errors.about ? (
+                            <p className="text-red-500 text-xs ">{formik.errors.about}</p>
+                        ) : null}
+                    </div>
+
 
                 </div>
 
