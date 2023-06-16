@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import LoadingButton from '../LoadingButton/LoadingButton';
 import { useFormik, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -7,17 +7,18 @@ import { addCourse } from '../../services/teacherApi';
 import './AddCourse.scss';
 
 function AddCourse() {
-    const fileInputRef =useRef();
+    const fileInputRef = useRef();
     const [lesson, setLesson] = useState([]);
     const [chapter, setChapter] = useState("");
     const [course, setCourse] = useState([]);
-    const [image,setImage]=useState('');
+    const [image, setImage] = useState('');
     const [chapterDetails, setChapterDetails] = useState(null);
 
     const handleClick = () => {
         fileInputRef.current.click();
     };
 
+    //chapter formik validation
     const validateLesson = Yup.object({
         chapterName: Yup.string()
             .required('Lesson Name Required'),
@@ -28,22 +29,25 @@ function AddCourse() {
             .matches(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/, 'Invalid YouTube link'),
     })
 
-
+    //course formik validation
     const validate = Yup.object({
         name: Yup.string()
             .required('Course Name Required'),
         category: Yup.string()
-            .required('category Required'),
+            .required('Category Required'),
         duration: Yup.string()
             .required('Phone duration is Required'),
         language: Yup.string()
-            .required('language Required'),
-        price:Yup.string()
+            .required('Language Required'),
+        price: Yup.string()
             .required('Price Required'),
+        about: Yup.string()
+            .required('About Required'),
         description: Yup.string()
             .required('Description Required'),
     });
 
+    //tosat message
     const generateError = (err) => {
         toast.error(err, {
             position: "top-center",
@@ -56,6 +60,7 @@ function AddCourse() {
         })
     }
 
+    //add chapter
     const addChapter = () => {
         setCourse([...course, { chapter, lessons: lesson }]);
         setLesson([]);
@@ -63,6 +68,7 @@ function AddCourse() {
         setChapter("");
     }
 
+    //chapter formik initial values
     const lessonFormik = useFormik({
         initialValues: {
             chapterName: "",
@@ -91,36 +97,39 @@ function AddCourse() {
         }
     })
 
+
+    //course formik initial values
     const formik = useFormik({
         initialValues: {
             name: "",
-            image:"",
+            image: "",
             category: "",
             duration: "",
             language: "",
             about: "",
-            price:"",
+            price: "",
             description: ""
         },
         validationSchema: validate,
         onSubmit: async (values) => {
             console.log(values);
-            addCourse(values,course,image)
-            .then((response)=>{
+            addCourse(values, course, image)
+                .then((response) => {
 
-                if(response.data.status){
-                    successMessaage(response.data.message);
-                }else{
-                    generateError(response.data.message);
-                }
-            })
-            .catch((err)=>{
-                generateError("Network error");
-            })
+                    if (response.data.status) {
+                        successMessaage(response.data.message);
+                    } else {
+                        generateError(response.data.message);
+                    }
+                })
+                .catch((err) => {
+                    generateError("Network error");
+                })
         }
 
     })
 
+    //course formik onchange
     const handleChange = (e) => {
         formik.setValues((prev) => {
             const formFields = { ...prev };
@@ -150,17 +159,17 @@ function AddCourse() {
             <div className='mb-4 pb-4 form-title-box ' >
                 <span className='text-base font-semibold text-violet-700'>Add Course</span>
             </div>
-            
+
             <div className='mt-10'>
-                {image?
+                {image ?
                     <div className='flex items-center justify-center w-full ' >
-                        <img class="h-auto max-w-lg rounded-lg w-full course-image" src={image ? URL.createObjectURL(image) : ""} alt="image description" onClick={handleClick}></img>
-                </div>
-                :""}
+                        <img class="h-auto max-w-lg rounded-lg w-full cursor-pointer course-pointer" src={image ? URL.createObjectURL(image) : ""} alt="image description" onClick={handleClick}></img>
+                    </div>
+                    : ""}
 
                 <div>
-                    <div class={!image ? "flex items-center justify-center w-full" :"items-center justify-center w-full hidden"}>
-                            <div className='w-full lg:w-1/3  md:w-1/2 sm:w-1/1'>
+                    <div class={!image ? "flex items-center justify-center w-full" : "items-center justify-center w-full hidden"}>
+                        <div className='w-full lg:w-1/3  md:w-1/2 sm:w-1/1'>
                             <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                     <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
@@ -168,8 +177,8 @@ function AddCourse() {
                                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
                                     <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                 </div>
-                                    <input id="dropzone-file" ref={fileInputRef} type="file" className="hidden" required
-                                    
+                                <input id="dropzone-file" name='course-image' ref={fileInputRef} type="file" className="hidden" required
+
                                     onChange={(e) => {
                                         setImage(e.target.files[0]);
                                     }}
@@ -196,11 +205,12 @@ function AddCourse() {
                             <p className="text-red-500 text-xs ">{formik.errors.name}</p>
                         ) : null}
                     </div>
+
                     <div className="w-full md:w-1/2 px-3">
                         <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="category">
                             Category
                         </label>
-                        <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category" name='category' type="text"
+                        <input className="appearance-none block w-full mb-3 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category" name='category' type="text"
                             onChange={(e) => { handleChange(e) }}
                             value={formik.values.category}
                             placeholder="Category" />
@@ -209,8 +219,8 @@ function AddCourse() {
                         ) : null}
                     </div>
                 </div>
-                <div className="flex flex-wrap -mx-3  mb-3">
 
+                <div className="flex flex-wrap -mx-3  mb-3">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="Duration">
                             Duration
@@ -229,23 +239,21 @@ function AddCourse() {
                         <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="language">
                             Language
                         </label>
-                        <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="language" name='language' type="text"
+                        <input className="appearance-none mb-3 block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="language" name='language' type="text"
                             onChange={(e) => { handleChange(e) }}
                             placeholder="language" />
                         {formik.touched.language && formik.errors.language ? (
                             <p className="text-red-500 text-xs ">{formik.errors.language}</p>
                         ) : null}
                     </div>
-
                 </div>
 
                 <div className="flex flex-wrap -mx-3  mb-3">
-
                     <div className="w-full md:w-1/2 px-3">
                         <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="price">
                             Price
                         </label>
-                        <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="price" name='price' type="text"
+                        <input className="appearance-none mb-3 block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="price" name='price' type="text"
                             onChange={(e) => { handleChange(e) }}
                             value={formik.values.price}
                             placeholder="Price" />
@@ -259,23 +267,20 @@ function AddCourse() {
                             About
                         </label>
 
-                        <textarea id="about" rows="3" name='about' className="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."
+                        <textarea id="about" rows="3" name='about' className="block mb-3 p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."
                             onChange={(e) => { handleChange(e) }}
                         >{formik.values.price}</textarea>
                         {formik.touched.about && formik.errors.about ? (
                             <p className="text-red-500 text-xs ">{formik.errors.about}</p>
                         ) : null}
                     </div>
-
-
                 </div>
 
                 <div className='mb-4'>
                     <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlfor="description">
                         Description
                     </label>
-
-                    <textarea id="description" rows="3" name='description' className="block p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."
+                    <textarea id="description" rows="3" name='description' className="block mb-3 p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."
                         onChange={(e) => { handleChange(e) }}
                     >{formik.values.price}</textarea>
                     {formik.touched.description && formik.errors.description ? (
@@ -287,7 +292,6 @@ function AddCourse() {
                     <label className="block uppercase tracking-wide text-violet-600 text-xs font-bold mb-2" htmlFor="addchapter">
                         Add Chapter
                     </label>
-
                     <div className="chapter mt-7">
                         <button type="button" className=" bg-green-400   focus:ring-4 focus:outline-none text-white focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2"
                             data-te-toggle="modal"
@@ -297,7 +301,6 @@ function AddCourse() {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-
                             <span className='ml-3 '>Add Chapter</span>
                         </button>
                     </div>
@@ -320,21 +323,15 @@ function AddCourse() {
                                     >
                                         <div className="flex flex-col justify-between p-4 leading-normal">
                                             <h5 className=" text-lg font-semibold tracking-tight text-gray-900 dark:text-white"><span className='mr-3'>{index + 1}.</span>{obj.chapter}</h5>
-
                                         </div>
                                     </a>
-
                                 </div>
                             )
                         })
                     }
-
                 </div>
 
-
-
                 <div className="flex flex-wrap -mx-3 mb-2">
-
                     <div className='mt-8 w-full  flex justify-end mr-3'>
                         <LoadingButton onClick={formik.handleSubmit}>
                             Submit
@@ -409,7 +406,6 @@ function AddCourse() {
                                     >Chapter Name
                                     </label>
                                 </div>
-
                             </div>
 
                             <div className='flex  mt-5 '>
@@ -472,19 +468,15 @@ function AddCourse() {
                                                         <a href="#" className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                                                             <div className="flex flex-col justify-between p-4 leading-normal">
                                                                 <h5 className=" text-lg font-semibold tracking-tight text-gray-900 dark:text-white"><span className='mr-3'>{index + 1}.</span>{obj.lessonName}</h5>
-
                                                             </div>
                                                         </a>
-
                                                     </div>
                                                 )
                                             })
                                         }
-
                                     </div>
 
                                     <div className="flex flex-wrap -mx-3 mb-2">
-
                                         <div className='mt-8 w-full  flex justify-end mr-7'>
                                             <button type="button" onClick={addChapter}
                                                 className='loading-btn form-btn mt-2 font-medium rounded' >
@@ -500,7 +492,6 @@ function AddCourse() {
                             }
 
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -526,7 +517,6 @@ function AddCourse() {
                                 id="editCourse">
                                 Edit Chapter
                             </h5>
-
                             <button
                                 type="button"
                                 className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
@@ -562,10 +552,7 @@ function AddCourse() {
                                     {lessonFormik.touched.chapterName && lessonFormik.errors.chapterName ? (
                                         <p className="text-red-500 text-xs ">{lessonFormik.errors.chapterName}</p>
                                     ) : null}
-
-
                                 </div>
-
                             </div>
 
                             <div className='flex  mt-5 '>
@@ -627,20 +614,16 @@ function AddCourse() {
                                                     <a href="#" className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                                                         <div className="flex flex-col justify-between p-4 leading-normal">
                                                             <h5 className=" text-lg font-semibold tracking-tight text-gray-900 dark:text-white"><span className='mr-3'>{index + 1}.</span>{obj.lessonName}</h5>
-
                                                         </div>
                                                     </a>
-
                                                 </div>
                                             )
                                         })
                                         : ""
                                     }
-
                                 </div>
 
                                 <div className="flex flex-wrap -mx-3 mb-2">
-
                                     <div className='mt-8 w-full  flex justify-end mr-7'>
                                         <button type="button" onClick={() => {
                                             setCourse(course.map((obj) => {
@@ -661,13 +644,10 @@ function AddCourse() {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }
