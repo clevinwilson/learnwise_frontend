@@ -3,14 +3,22 @@ import './AdminHeader.scss';
 import { setSidebar } from '../../Redux/Features/adminSidebarToogle';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
+import AccountSetup from '../TeacherAccountSetupModal/AccountSetup';
 
 function AdminHeader({ role }) {
     const sidebarToogle = useSelector((state) => state.adminSidebarToogle)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [showDiv, setShowDiv]=useState(false)
+    const [showDiv, setShowDiv] = useState(false)
     return (
         <div className='p-3'>
+
+            {/* account set modal for teacher */}
+            {role == 'teacher' ?
+                <AccountSetup/>
+                : null}
+
+
             <nav style={{ border: "1px solid #e5e7eb", position: 'fixed', width: '100%', top: '0', left: '0', right: '0' }} className="relative  z-50 px-4 py-4 flex justify-between items-center bg-white">
                 <a className="hidden md:flex text-3xl font-bold leading-none" href="#">
                     <h1 className='text-violet-800 text-2xl'>LearnWise</h1>
@@ -65,7 +73,6 @@ function AdminHeader({ role }) {
                     </div>
                 </div>
             </nav>
-
         </div>
     )
 }

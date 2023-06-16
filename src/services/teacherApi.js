@@ -43,5 +43,14 @@ const getDashboardDetails = () => {
     return axiosInstance("teacherJwtToken").get('/teacher/dashboard', )
 }
 
+//update teacher photo
+const updatePhoto=(image)=>{
+    return axiosInstance('teacherJwtToken').put('/teacher/update-photo', {image }, { headers: { "Content-Type": "multipart/form-data" } })
+}
 
-export { teacherLogin,authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails, updateCourse, changePassword, getDashboardDetails }
+//update teacher abut
+const updateAbout = (about) => {
+    return axiosInstance('teacherJwtToken').put('/teacher/update-about', { about })
+}
+
+export { teacherLogin, authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails, updateCourse, changePassword, getDashboardDetails, updatePhoto, updateAbout }
