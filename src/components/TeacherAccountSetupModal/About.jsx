@@ -1,10 +1,13 @@
 import React from 'react';
-import { ToastContainer, toast } from "react-toastify";
-import { useFormik, Formik } from 'formik';
+import {toast } from "react-toastify";
+import { useFormik} from 'formik';
 import * as Yup from 'yup';
 import { updateAbout } from '../../services/teacherApi';
+import { useDispatch } from "react-redux";
+import { setTeacherDetails } from '../../Redux/Features/teacherSlice';
 
 function About({ updateSection }) {
+    const dispatch = useDispatch();
 
     //course formik validation
     const validate = Yup.object({
@@ -21,7 +24,19 @@ function About({ updateSection }) {
         onSubmit: (values) => {
             updateAbout(values.about)
                 .then((response) => {
-                    console.log(response);
+                    dispatch(
+                        setTeacherDetails({
+                            id: response.data.teacher._id,
+                            email: response.data.teacher.email,
+                            picture: response.data.teacher.picture,
+                            about: response.data.teacher.about,
+                            firstName: response.data.teacher.firstName,
+                            lastName: response.data.teacher.lastName,
+                            accountSetup: response.data.teacher.accountSetup,
+                            login: true,
+                            token: response.data.token,
+                        })
+                    );
                 })
                 .catch((error) => {
                     toast.error(error, {

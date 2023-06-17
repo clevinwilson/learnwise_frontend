@@ -53,4 +53,7 @@ const updateAbout = (about) => {
     return axiosInstance('teacherJwtToken').put('/teacher/update-about', { about })
 }
 
+//getTeacherDetails
+
+
 export { teacherLogin, authTeacher, addCourse, getCourses, deleteCourse, getCourseDetails, updateCourse, changePassword, getDashboardDetails, updatePhoto, updateAbout }

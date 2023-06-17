@@ -51,11 +51,11 @@ function Login(props) {
     //user login with google
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
-                loginWithGoogl(codeResponse)
+            loginWithGoogl(codeResponse)
                 .then((response) => {
                     if (response.data.status === "Blocked") {
                         navigate('/account/suspended');
-                    }else{
+                    } else {
                         localStorage.setItem('JwtToken', response.data.token);
                         dispatch(
                             setUserDetails({
@@ -69,7 +69,8 @@ function Login(props) {
                         navigate("/");
                     }
                 }).catch((error) => {
-                    generateError(error.message) })
+                    generateError(error.message)
+                })
         },
         onError: (error) => {
             generateError("Login Failed")
@@ -82,7 +83,7 @@ function Login(props) {
         try {
             const { data } = await userLogin(loginData);
             if (data) {
-                if (data.status ==='Blocked'){
+                if (data.status === 'Blocked') {
                     navigate('/account/suspended')
                 }
                 if (data.login) {
@@ -112,7 +113,7 @@ function Login(props) {
     const handleAdminSubmit = async () => {
         try {
             adminLogin(loginData)
-            const { data } = await adminLogin(loginData) ;
+            const { data } = await adminLogin(loginData);
             if (data.login) {
                 localStorage.setItem('adminJwtToken', data.token);
                 dispatch(
@@ -135,7 +136,7 @@ function Login(props) {
     //teacher login
     const handelTeacherSubmit = async () => {
         try {
-            const { data } =await teacherLogin(loginData)
+            const { data } = await teacherLogin(loginData)
             if (data.login) {
                 localStorage.setItem('teacherJwtToken', data.token);
                 dispatch(
@@ -144,7 +145,10 @@ function Login(props) {
                         email: data.teacher.email,
                         firstName: data.teacher.firstName,
                         lastName: data.teacher.lastName,
+                        picture: data.teacher.picture,
+                        about: data.teacher.about,
                         login: data.login,
+                        accountSetup: data.teacher.accountSetup,
                         token: data.token
                     })
                 )

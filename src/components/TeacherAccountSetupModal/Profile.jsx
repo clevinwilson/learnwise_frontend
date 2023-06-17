@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 
 function Profile({ updateSection }) {
+
     const [image, setImage] = useState();
 
     function uploadPhoto() {

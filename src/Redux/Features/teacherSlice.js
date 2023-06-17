@@ -17,8 +17,11 @@ const teacherSlice = createSlice({
             state.email=action.payload.email;
             state.firstName=action.payload.firstName;
             state.lastName=action.payload.lastName;
+            state.picture = action.payload.picture;
+            state.about = action.payload.about;
             state.login = action.payload.login;
-            state.token = action.payload.token
+            state.accountSetup = action.payload.accountSetup;
+            state.token = action.payload.token;
         },
         setTeacherSignoutState: (state, action) => {
             state.id = null;
