@@ -59,7 +59,6 @@ function CourseDetails() {
                 </div>
                 :
                 <div className="p-2 lg:p-20 mx-auto">
-
                     <div className="flex flex-col-reverse sm:flex-row xl:px-20">
                         <div className="w-full lg:w-7/12 ">
                             <div className='hidden sm:block xl:ml-1 mb-8'>
@@ -69,8 +68,6 @@ function CourseDetails() {
                             </div>
 
                             <h3 className="text-xl text-theme-color mt-8 font-semibold mb-4 block sm:hidden ">Syllabus</h3>
-
-
                             <div className="App">
                                 <div className="syllabus syllabus-wrap rounded-lg">
                                     {courseDetails.course && courseDetails.course.map((course, index) => (
@@ -86,7 +83,7 @@ function CourseDetails() {
                                     <div className="flex items-center gap-4">
                                         <img
                                             alt="Man"
-                                            src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+                                            src={courseDetails.teacher && import.meta.env.VITE_SERVER_URL + courseDetails.teacher.picture}
                                             className="h-16 w-16 rounded-full object-cover"
                                         />
 
