@@ -15,7 +15,7 @@ function Profile({ updateSection }) {
             updateSection("about");
         })
         .catch((error)=>{
-            toast.error(error, {
+            toast.error(error.message, {
                 position: "top-center",
             });
         })
