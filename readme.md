@@ -18,7 +18,6 @@ other and collaborate on shared learning objectives.
 - Technologies used:Node.js, React.js, MongoDB
 - Live link: https://learnwise.tech/
 
-
 ## Prerequisites
 
 Before you can run the app, make sure you have the following installed on your machine:
@@ -30,7 +29,7 @@ Before you can run the app, make sure you have the following installed on your m
 
 1. Clone this repository to your local machine:
 
-   git clone  learnwise_frontend
+   git clone learnwise_frontend
 
 2. Navigate to the project directory:
 
@@ -42,31 +41,32 @@ Before you can run the app, make sure you have the following installed on your m
 
 4. Start the development server:
 
-   npm start
+   npm run dev
 
 ## Folder Structure
 
 Explain the structure of the project's folders and files. Describe the purpose of each important file or directory.
 
-src/    
-  |- assets/       # All images
-  
-  |- axios/        # Axios instance
+src/  
+ |- assets/ # All images
 
-  |- components/   # React components
+|- axios/ # Axios instance
 
-  |- pages/        # React pages or views
+|- components/ # React components
 
-  |- Redux/        # Redux store,slice,action
+|- pages/ # React pages or views
 
-  |- routes/       # All route
+|- Redux/ # Redux store,slice,action
 
-  |- services/     # All API services
+|- routes/ # All route
 
-  |- utils/        # Utility functions or modules
+|- services/ # All API services
 
-  |- App.jsx       # Entry point of the application
+|- utils/ # Utility functions or modules
 
-public/         # Public assets directory
-dist/           # Build output directory
+|- App.jsx # Entry point of the application
 
+public/ # Public assets directory
+dist/ # Build output directory
+
+The app should now be running at http://localhost:4000.
