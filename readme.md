@@ -50,8 +50,11 @@ Explain the structure of the project's folders and files. Describe the purpose o
 
 src/    
   |- assets/       # All images
+
   |- axios/        # Axios instance
+
   |- components/   # React components
+  
   |- pages/        # React pages or views
   |- Redux/        # Redux store,slice,action
   |- routes/       # All route
