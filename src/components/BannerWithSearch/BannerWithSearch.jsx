@@ -2,9 +2,10 @@ import React from 'react';
 import './BannerWithSearch.scss';
 import Button from '../Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
+import Fade from 'react-reveal/Fade';
 
 function BannerWithSearch() {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     return (
         <div className='homepage-banner grid sm:grind-cols-1 md:grid-cols-3 ' style={{ backgroundImage: "url(/images/homeBanner.PNG)" }}>
             <div className='col-span-2 h-full flex flex-col justify-center m-5 md:ml-14'>
@@ -19,7 +20,8 @@ function BannerWithSearch() {
                     <p className='text-xs sm:text-base sm:leading-5 md:leading-6'>Learn the skills you need to take the next step and every step <br />
                         after. Log in now to save on courses through March 1.</p>
                 </div>
-                <div onClick={() => { navigate('/courses')}} className='mb-10'>
+                <div onClick={() => { navigate('/courses') }} className='mb-10'>
+
                     <Button >
                         Explore courses
                     </Button>
@@ -27,16 +29,19 @@ function BannerWithSearch() {
             </div>
             <div className='col-span-1 flex justify-center items-center'>
                 <div className="max-w-md mx-auto hidden lg:inline-block">
-                    <div className=" banner-serach-bar relative flex items-center  h-14 border-white rounded-full focus-within:shadow-lg bg-white overflow-hidden">
-                        <div className="grid place-items-center h-full w-12 text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
+                    <Fade bottom>
+                        <div className=" banner-serach-bar relative flex items-center  h-14 border-white rounded-full focus-within:shadow-lg bg-white overflow-hidden">
+                            <div className="grid place-items-center h-full w-12 text-gray-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <Link to={'/search'}>
+                                <input style={{ '--tw-ring-color': '#fff' }} readOnly className="peer h-full w-full outline-none text-sm text-gray-700 pr-2 focus:border-white border-white" type="text" id="search" placeholder="Search Course.." />
+                            </Link>
                         </div>
-                       <Link to={'/search'}>
-                            <input style={{ '--tw-ring-color': '#fff' }} readOnly className="peer h-full w-full outline-none text-sm text-gray-700 pr-2 focus:border-white border-white" type="text" id="search" placeholder="Search Course.." />
-                       </Link>
-                    </div>
+                    </Fade>
+
                 </div>
 
             </div>
