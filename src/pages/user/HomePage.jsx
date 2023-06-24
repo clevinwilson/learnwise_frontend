@@ -1,6 +1,5 @@
 import React from 'react'
 import BannerWithSearch from '../../components/BannerWithSearch/BannerWithSearch'
-import BottomNavigation from '../../components/BottomNavigation/BottomNavigation'
 import UserHeader from '../../components/UserHeader/UserHeader'
 import TopCourses from '../../components/TopCourses/TopCourses'
 import UserFooter from '../../components/UserFooter/UserFooter'
