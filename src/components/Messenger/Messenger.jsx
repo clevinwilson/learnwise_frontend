@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import Chat from '../Chat/Chat';
 import Message from '../Message/Message';
 import Conversation from '../Conversation/Conversation';
@@ -25,12 +25,20 @@ function Messenger() {
     const socket = useRef();
     const [showMessagesDiv, setshowMessagesDiv] = useState(true);
     const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
-    const [searchTerm, setSearchTerm] = useState('');
     const [showAbout, setShowAbout] = useState(false)
     const [image, setImage] = useState();
+    const [title, setTitle] = useState("");
 
 
 
+    //filtering groups name
+    const filteredGroups = useMemo(() => {
+        return groupData.groups.filter(group => {
+            return (
+                (title === "" || group.name.toLowerCase().includes(title.toLowerCase()))
+            )
+        })
+    }, [title, groupData])
 
 
     //socket io
@@ -49,7 +57,6 @@ function Messenger() {
     useEffect(() => {
         //receive message
         socket.current.on('receiveMessage', ({ sender, text, type, image }) => {
-            console.log(image);
             if (sender._id != user.id) {
                 setMessages(messages => [...messages, { sender: sender, text, type, image }]);
             }
@@ -130,7 +137,7 @@ function Messenger() {
                                     <div className="relative">
                                         <label>
                                             <input className="rounded-full py-2 pr-6 pl-10 w-full border border-gray-100 focus:border-gray-100 bg-gray-100 focus:bg-gray-100 focus:outline-none text-gray-800 focus:shadow-md transition duration-300 ease-in" type="text" placeholder="Search Groups"
-                                                onChange={(event) => { setSearchTerm(event.target.value); }}
+                                                onChange={(event) => { setTitle(event.target.value); }}
                                             />
                                             <span className="absolute top-0 left-0 mt-2 ml-3 inline-block">
                                                 <svg viewBox="0 0 24 24" className="w-6 h-6">
@@ -141,9 +148,9 @@ function Messenger() {
                                     </div>
                                 </form>
                             </div>
-                            {groupData.groups.length ?
+                            {groupData.groups.length && filteredGroups.length ?
                                 <div className="contacts flex-1 overflow-y-scroll">
-                                    {groupData.groups && groupData.groups.map((group, index) => (
+                                    {filteredGroups.map((group, index) => (
                                         <div key={index} onClick={() => { handleConversation(group); setShowAbout(false) }}>
                                             <Conversation isMobile={isMobile} setshowMessagesDiv={setshowMessagesDiv} group={group} />
                                         </div>
