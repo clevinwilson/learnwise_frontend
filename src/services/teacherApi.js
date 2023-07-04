@@ -5,47 +5,46 @@ const authTeacher = () => {
 }
 
 //login
-const teacherLogin = (loginData)=>{
+const teacherLogin = (loginData) => {
     return axiosInstance("teacherJwtToken").post("/teacher/login", { ...loginData })
 }
 
-const addCourse = (values, course, image) => {
-    const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
-    return axiosInstance("teacherJwtToken").post('/teacher/add-course', { ...values, course, image }, { headers: { "Content-Type": "multipart/form-data" } })
+const addCourse = (values, course, image, selectedTags) => {
+    return axiosInstance("teacherJwtToken").post('/teacher/add-course', { ...values, course, image, selectedTags }, { headers: { "Content-Type": "multipart/form-data" } })
 }
 
 const getCourses = () => {
-    const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken') }` };
-    return axiosInstance("teacherJwtToken").get('/teacher/course', )
-}
-
-
-const deleteCourse=(courseId)=>{
     const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
-    return axiosInstance("teacherJwtToken").delete(`/teacher/delete-course/${courseId}`, )
+    return axiosInstance("teacherJwtToken").get('/teacher/course',)
 }
 
-const getCourseDetails=(courseId)=>{
+
+const deleteCourse = (courseId) => {
+    const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
+    return axiosInstance("teacherJwtToken").delete(`/teacher/delete-course/${courseId}`,)
+}
+
+const getCourseDetails = (courseId) => {
     return axiosInstance("teacherJwtToken").get(`/teacher/course-details/${courseId}`)
 }
 
-const updateCourse = (values, course, image, courseId)=>{
+const updateCourse = (values, course, image, courseId) => {
     const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
     return axiosInstance("teacherJwtToken").put('/teacher/update-course', { ...values, course, image, courseId }, { headers: { "Content-Type": "multipart/form-data" } })
 }
 
-const changePassword=(data)=>{
-    return axiosInstance("teacherJwtToken").put('/teacher/change-password', { ...data }, )
+const changePassword = (data) => {
+    return axiosInstance("teacherJwtToken").put('/teacher/change-password', { ...data },)
 }
 
 //dashboard details 
 const getDashboardDetails = () => {
-    return axiosInstance("teacherJwtToken").get('/teacher/dashboard', )
+    return axiosInstance("teacherJwtToken").get('/teacher/dashboard',)
 }
 
 //update teacher photo
-const updatePhoto=(image)=>{
-    return axiosInstance('teacherJwtToken').put('/teacher/update-photo', {image }, { headers: { "Content-Type": "multipart/form-data" } })
+const updatePhoto = (image) => {
+    return axiosInstance('teacherJwtToken').put('/teacher/update-photo', { image }, { headers: { "Content-Type": "multipart/form-data" } })
 }
 
 //update teacher abut

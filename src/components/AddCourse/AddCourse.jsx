@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { ToastContainer, toast } from "react-toastify";
 import { addCourse } from '../../services/teacherApi';
 import './AddCourse.scss';
+import CreatableSelect from 'react-select/creatable';
 
 function AddCourse() {
     const fileInputRef = useRef();
@@ -13,6 +14,7 @@ function AddCourse() {
     const [course, setCourse] = useState([]);
     const [image, setImage] = useState('');
     const [chapterDetails, setChapterDetails] = useState(null);
+    const [selectedTags, setSelectedTags] = useState();
 
     const handleClick = () => {
         fileInputRef.current.click();
@@ -112,8 +114,7 @@ function AddCourse() {
         },
         validationSchema: validate,
         onSubmit: async (values) => {
-            console.log(values);
-            addCourse(values, course, image)
+            addCourse(values, course, image, selectedTags)
                 .then((response) => {
 
                     if (response.data.status) {
@@ -249,17 +250,45 @@ function AddCourse() {
                 </div>
 
                 <div className="flex flex-wrap -mx-3  mb-3">
-                    <div className="w-full md:w-1/2 px-3">
-                        <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="price">
-                            Price
-                        </label>
-                        <input className="appearance-none mb-3 block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="price" name='price' type="text"
-                            onChange={(e) => { handleChange(e) }}
-                            value={formik.values.price}
-                            placeholder="Price" />
-                        {formik.touched.price && formik.errors.price ? (
-                            <p className="text-red-500 text-xs ">{formik.errors.price}</p>
-                        ) : null}
+
+                    <div className='flex flex-wrap  md:w-1/2'>
+                        <div className="w-full md:w-1/3 px-3">
+                            <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="price">
+                                Price
+                            </label>
+                            <input className="appearance-none mb-3 block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="price" name='price' type="text"
+                                onChange={(e) => { handleChange(e) }}
+                                value={formik.values.price}
+                                placeholder="Price" />
+                            {formik.touched.price && formik.errors.price ? (
+                                <p className="text-red-500 text-xs ">{formik.errors.price}</p>
+                            ) : null}
+                        </div>
+
+                        {/* tags */}
+                        <div className="w-full md:w-2/3 px-3">
+                            <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="price">
+                                Tags
+                            </label>
+
+                            <CreatableSelect
+
+                                value={selectedTags?.map(tag => {
+                                    return { label: tag.label };
+                                })}
+
+                                onChange={(value) => {
+                                    setSelectedTags(value)
+                                }}
+
+                                isMulti />
+
+
+                            {formik.touched.price && formik.errors.price ? (
+                                <p className="text-red-500 text-xs ">{formik.errors.price}</p>
+                            ) : null}
+                        </div>
+
                     </div>
 
                     <div className="w-full md:w-1/2 px-3">
