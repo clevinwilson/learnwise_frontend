@@ -28,9 +28,9 @@ const getCourseDetails = (courseId) => {
     return axiosInstance("teacherJwtToken").get(`/teacher/course-details/${courseId}`)
 }
 
-const updateCourse = (values, course, image, courseId) => {
-    const headers = { Authorization: `Bearer ${localStorage.getItem('teacherJwtToken')}` };
-    return axiosInstance("teacherJwtToken").put('/teacher/update-course', { ...values, course, image, courseId }, { headers: { "Content-Type": "multipart/form-data" } })
+const updateCourse = (values, course, image, courseId, selectedTags) => {
+    console.log(selectedTags);
+    return axiosInstance("teacherJwtToken").put('/teacher/update-course', { ...values, course, image, courseId, selectedTags }, { headers: { "Content-Type": "multipart/form-data" } })
 }
 
 const changePassword = (data) => {

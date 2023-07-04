@@ -7,6 +7,7 @@ import { addCourse, updateCourse } from '../../services/teacherApi';
 import './EditCourse.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import CreatableSelect from 'react-select/creatable';
 
 
 function EditCourse() {
@@ -19,6 +20,7 @@ function EditCourse() {
     const [course, setCourse] = useState([]);
     const [image, setImage] = useState('');
     const [chapterDetails, setChapterDetails] = useState(null);
+    const [selectedTags, setSelectedTags] = useState();
     const navigate = useNavigate();
 
     //geting course details
@@ -29,6 +31,9 @@ function EditCourse() {
             }
             //setting course details
             setCourse(courseDetailsRedux.course)
+
+            //seting tag state
+            setSelectedTags(courseDetailsRedux.tags)
             //prevent reload of page 
             function handleBeforeUnload(event) {
                 event.preventDefault(); // prevent default behavior
@@ -129,7 +134,7 @@ function EditCourse() {
         },
         validationSchema: validate,
         onSubmit: async (values) => {
-            updateCourse(values, course, image, courseId)
+            updateCourse(values, course, image, courseId, selectedTags)
                 .then((response) => {
 
                     if (response.data.status) {
@@ -224,7 +229,6 @@ function EditCourse() {
                                     <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                 </div>
                                 <input id="dropzone-file" ref={fileInputRef} type="file" className="hidden" required
-
                                     onChange={(e) => {
                                         setImage(e.target.files[0]);
                                     }}
@@ -303,17 +307,45 @@ function EditCourse() {
                 </div>
 
                 <div className="flex flex-wrap -mx-3  mb-3">
-                    <div className="w-full md:w-1/2 px-3">
-                        <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="price">
-                            Price
-                        </label>
-                        <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="price" name='price' type="text"
-                            onChange={(e) => { handleChange(e) }}
-                            value={formik.values.price}
-                            placeholder="Price" />
-                        {formik.touched.price && formik.errors.price ? (
-                            <p className="text-red-500 text-xs ">{formik.errors.price}</p>
-                        ) : null}
+                    
+
+                    <div className='flex flex-wrap  md:w-1/2'>
+
+                        <div className="w-full md:w-1/3 px-3">
+                            <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="price">
+                                Price
+                            </label>
+                            <input className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="price" name='price' type="text"
+                                onChange={(e) => { handleChange(e) }}
+                                value={formik.values.price}
+                                placeholder="Price" />
+                            {formik.touched.price && formik.errors.price ? (
+                                <p className="text-red-500 text-xs ">{formik.errors.price}</p>
+                            ) : null}
+                        </div>
+
+
+                        {/* tags */}
+                        <div className="w-full md:w-2/3 px-3">
+                            <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="price">
+                                Tags
+                            </label>
+
+                            <CreatableSelect
+
+                                value={selectedTags?.map(tag => {
+                                    return { label: tag};
+                                })}
+
+                                onChange={(value) => {
+                                    setSelectedTags(value.map(value => value.label))
+                                }}
+
+                                isMulti />
+                            {formik.touched.price && formik.errors.price ? (
+                                <p className="text-red-500 text-xs ">{formik.errors.price}</p>
+                            ) : null}
+                        </div>
                     </div>
 
                     <div className="w-full md:w-1/2 px-3">
