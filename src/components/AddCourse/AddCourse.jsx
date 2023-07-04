@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { addCourse } from '../../services/teacherApi';
 import './AddCourse.scss';
 import CreatableSelect from 'react-select/creatable';
+import { BsInfoCircle } from "react-icons/bs";
 
 function AddCourse() {
     const fileInputRef = useRef();
@@ -267,12 +268,18 @@ function AddCourse() {
 
                         {/* tags */}
                         <div className="w-full md:w-2/3 px-3">
-                            <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2" htmlFor="price">
-                                Tags
-                            </label>
+                           <div className='flex'>
+                                <label className="block uppercase tracking-wide text-violet-700 text-xs font-bold mb-2 mr-3" htmlFor="price">
+                                    Tags
+                                </label>
+                                <div class="tooltip"><BsInfoCircle />
+                                    <span class="tooltiptext">Help to enhance the search</span>
+                                </div>
+                           </div>
+
+                           
 
                             <CreatableSelect
-
                                 value={selectedTags?.map(tag => {
                                     return { label: tag.label };
                                 })}
@@ -282,8 +289,6 @@ function AddCourse() {
                                 }}
 
                                 isMulti />
-
-
                             {formik.touched.price && formik.errors.price ? (
                                 <p className="text-red-500 text-xs ">{formik.errors.price}</p>
                             ) : null}
